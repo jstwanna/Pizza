@@ -7,7 +7,7 @@ var api = builder
 var frontend = builder
     .AddNpmApp("pizza-frontend", "../Pizza.Frontend", "dev")
     .WithReference(api)
-    .WithHttpEndpoint(env: "PORT")
+    .WithHttpEndpoint(env: "PORT", port: 5555)
     .WithExternalHttpEndpoints()
     .PublishAsDockerFile();
 
