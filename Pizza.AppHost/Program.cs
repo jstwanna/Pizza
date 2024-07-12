@@ -9,10 +9,10 @@ var api = builder
 if (builder.Environment.IsDevelopment())
 {
     var frontend = builder
-    .AddNpmApp("pizza-frontend", "../Pizza.Frontend", "dev")
-    .WithReference(api)
-    .WithHttpEndpoint(env: "PORT", port: 5555)
-    .WithExternalHttpEndpoints();
+        .AddNpmApp("pizza-frontend", "../Pizza.Frontend", "dev")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT", port: 8080)
+        .WithExternalHttpEndpoints();
 }
 
 builder.Build().Run();
