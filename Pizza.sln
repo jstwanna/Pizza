@@ -2,11 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.AppHost", "Pizza.AppHost\Pizza.AppHost.csproj", "{B9E2B6FB-2E5B-4E71-AA8B-AF5515DB203F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.AppHost", "Pizza.AppHost\Pizza.AppHost.csproj", "{B9E2B6FB-2E5B-4E71-AA8B-AF5515DB203F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.ServiceDefaults", "Pizza.ServiceDefaults\Pizza.ServiceDefaults.csproj", "{54561097-32B9-4ABE-ADDA-46205510E3BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pizza.Tests", "Pizza.Tests\Pizza.Tests.csproj", "{A6CDE2D6-6602-44AB-A47C-40B0C7576172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Tests", "Pizza.Tests\Pizza.Tests.csproj", "{A6CDE2D6-6602-44AB-A47C-40B0C7576172}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Api", "Pizza.Api\Pizza.Api.csproj", "{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,10 @@ Global
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
