@@ -1,0 +1,36 @@
+$white: hsl(0, 0%, 100%);
+$white-100: hsla(0, 0%, 100%, 0.1);
+$white-200: hsla(0, 0%, 77%, 0.2);
+$white-500: hsla(0, 0%, 77%, 0.5);
+$white-700: hsla(0, 0%, 100%, 0.7);
+$light-white: hsla(0, 0%, 100%, 0.75);
+$black: hsl(0, 0%, 0%);
+$black-100: hsla(241, 82%, 11%, 0.1);
+$black-150: hsla(241, 82%, 11%, 0.15);
+$dark: hsl(0, 0%, 9%);
+$orange: hsl(25, 100%, 50%);
+$dark-orange: hsl(25, 100%, 45%);
+$pink: hsl(24, 100%, 95%);
+$light-pink: hsl(24, 100%, 85%);
+$deep-amber: hsl(25, 100%, 41%);
+$gray: hsl(240, 20%, 96%);
+$dark-gray: hsl(219, 10%, 40%);
+$yellow: hsl(49, 100%, 50%);
+
+// Шрифты
+$ff-dodo: "Dodo";
+
+//  Насыщенность
+$fw-normal: 400;
+$fw-medium: 500;
+$fw-semibold: 600;
+
+// Размер текста
+$fs-xs: 0.75rem;
+$fs-sm: 0.875rem;
+$fs-base: 1rem;
+$fs-lg: 1.125rem;
+$fs-xl: 1.25rem;
+$fs-2xl: 1.5rem;
+$fs-3xl: 1.625rem;
+$fs-4xl: 2.25rem;

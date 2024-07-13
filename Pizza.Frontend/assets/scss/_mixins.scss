@@ -1,0 +1,10 @@
+@mixin transition($duration: 0.35s, $timing-function: linear) {
+  transition: all $duration $timing-function;
+}
+
+@mixin section-title {
+  font-weight: $fw-semibold;
+  font-size: $fs-4xl;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
