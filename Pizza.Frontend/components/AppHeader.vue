@@ -26,13 +26,13 @@ const handleClickLoyalty = () => {
           </UIBaseLink>
           <div class="header__statistic">
             <div>Сеть №1 в России</div>
-            <NuxtLink
+            <UIBaseLink
               to="https://docs.google.com/document/d/1OqaMef63wANPbsGCE8RD5QW9ve8Z7QBE/edit"
               target="_blank"
               class="header__statistic-link"
             >
               по количеству пиццерий
-            </NuxtLink>
+            </UIBaseLink>
           </div>
         </div>
         <div>

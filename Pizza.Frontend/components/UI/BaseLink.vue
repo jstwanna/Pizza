@@ -1,13 +1,18 @@
 <script lang="ts" setup>
+type TargetAttribute = '_blank' | '_self' | '_parent' | '_top';
+
 interface Props {
-  to: string | Object;
+  to: string;
+  target?: TargetAttribute;
 }
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  target: '_self',
+});
 </script>
 
 <template>
-  <NuxtLink :to="to" class="link" active-class="link_active">
+  <NuxtLink :to="to" class="link" active-class="link_active" :target="target">
     <slot />
   </NuxtLink>
 </template>

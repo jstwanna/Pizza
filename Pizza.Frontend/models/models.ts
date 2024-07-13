@@ -19,3 +19,13 @@ export interface OftenOrderCard {
   cost: number;
   oldCost: number | null;
 }
+
+export interface ContactLink {
+  id: number;
+  title: string;
+  links: {
+    id: number;
+    name: string;
+    to: string;
+  }[];
+}

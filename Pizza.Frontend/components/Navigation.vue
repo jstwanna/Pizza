@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { headerLinks } from '../utils/constants';
 
-const shadow = ref(false);
+const shadow = ref<boolean>(false);
 
 const handleShadow = () => {
-  shadow.value = window.scrollY >= 100;
+  shadow.value = window.scrollY >= 165;
 };
 
 const route = useRoute();
@@ -58,7 +58,7 @@ onUnmounted(() => {
   backdrop-filter: blur(1.25rem);
 
   &_shadow {
-    box-shadow: $light-black 0 0.25rem 1.875rem;
+    box-shadow: $black-100 0 0.25rem 1.875rem;
   }
 
   &__menu {

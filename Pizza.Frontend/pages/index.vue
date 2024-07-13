@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import map from '../assets/images/911e3a5bc67fc765b604..jpg';
+
 import { orderCards } from '../utils/constants';
 import type { OftenOrderCard } from '../models/models';
 
@@ -132,6 +133,8 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
   }
 
   &__image-text {
+    pointer-events: none;
+    font-size: $fs-xl;
     position: absolute;
     top: 50%;
     left: 50%;
