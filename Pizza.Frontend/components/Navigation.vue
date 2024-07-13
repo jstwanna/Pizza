@@ -28,7 +28,7 @@ onUnmounted(() => {
 <template>
   <div :class="['navigation', { navigation_shadow: shadow }]">
     <div class="navigation__menu">
-      <div class="navigation__logo-container">
+      <div class="navigation__logo-container" @click="handleClickToTop">
         <img
           :src="smallLogo"
           alt="Лого додо"
@@ -89,6 +89,7 @@ onUnmounted(() => {
   }
 
   &__logo-container {
+    cursor: pointer;
     display: inline-block;
     vertical-align: middle;
     overflow: hidden;
@@ -96,6 +97,11 @@ onUnmounted(() => {
     width: 3.25rem;
     padding-right: 1rem;
     height: 2.25rem;
+    @include transition;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 
   &__logo {

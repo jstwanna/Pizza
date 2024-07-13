@@ -102,6 +102,11 @@ export const headerLinks: Link[] = [
     title: 'Другие товары',
     to: '#other-goods',
   },
+  {
+    id: 11,
+    title: 'Акции',
+    to: '#',
+  },
 ];
 
 export const orderCards: OftenOrderCard[] = [
