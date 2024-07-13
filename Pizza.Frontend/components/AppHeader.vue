@@ -10,7 +10,9 @@ const handleClickLoyalty = () => {
   <header class="header">
     <ul class="header__wrapper">
       <li v-for="link in headerMenuItems" :key="link.id">
-        <UIBaseLink :to="link.to">{{ link.title }}</UIBaseLink>
+        <UIBaseLink :to="link.to" activeClass="header__link_active">{{
+          link.title
+        }}</UIBaseLink>
       </li>
     </ul>
 
@@ -94,6 +96,12 @@ const handleClickLoyalty = () => {
 <style lang="scss" scoped>
 .header {
   position: relative;
+
+  &__link {
+    &_active {
+      color: $orange;
+    }
+  }
 
   &__wrapper {
     height: 3.25rem;

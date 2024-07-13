@@ -11,7 +11,6 @@ defineProps<{ contact: ContactLink }>();
       v-for="item in contact.links"
       :key="item.id"
       :to="item.to"
-      :target="item.name === 'О нас' ? '_self' : '_blank'"
       class="contact-section__link"
     >
       {{ item.name }}

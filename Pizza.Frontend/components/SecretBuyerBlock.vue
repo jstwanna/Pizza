@@ -13,9 +13,7 @@ import secretBuyer from '../assets/svg/secretBuyer.svg';
       <p class="secret__text">
         Проверьте нашу кухню и получите додокоины — хватит на две пиццы
       </p>
-      <UIBaseLink to="/control" class="secret__link" target="_blank">
-        Заполнить анкету
-      </UIBaseLink>
+      <UIBaseLink to="#" class="secret__link"> Заполнить анкету </UIBaseLink>
     </div>
   </div>
 </template>

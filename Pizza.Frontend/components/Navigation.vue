@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import smallLogo from '../assets/svg/smallLogo.svg';
+
 import { headerLinks } from '../utils/constants';
 
 const shadow = ref<boolean>(false);
@@ -8,7 +10,11 @@ const handleShadow = () => {
 };
 
 const route = useRoute();
-const isActive = (to: string) => route.path === to;
+const isActive = (to: string) => route.hash === to;
+
+const handleClickToTop = () => {
+  window.scrollTo({ top: 0 });
+};
 
 onMounted(() => {
   window.addEventListener('scroll', handleShadow);
@@ -22,6 +28,16 @@ onUnmounted(() => {
 <template>
   <div :class="['navigation', { navigation_shadow: shadow }]">
     <nav class="navigation__menu">
+      <Transition name="slide">
+        <div
+          class="navigation__logo-container"
+          v-if="shadow"
+          @click="handleClickToTop"
+        >
+          <img :src="smallLogo" alt="Лого додо" class="navigation__logo" />
+        </div>
+      </Transition>
+
       <ul class="navigation__links">
         <li
           v-for="link in headerLinks"
@@ -39,9 +55,10 @@ onUnmounted(() => {
           </a>
         </li>
         <li class="navigation__link-container">
-          <UIBaseLink to="/bonus">Акции</UIBaseLink>
+          <UIBaseLink to="#">Акции</UIBaseLink>
         </li>
       </ul>
+
       <UIBaseButton type="button" class="navigation__basket">
         Корзина
       </UIBaseButton>
@@ -62,17 +79,28 @@ onUnmounted(() => {
   }
 
   &__menu {
+    overflow: hidden;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     max-width: 80rem;
     margin-left: auto;
     margin-right: auto;
   }
 
+  &__logo-container {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    overflow: hidden;
+    width: 3.25rem;
+    height: 2.25rem;
+    padding-right: 1rem;
+  }
+
   &__links {
     display: flex;
     column-gap: 1.25rem;
+    margin-right: auto;
   }
 
   &__link-container {
@@ -104,5 +132,20 @@ onUnmounted(() => {
       background-color: $dark-orange;
     }
   }
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  @include transition(0.25s, ease);
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(-3.25rem);
+}
+
+.slide-enter-from,
+.slide-leave {
+  transform: translateX(-3.25rem);
 }
 </style>

@@ -159,12 +159,12 @@ export const contactLinks: ContactLink[] = [
       {
         id: 2,
         name: 'Додо-книга',
-        to: '/book',
+        to: '#',
       },
       {
         id: 3,
         name: 'Блог «Сила ума»',
-        to: '/blog',
+        to: '#',
       },
     ],
   },
@@ -186,22 +186,22 @@ export const contactLinks: ContactLink[] = [
       {
         id: 1,
         name: 'Франшиза',
-        to: '/franchise',
+        to: '#',
       },
       {
         id: 2,
         name: 'Инвестиции',
-        to: '/investments',
+        to: '#',
       },
       {
         id: 3,
         name: 'Поставщикам',
-        to: '/suppliers',
+        to: '#',
       },
       {
         id: 4,
         name: 'Предложить помещение',
-        to: '/rent',
+        to: '#',
       },
     ],
   },
@@ -212,17 +212,17 @@ export const contactLinks: ContactLink[] = [
       {
         id: 1,
         name: 'Почему мы готовим без перчаток?',
-        to: '/franchise',
+        to: '#',
       },
       {
         id: 2,
         name: 'Экскурсии и мастер-классы',
-        to: '/kids',
+        to: '#',
       },
       {
         id: 3,
         name: 'Корпоративные заказы',
-        to: '/corporate-orders',
+        to: '#',
       },
     ],
   },
@@ -266,7 +266,7 @@ export const footerLinks: Link[] = [
   {
     id: 1,
     title: 'Правовая информация',
-    to: '/legal',
+    to: '#',
   },
   {
     id: 2,
@@ -276,7 +276,7 @@ export const footerLinks: Link[] = [
   {
     id: 3,
     title: 'Помощь',
-    to: '/faq',
+    to: '#',
   },
 ];
 

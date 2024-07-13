@@ -4,10 +4,12 @@ type TargetAttribute = '_blank' | '_self' | '_parent' | '_top';
 interface Props {
   to: string;
   target?: TargetAttribute;
+  activeClass?: string | null;
 }
 
 withDefaults(defineProps<Props>(), {
   target: '_self',
+  activeClass: null,
 });
 </script>
 
@@ -25,8 +27,7 @@ withDefaults(defineProps<Props>(), {
   text-decoration: none;
   @include transition(0.25s, ease);
 
-  &:hover,
-  &_active {
+  &:hover {
     color: $orange;
   }
 }
