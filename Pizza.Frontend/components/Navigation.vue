@@ -27,42 +27,43 @@ onUnmounted(() => {
 
 <template>
   <div :class="['navigation', { navigation_shadow: shadow }]">
-    <nav class="navigation__menu">
-      <Transition name="slide">
-        <div
-          class="navigation__logo-container"
-          v-if="shadow"
-          @click="handleClickToTop"
-        >
-          <img :src="smallLogo" alt="Лого додо" class="navigation__logo" />
-        </div>
-      </Transition>
+    <div class="navigation__menu">
+      <div class="navigation__logo-container">
+        <img
+          :src="smallLogo"
+          alt="Лого додо"
+          class="navigation__logo"
+          :class="{ navigation__logo_shifted: shadow }"
+        />
+      </div>
 
-      <ul class="navigation__links">
-        <li
-          v-for="link in headerLinks"
-          :key="link.id"
-          class="navigation__link-container"
-        >
-          <a
-            :href="link.to"
-            :class="[
-              'navigation__link',
-              { navigation__link_active: isActive(link.to) },
-            ]"
+      <nav
+        class="navigation__links-container"
+        :class="{ 'navigation__links-container_shifted': shadow }"
+      >
+        <ul class="navigation__links">
+          <li
+            v-for="link in headerLinks"
+            :key="link.id"
+            class="navigation__link-container"
           >
-            {{ link.title }}
-          </a>
-        </li>
-        <li class="navigation__link-container">
-          <UIBaseLink to="#">Акции</UIBaseLink>
-        </li>
-      </ul>
+            <a
+              :href="link.to"
+              :class="[
+                'navigation__link',
+                { navigation__link_active: isActive(link.to) },
+              ]"
+            >
+              {{ link.title }}
+            </a>
+          </li>
+        </ul>
+      </nav>
 
       <UIBaseButton type="button" class="navigation__basket">
         Корзина
       </UIBaseButton>
-    </nav>
+    </div>
   </div>
 </template>
 
@@ -79,7 +80,7 @@ onUnmounted(() => {
   }
 
   &__menu {
-    overflow: hidden;
+    position: relative;
     display: flex;
     align-items: center;
     max-width: 80rem;
@@ -89,18 +90,39 @@ onUnmounted(() => {
 
   &__logo-container {
     display: inline-block;
-    position: relative;
     vertical-align: middle;
     overflow: hidden;
+    position: relative;
     width: 3.25rem;
-    height: 2.25rem;
     padding-right: 1rem;
+    height: 2.25rem;
+  }
+
+  &__logo {
+    transform: translateX(-3.25rem);
+    @include transition(0.25s, ease);
+
+    &_shifted {
+      transform: translateX(0);
+    }
+  }
+
+  &__links-container {
+    display: inline-flex;
+    align-items: center;
+    transform: translateX(-3.25rem);
+    @include transition(0.25s, ease);
+
+    &_shifted {
+      transform: translateX(0);
+    }
   }
 
   &__links {
+    white-space: nowrap;
     display: flex;
-    column-gap: 1.25rem;
-    margin-right: auto;
+    gap: 1.25rem;
+    vertical-align: middle;
   }
 
   &__link-container {
@@ -121,7 +143,16 @@ onUnmounted(() => {
       color: $orange;
     }
   }
+
+  &__basket-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+  }
+
   &__basket {
+    margin-left: auto;
     color: $white;
     line-height: 1.5rem;
     height: 2.5rem;
@@ -132,20 +163,5 @@ onUnmounted(() => {
       background-color: $dark-orange;
     }
   }
-}
-
-.slide-enter-active,
-.slide-leave-active {
-  @include transition(0.25s, ease);
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateX(-3.25rem);
-}
-
-.slide-enter-from,
-.slide-leave {
-  transform: translateX(-3.25rem);
 }
 </style>
