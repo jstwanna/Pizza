@@ -37,6 +37,7 @@ const handleClickLoyalty = () => {
             </UIBaseLink>
           </div>
         </div>
+
         <div>
           <h1 class="header__delivery">
             Доставка пиццы
@@ -74,6 +75,7 @@ const handleClickLoyalty = () => {
           </div>
         </div>
       </div>
+
       <div class="header__profile">
         <UIBaseButton
           type="button"

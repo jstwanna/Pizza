@@ -90,6 +90,7 @@ onUnmounted(() => {
     >
       <div class="carousel__icon carousel__icon_left"></div>
     </UIBaseButton>
+
     <UIBaseButton
       v-if="showRightButton"
       type="button"

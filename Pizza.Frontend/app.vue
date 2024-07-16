@@ -3,9 +3,11 @@
 <template>
   <div class="app">
     <AppHeader />
+
     <main class="app__main">
       <NuxtPage />
     </main>
+
     <AppFooter />
   </div>
 </template>

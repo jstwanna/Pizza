@@ -47,15 +47,12 @@ onUnmounted(() => {
             :key="link.id"
             class="navigation__link-container"
           >
-            <a
-              :href="link.to"
-              :class="[
-                'navigation__link',
-                { navigation__link_active: isActive(link.to) },
-              ]"
+            <UIBaseLink
+              :to="link.to"
+              :class="{ navigation__link_active: isActive(link.to) }"
             >
               {{ link.title }}
-            </a>
+            </UIBaseLink>
           </li>
         </ul>
       </nav>
