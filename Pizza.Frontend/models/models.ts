@@ -29,3 +29,11 @@ export interface ContactLink {
     to: string;
   }[];
 }
+
+export interface CarouselItem {
+  image: {
+    id: number;
+    src: string;
+    title: string;
+  }[];
+}

@@ -1,4 +1,8 @@
-import type { OftenOrderCard, ContactLink } from '../models/models';
+import type {
+  OftenOrderCard,
+  ContactLink,
+  CarouselItem,
+} from '../models/models';
 import { OrderType } from '../models/models';
 
 import dodster from '../assets/images/11EE796F96D11392A2F6DD73599921B9.jpg';
@@ -13,6 +17,15 @@ import appGallery from '../assets/svg/appGallery.svg';
 import ok from '../assets/svg/ok.svg';
 import vk from '../assets/svg/vk.svg';
 import youtube from '../assets/svg/youtube.svg';
+
+import storyDay from '../assets/images/cl7wilwwcfglss7efbpaaft.webp';
+import storyCoffee from '../assets/images/bj8rd3u5wrnpu9krxxrcpbc.webp';
+import storySauces from '../assets/images/tgubdtglh2v03d1puluxgts.webp';
+import storyDelivery from '../assets/images/fr2csrffmowblqlfmtcjau2.webp';
+import storyPrize from '../assets/images/y5wadnsstj5vxxvmndm6gce.webp';
+import storyPiece from '../assets/images/8u3fkyrblr4hnf4px3r7tqg.webp';
+import storyForKids from '../assets/images/z7psdjc0pmm8hw6yq9njaoq.webp';
+import storyCharge from '../assets/images/pjhpkwzmf5yk4acrf4ech2h.webp';
 
 interface Link {
   id: number;
@@ -305,3 +318,48 @@ export const socialLinks: ExternalLink[] = [
     to: 'https://www.youtube.com/dodomovie',
   },
 ];
+
+export const carouselItems: CarouselItem = {
+  image: [
+    {
+      id: 1,
+      src: storyDay,
+      title: 'Додо лето',
+    },
+    {
+      id: 2,
+      src: storyCoffee,
+      title: 'История кофе',
+    },
+    {
+      id: 3,
+      src: storySauces,
+      title: 'Новые соусы',
+    },
+    {
+      id: 4,
+      src: storyDelivery,
+      title: 'Доставка пиццы другу',
+    },
+    {
+      id: 4,
+      src: storyPrize,
+      title: 'Подписка за рассылку',
+    },
+    {
+      id: 5,
+      src: storyPiece,
+      title: 'Пицца кусочками',
+    },
+    {
+      id: 6,
+      src: storyForKids,
+      title: 'Категории для детей',
+    },
+    {
+      id: 7,
+      src: storyCharge,
+      title: 'Добрый кола',
+    },
+  ],
+};

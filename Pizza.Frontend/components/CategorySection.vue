@@ -29,6 +29,10 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 
 <style lang="scss" scoped>
 .category {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+
   &__title {
     @include section-title;
   }

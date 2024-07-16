@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import map from '../assets/images/911e3a5bc67fc765b604..jpg';
 
-import { orderCards } from '../utils/constants';
+import { orderCards, carouselItems } from '../utils/constants';
 import type { OftenOrderCard } from '../models/models';
 
 const handleCardClick = (clickedCard: OftenOrderCard) => {
@@ -11,7 +11,7 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 
 <template>
   <section class="carousel">
-    <h2 class="carousel__title">Carousel :(</h2>
+    <UIBaseCarousel :images="carouselItems" />
   </section>
 
   <section class="often-order">
@@ -56,13 +56,16 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 
 <style lang="scss" scoped>
 .carousel {
-  &__title {
-    margin: 4rem 0 2rem;
-    text-align: center;
-  }
+  max-width: 86rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .often-order {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+
   &__title {
     font-weight: $fw-medium;
     font-size: $fs-2xl;
@@ -82,6 +85,10 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 .delivery {
   display: flex;
   flex-wrap: wrap;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+
   &__title {
     width: 100%;
     @include section-title;

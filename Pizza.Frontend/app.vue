@@ -29,11 +29,5 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
-  &__main {
-    max-width: 80rem;
-    margin-left: auto;
-    margin-right: auto;
-  }
 }
 </style>
