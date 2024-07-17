@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { CarouselItem } from '../../models/models';
+import type { Image } from '../../models/models';
 
-const props = defineProps<{ images: CarouselItem }>();
+defineProps<{ images: Image[] }>();
 
 const carousel = ref<HTMLDivElement | null>(null);
 const isDown = ref(false);
@@ -53,7 +53,7 @@ const onMouseMove = (e: MouseEvent) => {
   if (!isDown.value || !carousel.value) return;
   e.preventDefault();
   const x = e.pageX - carousel.value.offsetLeft;
-  const walk = (x - startX.value) * 2;
+  const walk = (x - startX.value) * 1;
   carousel.value.scrollLeft = scrollLeft.value - walk;
   checkButtonsVisibility();
 };
@@ -101,7 +101,7 @@ onUnmounted(() => {
     </UIBaseButton>
 
     <ul class="carousel__items" ref="carousel">
-      <li v-for="image in props.images.image" :key="image.id">
+      <li v-for="image in images" :key="image.id">
         <UIBaseButton type="button" class="carousel__button">
           <img :src="image.src" :alt="image.title" class="carousel__item" />
         </UIBaseButton>

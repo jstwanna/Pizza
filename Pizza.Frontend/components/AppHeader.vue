@@ -115,12 +115,10 @@ const handleClickLoyalty = () => {
   }
 
   &__info-container {
-    max-width: 80rem;
+    @include container;
     display: flex;
     justify-content: space-between;
     padding: 1.5rem 0 1rem;
-    margin-left: auto;
-    margin-right: auto;
   }
 
   &__info {
@@ -145,6 +143,7 @@ const handleClickLoyalty = () => {
   }
 
   &__statistic-link {
+    font-size: $fs-xs;
     color: $orange;
     text-decoration: none;
     @include transition;
@@ -222,7 +221,7 @@ const handleClickLoyalty = () => {
   }
 
   &__coin {
-    @include transition(150ms, ease);
+    @include transition($duration: 150ms, $timing-function: ease);
     background-color: $black;
     mask-image: url('/coin.svg');
     height: 1.75rem;
@@ -230,7 +229,7 @@ const handleClickLoyalty = () => {
   }
 
   &__dodo-coins {
-    @include transition(150ms, ease);
+    @include transition($duration: 150ms, $timing-function: ease);
     font-size: $fs-sm;
     font-weight: $fw-semibold;
     white-space: nowrap;

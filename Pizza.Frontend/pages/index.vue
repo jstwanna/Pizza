@@ -1,12 +1,15 @@
 <script lang="ts" setup>
-import map from '../assets/images/911e3a5bc67fc765b604..jpg';
-
 import { orderCards, carouselItems } from '../utils/constants';
 import type { OftenOrderCard } from '../models/models';
 
 const handleCardClick = (clickedCard: OftenOrderCard) => {
   console.log('Card clicked:', clickedCard);
 };
+
+useHead({
+  title:
+    'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
+});
 </script>
 
 <template>
@@ -47,7 +50,11 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
     <div class="delivery__container">
       <h3 class="delivery__subtitle">Зона доставки ограничена</h3>
       <UIBaseButton type="button" class="delivery__button">
-        <img :src="map" alt="Фото зоны доставки" class="delivery__image" />
+        <img
+          src="https://cdn.dodostatic.net/site-static/dist/assets/911e3a5bc67fc765b604..jpg"
+          alt="Фото зоны доставки"
+          class="delivery__image"
+        />
         <span class="delivery__image-text">Зона доставки</span>
       </UIBaseButton>
     </div>
@@ -62,9 +69,7 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 }
 
 .often-order {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
+  @include container;
 
   &__title {
     font-weight: $fw-medium;
@@ -79,15 +84,14 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
     flex-wrap: wrap;
     margin-top: 0.5625rem;
     margin-bottom: 1.25rem;
+    column-gap: 1.5rem;
   }
 }
 
 .delivery {
   display: flex;
   flex-wrap: wrap;
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
+  @include container;
 
   &__title {
     width: 100%;
@@ -131,7 +135,7 @@ const handleCardClick = (clickedCard: OftenOrderCard) => {
 
   &__image {
     width: 100%;
-    @include transition(2s, ease);
+    @include transition($duration: 2s, $timing-function: ease);
 
     &:hover {
       transform: scale(1.2) translate(-0.9375rem, -0.9375rem);

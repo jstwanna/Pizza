@@ -80,9 +80,7 @@ onUnmounted(() => {
     position: relative;
     display: flex;
     align-items: center;
-    max-width: 80rem;
-    margin-left: auto;
-    margin-right: auto;
+    @include container;
   }
 
   &__logo-container {
@@ -103,7 +101,7 @@ onUnmounted(() => {
 
   &__logo {
     transform: translateX(-3.25rem);
-    @include transition(0.25s, ease);
+    @include transition(transform, 0.25s, ease);
 
     &_shifted {
       transform: translateX(0);
@@ -114,7 +112,7 @@ onUnmounted(() => {
     display: inline-flex;
     align-items: center;
     transform: translateX(-3.25rem);
-    @include transition(0.25s, ease);
+    @include transition(transform, 0.25s, ease);
 
     &_shifted {
       transform: translateX(0);

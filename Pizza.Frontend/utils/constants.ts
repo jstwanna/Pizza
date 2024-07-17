@@ -1,7 +1,12 @@
 import type {
   OftenOrderCard,
   ContactLink,
-  CarouselItem,
+  Image,
+  Images,
+  Link,
+  ExternalLink,
+  Stat,
+  Ingredient,
 } from '../models/models';
 import { OrderType } from '../models/models';
 
@@ -18,33 +23,24 @@ import ok from '../assets/svg/ok.svg';
 import vk from '../assets/svg/vk.svg';
 import youtube from '../assets/svg/youtube.svg';
 
-import storyDay from '../assets/images/cl7wilwwcfglss7efbpaaft.webp';
-import storyCoffee from '../assets/images/bj8rd3u5wrnpu9krxxrcpbc.webp';
-import storySauces from '../assets/images/tgubdtglh2v03d1puluxgts.webp';
-import storyDelivery from '../assets/images/fr2csrffmowblqlfmtcjau2.webp';
-import storyPrize from '../assets/images/y5wadnsstj5vxxvmndm6gce.webp';
-import storyPiece from '../assets/images/8u3fkyrblr4hnf4px3r7tqg.webp';
-import storyForKids from '../assets/images/z7psdjc0pmm8hw6yq9njaoq.webp';
-import storyCharge from '../assets/images/pjhpkwzmf5yk4acrf4ech2h.webp';
-
-interface Link {
-  id: number;
-  title: string;
-  to: string;
-}
-
-interface ExternalLink {
-  id: number;
-  title: string;
-  src: string;
-  to: string;
-}
-
-interface Stat {
-  id: number;
-  title: string;
-  text: string;
-}
+import aboutMan from '../assets/svg/aboutMan.svg';
+import aboutChat from '../assets/svg/aboutChat.svg';
+import aboutSecondChat from '../assets/svg/aboutSecondChat.svg';
+import ingredientPeople from '../assets/svg/ingredientPeople.svg';
+import ingredientChat from '../assets/svg/ingredientChat.svg';
+import ingredientSecondChat from '../assets/svg/ingredientSecondChat.svg';
+import statisticPeople from '../assets/svg/statisticPeople.svg';
+import statisticChat from '../assets/svg/statisticChat.svg';
+import statisticSecondChat from '../assets/svg/statisticSecondChat.svg';
+import rulePeople from '../assets/svg/rulePeople.svg';
+import ruleChat from '../assets/svg/ruleChat.svg';
+import ruleSecondChat from '../assets/svg/ruleSecondChat.svg';
+import openPeople from '../assets/svg/openPeople.svg';
+import openChat from '../assets/svg/openChat.svg';
+import openSecondChat from '../assets/svg/openSecondChat.svg';
+import dodoPeople from '../assets/svg/dodoPeople.svg';
+import dodoChat from '../assets/svg/dodoChat.svg';
+import dodoSecondChat from '../assets/svg/dodoSecondChat.svg';
 
 export const headerMenuItems: Link[] = [
   {
@@ -319,47 +315,187 @@ export const socialLinks: ExternalLink[] = [
   },
 ];
 
-export const carouselItems: CarouselItem = {
-  image: [
-    {
-      id: 1,
-      src: storyDay,
-      title: 'Додо лето',
-    },
-    {
-      id: 2,
-      src: storyCoffee,
-      title: 'История кофе',
-    },
-    {
-      id: 3,
-      src: storySauces,
-      title: 'Новые соусы',
-    },
-    {
-      id: 4,
-      src: storyDelivery,
-      title: 'Доставка пиццы другу',
-    },
-    {
-      id: 4,
-      src: storyPrize,
-      title: 'Подписка за рассылку',
-    },
-    {
-      id: 5,
-      src: storyPiece,
-      title: 'Пицца кусочками',
-    },
-    {
-      id: 6,
-      src: storyForKids,
-      title: 'Категории для детей',
-    },
-    {
-      id: 7,
-      src: storyCharge,
-      title: 'Добрый кола',
-    },
-  ],
-};
+export const carouselItems: Image[] = [
+  {
+    id: 1,
+    src: 'https://cdn.inappstory.ru/story/ngh/cs7/1ef/cl7wilwwcfglss7efbpaaft/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=599731850',
+    title: 'Додо лето',
+  },
+  {
+    id: 2,
+    src: 'https://cdn.inappstory.ru/story/cz6/kdm/pu7/r5tndlrq37nenv4iwclqhru/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=951641400',
+    title: 'Леди-баг комбо',
+  },
+  {
+    id: 3,
+    src: 'https://cdn.inappstory.ru/story/gxm/n1i/knm/bj8rd3u5wrnpu9krxxrcpbc/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=3161425840',
+    title: 'История кофе',
+  },
+  {
+    id: 4,
+    src: 'https://cdn.inappstory.ru/story/4tb/ebr/9gq/tgubdtglh2v03d1puluxgts/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=2256198318',
+    title: 'Новые соусы',
+  },
+  {
+    id: 5,
+    src: 'https://cdn.inappstory.ru/story/uts/pwz/2po/fr2csrffmowblqlfmtcjau2/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=1914710796',
+    title: 'Доставка пиццы другу',
+  },
+  {
+    id: 6,
+    src: 'https://cdn.inappstory.ru/story/g14/x7g/zif/y5wadnsstj5vxxvmndm6gce/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=2930947821',
+    title: 'Подписка за рассылку',
+  },
+  {
+    id: 7,
+    src: 'https://cdn.inappstory.ru/story/hpn/ned/umu/8u3fkyrblr4hnf4px3r7tqg/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=4128893999',
+    title: 'Пицца кусочками',
+  },
+  {
+    id: 8,
+    src: 'https://cdn.inappstory.ru/story/y89/y0l/nv2/pjhpkwzmf5yk4acrf4ech2h/custom_cover/logo-350x440.webp?k=IgAAAAAAAAAEAQ&v=907332844',
+    title: 'Добрый кола',
+  },
+];
+
+export const ingredientItems: Ingredient[] = [
+  {
+    id: 1,
+    title: 'Тесто',
+    text: 'Самая тонкая вещь. Главное - сделать его «живым». Это целый квест из граммов, градусов, процентов и часов с минутами. Процесс непростой, но у нас получается!',
+  },
+  {
+    id: 2,
+    title: 'Моцарелла',
+    text: 'Сыр в пицце - ключевой ингредиент. Мы используем настоящую моцареллу от российских поставщиков. Сыр должен тянуться, как на картинке.',
+  },
+  {
+    id: 3,
+    title: 'Начинка',
+    text: 'Есть два главных правила вкусной начинки: не экономить на начинке; фанатично соблюдать режим хранения. Это и весь секрет.',
+  },
+  {
+    id: 4,
+    title: 'Томатный соус',
+    text: 'Главное, что нужно знать про хороший томатный соус: он должен быть сделан из томатов. Звучит логично, но задумайтесь!',
+  },
+];
+
+export const testimonialItems: Images[] = [
+  {
+    images: [
+      {
+        id: 1,
+        src: aboutMan,
+        title: 'Картина человека',
+      },
+      {
+        id: 2,
+        src: aboutChat,
+        title: 'Эй, тут начинают что-то рассказывать.',
+      },
+      {
+        id: 3,
+        src: aboutSecondChat,
+        title: 'Стой без нас не смотри!',
+      },
+    ],
+  },
+  {
+    images: [
+      {
+        id: 1,
+        src: ingredientPeople,
+        title: 'Картинка людей',
+      },
+      {
+        id: 2,
+        src: ingredientChat,
+        title: 'Вроде несложно...',
+      },
+      {
+        id: 3,
+        src: ingredientSecondChat,
+        title: 'Ага, но давай-ка лучше закажем.',
+      },
+    ],
+  },
+  {
+    images: [
+      {
+        id: 1,
+        src: statisticPeople,
+        title: 'Картинка смотрящих людей',
+      },
+      {
+        id: 2,
+        src: statisticChat,
+        title: 'Я думал, Додо есть только у нас, в Ульяновске...',
+      },
+      {
+        id: 3,
+        src: statisticSecondChat,
+        title: 'Ой, смотри, продолжает расти!',
+      },
+    ],
+  },
+  {
+    images: [
+      {
+        id: 1,
+        src: rulePeople,
+        title: 'Картинка соприкасающихся людей',
+      },
+      {
+        id: 2,
+        src: ruleChat,
+        title: 'Мне не показалось? Ты меня сейчас потрогал?',
+      },
+      {
+        id: 3,
+        src: ruleSecondChat,
+        title: 'Ладно, иду мыть руки...',
+      },
+    ],
+  },
+  {
+    images: [
+      {
+        id: 1,
+        src: openPeople,
+        title: 'Картинка фотографирующих людей',
+      },
+      {
+        id: 2,
+        src: openChat,
+        title:
+          'Странно, что они не держат в секрете все свои, ну, секреты, ведь кто-то может узнать и...',
+      },
+      {
+        id: 3,
+        src: openSecondChat,
+        title: 'Что, сделать так же? А это идея, давай.',
+      },
+    ],
+  },
+  {
+    images: [
+      {
+        id: 1,
+        src: dodoPeople,
+        title: 'Картинка людей смотрящих на Додо',
+      },
+      {
+        id: 2,
+        src: dodoChat,
+        title:
+          'Эти создания восхитительны, какие утончённые линии, какая грация!',
+      },
+      {
+        id: 3,
+        src: dodoSecondChat,
+        title: 'О боже, ровно это ты и обо мне говорил...',
+      },
+    ],
+  },
+];

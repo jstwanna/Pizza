@@ -7,8 +7,6 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title:
-        'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
       htmlAttrs: {
         lang: 'ru',
       },

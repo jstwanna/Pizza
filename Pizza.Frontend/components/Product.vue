@@ -62,7 +62,7 @@ const handleClickCard = () => {
   &__image {
     position: relative;
     top: 0;
-    @include transition(150ms, ease-out);
+    @include transition(top, 150ms, ease-out);
     width: 90%;
     object-fit: cover;
     margin-top: 5%;

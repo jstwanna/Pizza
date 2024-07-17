@@ -4,17 +4,17 @@ type TargetAttribute = '_blank' | '_self' | '_parent' | '_top';
 interface Props {
   to: string;
   target?: TargetAttribute;
-  activeClass?: string | null;
+  activeClass?: string;
 }
 
 withDefaults(defineProps<Props>(), {
   target: '_self',
-  activeClass: null,
+  activeClass: '',
 });
 </script>
 
 <template>
-  <NuxtLink :to="to" class="link" active-class="link_active" :target="target">
+  <NuxtLink :to="to" class="link" :active-class="activeClass" :target="target">
     <slot />
   </NuxtLink>
 </template>
@@ -25,7 +25,8 @@ withDefaults(defineProps<Props>(), {
   font-size: $fs-sm;
   font-weight: $fw-semibold;
   text-decoration: none;
-  @include transition(0.25s, ease);
+
+  @include transition($duration: 0.25s, $timing-function: ease);
 
   &:hover {
     color: $orange;

@@ -97,9 +97,7 @@ const currentYear = computed(() => new Date().getFullYear());
   background-color: $dark;
 
   &__container {
-    max-width: 80rem;
-    margin-left: auto;
-    margin-right: auto;
+    @include container;
     padding-top: 1.875rem;
   }
 

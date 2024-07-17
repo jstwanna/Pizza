@@ -34,7 +34,7 @@ const handleClickCard = () => {
 
 <style lang="scss" scoped>
 .order-card {
-  @include transition(150ms, ease-out);
+  @include transition($duration: 150ms, $timing-function: ease-out);
   box-shadow: $black-150 0 0.25rem 1.375rem -0.375rem;
   border-radius: 0.75rem;
   display: flex;
