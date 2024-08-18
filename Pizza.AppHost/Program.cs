@@ -2,9 +2,31 @@ using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
+var elasticPass = builder.AddParameter("elasticPass", secret: true);
+
+var elastic = builder
+    .AddElasticsearch(
+        name: "elastic", 
+        password: elasticPass)
+    .WithDataVolume();
+
+var pgUsername = builder.AddParameter("pgUsername", secret: true);
+var pgPassword = builder.AddParameter("pgPassword", secret: true);
+
+var postgres = builder.AddPostgres(
+    name: "postgres", 
+    userName: pgUsername, 
+    password: pgPassword, 
+    port: 5432);
+
+var postgresdb = postgres.AddDatabase("postgres-db");
+
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
-    .WithExternalHttpEndpoints();
+    .WithExternalHttpEndpoints()
+    .WithReference(postgresdb)
+    .WithReference(elastic)
+    ;
 
 if (builder.Environment.IsDevelopment())
 {
