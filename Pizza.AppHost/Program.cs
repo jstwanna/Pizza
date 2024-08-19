@@ -30,7 +30,17 @@ var postgres = builder.AddPostgres(
     .WithDataVolume()
     .WithPgAdmin(s => s.WithHostPort(5430));
 
-var postgresdb = postgres.AddDatabase("postgres-db");
+var postgresdb = postgres.AddDatabase("ttt");
+
+var keycloackUsername = builder.AddParameter("keycloackUsername", secret: true);
+var keycloackPassword = builder.AddParameter("keycloackPassword", secret: true);
+
+var keycloack = builder.AddKeycloak(
+        name:"keycloack", 
+        port: 5433,
+        adminPassword: keycloackPassword,
+        adminUsername: keycloackUsername)
+    .WithDataVolume();
 
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
@@ -38,6 +48,7 @@ var api = builder
     .WithReference(rabbit)
     .WithReference(postgresdb)
     .WithReference(elastic)
+    .WithReference(keycloack)
     ;
 
 if (builder.Environment.IsDevelopment())
