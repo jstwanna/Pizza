@@ -18,7 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Authorization.API\Authorization.API.csproj" />
     <ProjectReference Include="..\Pizza.Api\Pizza.Api.csproj" />
   </ItemGroup>
 

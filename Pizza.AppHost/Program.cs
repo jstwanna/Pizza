@@ -14,8 +14,7 @@ var rabbit = builder.AddRabbitMQ(
 
 var elasticPass = builder.AddParameter("elasticPass", secret: true);
 
-var elastic = builder
-    .AddElasticsearch(
+var elastic = builder.AddElasticsearch(
         name: "elastic", 
         password: elasticPass)
     .WithDataVolume();
