@@ -14,9 +14,11 @@
     <PackageReference Include="Aspire.Hosting.Elasticsearch" Version="8.1.0-preview.1.24373.2" />
     <PackageReference Include="Aspire.Hosting.NodeJs" Version="8.0.2" />
     <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="8.1.0" />
+    <PackageReference Include="Aspire.Hosting.RabbitMQ" Version="8.1.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Authorization.API\Authorization.API.csproj" />
     <ProjectReference Include="..\Pizza.Api\Pizza.Api.csproj" />
   </ItemGroup>
 
