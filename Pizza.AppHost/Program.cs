@@ -32,8 +32,6 @@ var postgres = builder.AddPostgres(
 
 var postgresdb = postgres.AddDatabase("postgres-db");
 
-builder.AddProject<Projects.Authorization_API>("authorization-api");
-
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
     .WithExternalHttpEndpoints()
