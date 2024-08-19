@@ -12,11 +12,9 @@ var rabbit = builder.AddRabbitMQ(
         port: 5431)
     .WithManagementPlugin();
 
-var elasticPass = builder.AddParameter("elasticPass", secret: true);
-
-var elastic = builder.AddElasticsearch(
-        name: "elastic", 
-        password: elasticPass)
+var seq = builder
+    .AddSeq("seq", 5434)
+    .ExcludeFromManifest()
     .WithDataVolume();
 
 var pgUsername = builder.AddParameter("pgUsername", secret: true);
@@ -32,14 +30,14 @@ var postgres = builder.AddPostgres(
 
 var postgresdb = postgres.AddDatabase("ttt");
 
-var keycloackUsername = builder.AddParameter("keycloackUsername", secret: true);
-var keycloackPassword = builder.AddParameter("keycloackPassword", secret: true);
+var keycloakUsername = builder.AddParameter("keycloakUsername", secret: true);
+var keycloakPassword = builder.AddParameter("keycloakPassword", secret: true);
 
-var keycloack = builder.AddKeycloak(
-        name:"keycloack", 
+var keycloak = builder.AddKeycloak(
+        name:"keycloak", 
         port: 5433,
-        adminPassword: keycloackPassword,
-        adminUsername: keycloackUsername)
+        adminPassword: keycloakPassword,
+        adminUsername: keycloakUsername)
     .WithDataVolume();
 
 var api = builder
@@ -47,8 +45,8 @@ var api = builder
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
     .WithReference(postgresdb)
-    .WithReference(elastic)
-    .WithReference(keycloack)
+    .WithReference(seq)
+    .WithReference(keycloak)
     ;
 
 if (builder.Environment.IsDevelopment())
