@@ -22,6 +22,8 @@ builder.Services.AddSwaggerGen(o =>
     });
 });
 
+builder.AddSeqEndpoint("seq");
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
