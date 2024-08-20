@@ -12,9 +12,9 @@ var rabbit = builder.AddRabbitMQ(
         port: 5431)
     .WithManagementPlugin();
 
-var qdrant = builder
+var seq = builder
     .AddSeq("seq", 5434)
-    .WithDataVolume();
+    .WithDataVolume("seq_data");
 
 var pgUsername = builder.AddParameter("pgUsername", secret: true);
 var pgPassword = builder.AddParameter("pgPassword", secret: true);
@@ -24,7 +24,7 @@ var postgres = builder.AddPostgres(
         userName: pgUsername,
         password: pgPassword,
         port: 5432)
-    .WithDataVolume()
+    .WithDataVolume("postgres_data")
     .WithPgAdmin(s => s.WithHostPort(5430));
 
 //var postgresdb = postgres.AddDatabase("ttt");
@@ -37,14 +37,14 @@ var keycloak = builder.AddKeycloak(
         port: 5433,
         adminPassword: keycloakPassword,
         adminUsername: keycloakUsername)
-    .WithDataVolume();
+    .WithDataVolume("keycloak_data");
 
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
     //.WithReference(postgresdb)
-    .WithReference(qdrant)
+    .WithReference(seq)
     .WithReference(keycloak)
     ;
 
