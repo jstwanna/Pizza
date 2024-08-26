@@ -29,23 +29,12 @@ var postgres = builder.AddPostgres(
 
 //var postgresdb = postgres.AddDatabase("ttt");
 
-var keycloakUsername = builder.AddParameter("keycloakUsername", secret: true);
-var keycloakPassword = builder.AddParameter("keycloakPassword", secret: true);
-
-var keycloak = builder.AddKeycloak(
-        name:"keycloak", 
-        port: 5433,
-        adminPassword: keycloakPassword,
-        adminUsername: keycloakUsername)
-    .WithDataVolume("keycloak_data");
-
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
     //.WithReference(postgresdb)
     .WithReference(seq)
-    .WithReference(keycloak)
     ;
 
 if (builder.Environment.IsDevelopment())
