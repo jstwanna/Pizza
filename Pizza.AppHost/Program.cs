@@ -29,11 +29,13 @@ var postgres = builder.AddPostgres(
 
 //var postgresdb = postgres.AddDatabase("ttt");
 
+var authorizationService = builder.AddProject<Projects.AuthorizationService>("authorization-service");
+
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
-    //.WithReference(postgresdb)
+    .WithReference(postgres)
     .WithReference(seq)
     ;
 

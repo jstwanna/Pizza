@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Tests", "Pizza.Tests\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Api", "Pizza.Api\Pizza.Api.csproj", "{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthorizationService", "AuthorizationService\AuthorizationService.csproj", "{B2EB51CE-E4F1-4999-B83C-B90EDF253F4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2EB51CE-E4F1-4999-B83C-B90EDF253F4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2EB51CE-E4F1-4999-B83C-B90EDF253F4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2EB51CE-E4F1-4999-B83C-B90EDF253F4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2EB51CE-E4F1-4999-B83C-B90EDF253F4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
