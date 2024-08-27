@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthorizationService\AuthorizationService.csproj" />
+    <ProjectReference Include="..\Catalog.Api\Catalog.Api.csproj" />
     <ProjectReference Include="..\Pizza.Api\Pizza.Api.csproj" />
   </ItemGroup>
 

@@ -29,7 +29,15 @@ var postgres = builder.AddPostgres(
 
 //var postgresdb = postgres.AddDatabase("ttt");
 
-var authorizationService = builder.AddProject<Projects.AuthorizationService>("authorization-service");
+var authorizationService = builder
+    .AddProject<Projects.AuthorizationService>("authorization-service")
+    .WithReference(postgres)
+    .WithReference(rabbit);
+
+var catalogService = builder
+    .AddProject<Projects.Catalog_Api>("catalog-api")
+    .WithReference(postgres)
+    .WithReference(rabbit);
 
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
@@ -37,6 +45,8 @@ var api = builder
     .WithReference(rabbit)
     .WithReference(postgres)
     .WithReference(seq)
+    .WithReference(authorizationService)
+    .WithReference(catalogService)
     ;
 
 if (builder.Environment.IsDevelopment())
