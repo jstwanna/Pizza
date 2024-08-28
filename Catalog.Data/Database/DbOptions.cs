@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Data.Models
+namespace Catalog.Data.Database
 {
-    internal class PizzaSize
+    public class DbOptions
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string connectionString { get; set; }
     }
 }

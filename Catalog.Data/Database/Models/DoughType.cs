@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Data.Models
+namespace Catalog.Data.Database.Models
 {
-    internal class DoughType
+    public class DoughType
     {
         public int Id { get; set; }
         public string Name { get; set; }
