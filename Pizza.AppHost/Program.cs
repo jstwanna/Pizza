@@ -27,7 +27,7 @@ var postgres = builder.AddPostgres(
     .WithDataVolume("postgres_data")
     .WithPgAdmin(s => s.WithHostPort(5430));
 
-//var postgresdb = postgres.AddDatabase("ttt");
+var postgresdb = postgres.AddDatabase("postgres-db", "postgres");
 
 var authorizationService = builder
     .AddProject<Projects.AuthorizationService>("authorization-service")
@@ -36,7 +36,7 @@ var authorizationService = builder
 
 var catalogService = builder
     .AddProject<Projects.Catalog_Api>("catalog-api")
-    .WithReference(postgres)
+    .WithReference(postgresdb)
     .WithReference(rabbit);
 
 var api = builder
