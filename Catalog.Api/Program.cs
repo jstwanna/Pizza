@@ -12,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddNpgsqlDbContext<CatalogDbContext>("postgres-db");
+builder.AddRabbitMQClient("rabbit");
 
 var app = builder.Build();
 

@@ -11,7 +11,6 @@ namespace Catalog.Data.Database.Models
     {
         public int Id { get; set; }
         public string Image { get; set; }
-        public string Components { get; set; }
         public double Price { get; set; }
         public double Weight { get; set; }
 
@@ -26,5 +25,7 @@ namespace Catalog.Data.Database.Models
         public int PizzaSizeId { get; set; }
         [ForeignKey("PizzaSizeId")]
         public PizzaSize PizzaSize { get; set; }
+
+        public List<Additive> Additives { get; set; } = new();
     }
 }
