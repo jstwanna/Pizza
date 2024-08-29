@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Data\Catalog.Data.csproj" />
+    <ProjectReference Include="..\Pizza.Infrastructure\Pizza.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

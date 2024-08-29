@@ -1,4 +1,5 @@
 using Catalog.Data.Database;
+using Catalog.Domain;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.AddNpgsqlDbContext<CatalogDbContext>("postgres-db");
 builder.AddRabbitMQClient("rabbit");
+
+builder.Services.AddCatalogServices();
 
 var app = builder.Build();
 
