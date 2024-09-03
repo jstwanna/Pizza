@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using MassTransit;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,17 @@ builder.Services.AddSwaggerGen(o =>
 });
 
 builder.AddSeqEndpoint("seq");
+
+var rabbitConnStr = builder.Configuration.GetConnectionString("rabbit");
+
+builder.Services.AddMassTransit(cfg =>
+{
+    cfg.UsingRabbitMq((context, rabbitCfg) =>
+    {
+        rabbitCfg.Host(rabbitConnStr);
+        //rabbitCfg.ConfigureEndpoints(context);
+    });
+});
 
 var app = builder.Build();
 

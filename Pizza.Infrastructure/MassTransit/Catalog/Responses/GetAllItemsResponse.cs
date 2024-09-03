@@ -10,6 +10,6 @@ namespace Pizza.Infrastructure.Rabbit.Catalog.Responses
     public class GetAllItemsResponse
     {
         public PizzaListView[] Pizzas { get; set; }
-        public ProductListView Products { get; set; }
+        public ProductListView[] Products { get; set; }
     }
 }

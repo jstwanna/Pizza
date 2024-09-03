@@ -230,7 +230,7 @@ namespace Catalog.Data.Database
                 new Pizza
                 {
                     Id = 11,
-                    PizzaTypeId = 2,
+                    PizzaTypeId = 1,
                     PizzaSizeId = 1,
                     DoughTypeId = 1,
                     Image = "MixSmall.png",
@@ -240,7 +240,7 @@ namespace Catalog.Data.Database
                 new Pizza
                 {
                     Id = 12,
-                    PizzaTypeId = 2,
+                    PizzaTypeId = 1,
                     PizzaSizeId = 2,
                     DoughTypeId = 1,
                     Image = "MixMedium.png",
@@ -250,7 +250,7 @@ namespace Catalog.Data.Database
                 new Pizza
                 {
                     Id = 13,
-                    PizzaTypeId = 2,
+                    PizzaTypeId = 1,
                     PizzaSizeId = 3,
                     DoughTypeId = 1,
                     Image = "MixBig.png",
@@ -260,7 +260,7 @@ namespace Catalog.Data.Database
                 new Pizza
                 {
                     Id = 14,
-                    PizzaTypeId = 2,
+                    PizzaTypeId = 1,
                     PizzaSizeId = 2,
                     DoughTypeId = 2,
                     Image = "MixMediumThin.png",
@@ -270,7 +270,7 @@ namespace Catalog.Data.Database
                 new Pizza
                 {
                     Id = 15,
-                    PizzaTypeId = 2,
+                    PizzaTypeId = 1,
                     PizzaSizeId = 3,
                     DoughTypeId = 2,
                     Image = "MixBigThin.png",

@@ -19,7 +19,7 @@ namespace Catalog.Domain.Services
             this.dbContext = dbContext;
         }
 
-        public IEnumerable<PizzaListView> GetAllPizzas ()
+        public Task<PizzaListView[]> GetAllPizzas ()
         {
             var pizzas = dbContext.Pizzas
                 .Include(i => i.PizzaType)
@@ -47,12 +47,12 @@ namespace Catalog.Domain.Services
                         })
                     })
                 })
-                .ToArray();
+                .ToArrayAsync();
 
             return pizzas;
         }
 
-        public IEnumerable<ProductListView> GetAllProducts ()
+        public Task<ProductListView[]> GetAllProducts ()
         {
             var products = dbContext.Products
                 .Include(i => i.ProductType)
@@ -67,7 +67,7 @@ namespace Catalog.Domain.Services
                     ProductType = s.ProductType.Name,
                     Weight = s.Weight
                 })
-                .ToArray();
+                .ToArrayAsync();
 
             return products;
         }
