@@ -1,29 +1,30 @@
 using Microsoft.OpenApi.Models;
 using MassTransit;
 
+string devAllowCors = "dev_cors";
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(o =>
-{
-    o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        In = ParameterLocation.Header,
-        Description = "Enter JWT token",
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        BearerFormat = "JWT",
-        Scheme = "bearer"
-    });
-});
+builder.Services.AddSwaggerDocument();
+builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen(o =>
+//{
+//    o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+//    {
+//        In = ParameterLocation.Header,
+//        Description = "Enter JWT token",
+//        Name = "Authorization",
+//        Type = SecuritySchemeType.Http,
+//        BearerFormat = "JWT",
+//        Scheme = "bearer"
+//    });
+//});
 
-builder.AddSeqEndpoint("seq");
+builder.AddSeqEndpoint("seq", cfg => cfg.DisableHealthChecks = true);
 
 var rabbitConnStr = builder.Configuration.GetConnectionString("rabbit");
 
@@ -32,19 +33,29 @@ builder.Services.AddMassTransit(cfg =>
     cfg.UsingRabbitMq((context, rabbitCfg) =>
     {
         rabbitCfg.Host(rabbitConnStr);
-        //rabbitCfg.ConfigureEndpoints(context);
     });
+});
+
+builder.Services.AddCors(option =>
+{
+    option.AddPolicy(
+        devAllowCors,
+        p =>
+        p
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowAnyOrigin());
 });
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseCors(devAllowCors);
+    app.UseOpenApi();
+    app.UseSwaggerUi();
 }
 
 app.UseHttpsRedirection();
