@@ -66,7 +66,8 @@ namespace Catalog.Domain.Services
                     Image = s.Image,
                     Name = s.Name,
                     ProductType = s.ProductType.Name,
-                    Weight = s.Weight
+                    Weight = s.Weight,
+                    Price = s.Price
                 })
                 .ToArrayAsync();
 

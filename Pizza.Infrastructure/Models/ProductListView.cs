@@ -16,5 +16,6 @@ namespace Pizza.Infrastructure.Models
         public string CountMeasurement { get; set; }
         public string Image { get; set; }
         public string ProductType { get; set; }
+        public double Price { get; set; }
     }
 }

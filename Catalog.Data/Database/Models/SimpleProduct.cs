@@ -16,6 +16,7 @@ namespace Catalog.Data.Database.Models
         public double Count { get; set; }
         public string CountMeasurement { get; set; }
         public string Image {  get; set; }
+        public double Price { get; set; }
         
         public int ProductTypeId { get; set; }
         [ForeignKey("ProductTypeId")]

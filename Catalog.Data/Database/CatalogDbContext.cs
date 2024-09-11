@@ -350,7 +350,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 1,
                         Weight = 130,
-                        Image = "omelette1.png"
+                        Image = "omelette1.png",
+                        Price = 179
                     },
                     new SimpleProduct
                     {
@@ -361,7 +362,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 1,
                         Weight = 110,
-                        Image = "omelette2.png"
+                        Image = "omelette2.png",
+                        Price = 179
                     },
                     new SimpleProduct
                     {
@@ -372,7 +374,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 1,
                         Weight = 110,
-                        Image = "omelette3.png"
+                        Image = "omelette3.png",
+                        Price = 179
                     },
                     new SimpleProduct
                     {
@@ -383,7 +386,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 2,
                         Weight = 210,
-                        Image = "denvich1.png"
+                        Image = "denvich1.png",
+                        Price = 259
                     },
                     new SimpleProduct
                     {
@@ -394,7 +398,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 2,
                         Weight = 210,
-                        Image = "denvich2.png"
+                        Image = "denvich2.png",
+                        Price = 259
                     },
                     new SimpleProduct
                     {
@@ -405,7 +410,8 @@ namespace Catalog.Data.Database
                         CountMeasurement = "шт",
                         ProductTypeId = 2,
                         Weight = 350,
-                        Image = "denvich3.png"
+                        Image = "denvich3.png",
+                        Price = 329
                     }
                 });
         }
