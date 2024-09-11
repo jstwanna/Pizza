@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Api\Catalog.Api.csproj" />
+    <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
     <ProjectReference Include="..\Pizza.Api\Pizza.Api.csproj" />
   </ItemGroup>
 
