@@ -10,7 +10,7 @@ var rabbit = builder.AddRabbitMQ(
         userName: rabbitUsername,
         password: rabbitPassword,
         port: 5431)
-    .WithManagementPlugin();
+    .WithManagementPlugin(port: 5435);
 
 var seq = builder
     .AddSeq("seq", 5434)
