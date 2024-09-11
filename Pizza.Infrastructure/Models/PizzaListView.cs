@@ -9,6 +9,7 @@ namespace Pizza.Infrastructure.Models
     public class PizzaListView
     {
         public int Id { get; set; }
+        public string Desctiption { get; set; }
         public IEnumerable<PizzaView>? Pizzas { get; set; }
     }
 }

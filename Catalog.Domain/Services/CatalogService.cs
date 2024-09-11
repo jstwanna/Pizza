@@ -26,10 +26,11 @@ namespace Catalog.Domain.Services
                 .Include(i => i.DoughType)
                 .Include(i => i.PizzaSize)
                 .Include(i => i.Additives)
-                .GroupBy(g => g.PizzaTypeId)
+                .GroupBy(g => g.PizzaType)
                 .Select(s => new PizzaListView
                 {
-                    Id = s.Key,
+                    Id = s.Key.Id,
+                    Desctiption = s.Key.Description,
                     Pizzas = s.Select(s => new PizzaView
                     {
                         Image = s.Image,
