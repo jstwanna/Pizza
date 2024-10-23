@@ -31,7 +31,7 @@ var postgresdb = postgres.AddDatabase("postgres-db", "postgres");
 
 var identityService = builder
     .AddProject<Projects.Identity_Api>("identity-service")
-    .WithReference(postgres)
+    .WithReference(postgresdb)
     .WithReference(rabbit);
 
 var catalogService = builder
@@ -39,15 +39,18 @@ var catalogService = builder
     .WithReference(postgresdb)
     .WithReference(rabbit);
 
+var media = builder
+    .AddProject<Projects.Pizza_Media>("media-server")
+    .WithExternalHttpEndpoints();
+
 var api = builder
     .AddProject<Projects.Pizza_Api>("pizza-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
-    .WithReference(postgres)
     .WithReference(seq)
-    //.WithReference(authorizationService)
     .WithReference(catalogService)
     .WithReference(identityService)
+    .WithReference(media)
     ;
 
 if (builder.Environment.IsDevelopment())

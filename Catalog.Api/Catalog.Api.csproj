@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Pizza.ServiceDefaults\Pizza.ServiceDefaults.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
