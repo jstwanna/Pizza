@@ -8,8 +8,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.ServiceDefaults", "Pi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Tests", "Pizza.Tests\Pizza.Tests.csproj", "{A6CDE2D6-6602-44AB-A47C-40B0C7576172}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.ApiGateway", "Pizza.Api\Client.ApiGateway.csproj", "{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{373A7792-9219-4D08-80CA-84EE54377FC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Catalog", "Catalog", "{221DC282-C7EF-4D2D-A10C-6DEC88757AC3}"
@@ -32,6 +30,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Identity.Domain", "Identity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Media", "Pizza.Media\Pizza.Media.csproj", "{E7B5E40D-2EFE-48EA-B8DA-50C273CE088D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.ApiGateway", "Client.ApiGateway\Client.ApiGateway.csproj", "{3CBD01EB-780D-4748-B766-1757B09F5598}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,10 +50,6 @@ Global
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6CDE2D6-6602-44AB-A47C-40B0C7576172}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B5FE2251-EA55-4016-A5F2-B01BD4487FF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B5FE2251-EA55-4016-A5F2-B01BD4487FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5FE2251-EA55-4016-A5F2-B01BD4487FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -86,6 +82,10 @@ Global
 		{E7B5E40D-2EFE-48EA-B8DA-50C273CE088D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7B5E40D-2EFE-48EA-B8DA-50C273CE088D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7B5E40D-2EFE-48EA-B8DA-50C273CE088D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CBD01EB-780D-4748-B766-1757B09F5598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CBD01EB-780D-4748-B766-1757B09F5598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CBD01EB-780D-4748-B766-1757B09F5598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CBD01EB-780D-4748-B766-1757B09F5598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,7 +25,7 @@
   </ItemGroup>
 
 	<Target Name="NSwag" AfterTargets="PostBuildEvent">
-		<Exec Command="$(NSwagExe_Net80) run ../Pizza.Frontend/api/api.nswag.json /variables:ProjPath=$(ProjectDir)Pizza.Api.csproj">
+		<Exec Command="$(NSwagExe_Net80) run ../Client.Frontend/api/api.nswag.json /variables:ProjPath=$(ProjectDir)Client.ApiGateway.csproj">
 			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
 			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
 		</Exec>
