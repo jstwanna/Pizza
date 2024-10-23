@@ -35,7 +35,7 @@ var identityService = builder
     .WithReference(rabbit);
 
 var catalogService = builder
-    .AddProject<Projects.Catalog_Api>("catalog-api")
+    .AddProject<Projects.Catalog_Api>("catalog-service")
     .WithReference(postgresdb)
     .WithReference(rabbit);
 
@@ -44,7 +44,7 @@ var media = builder
     .WithExternalHttpEndpoints();
 
 var api = builder
-    .AddProject<Projects.Pizza_Api>("pizza-api")
+    .AddProject<Projects.Client_ApiGateway>("client-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
     .WithReference(seq)

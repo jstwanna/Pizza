@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.ServiceDefaults", "Pi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Tests", "Pizza.Tests\Pizza.Tests.csproj", "{A6CDE2D6-6602-44AB-A47C-40B0C7576172}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pizza.Api", "Pizza.Api\Pizza.Api.csproj", "{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client.ApiGateway", "Pizza.Api\Client.ApiGateway.csproj", "{06C0EDDD-957B-47E2-9CBD-20E80CA5B664}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{373A7792-9219-4D08-80CA-84EE54377FC4}"
 EndProject
