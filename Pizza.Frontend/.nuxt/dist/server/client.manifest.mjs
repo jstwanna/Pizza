@@ -1,0 +1,1 @@
+export { default } from "file:///D:/tryProject(VUE.js)/Portfolio/Pizza/Pizza.Frontend/node_modules/.pnpm/@nuxt+vite-builder@3.12.3_@types+node@20.14.10_magicast@0.3.4_rollup@4.18.1_sass@1.77.8_terser@5.31.2_vue@3.4.31/node_modules/@nuxt/vite-builder/dist/runtime/client.manifest.mjs"
