@@ -19,8 +19,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Catalog.Api\Catalog.Api.csproj" />
+    <ProjectReference Include="..\Client.ApiGateway\Client.ApiGateway.csproj" />
     <ProjectReference Include="..\Identity.Api\Identity.Api.csproj" />
-    <ProjectReference Include="..\Pizza.Api\Pizza.Api.csproj" />
+    <ProjectReference Include="..\Pizza.Media\Pizza.Media.csproj" />
   </ItemGroup>
 
 </Project>

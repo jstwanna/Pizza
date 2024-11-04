@@ -31,29 +31,32 @@ var postgresdb = postgres.AddDatabase("postgres-db", "postgres");
 
 var identityService = builder
     .AddProject<Projects.Identity_Api>("identity-service")
-    .WithReference(postgres)
-    .WithReference(rabbit);
-
-var catalogService = builder
-    .AddProject<Projects.Catalog_Api>("catalog-api")
     .WithReference(postgresdb)
     .WithReference(rabbit);
 
+var catalogService = builder
+    .AddProject<Projects.Catalog_Api>("catalog-service")
+    .WithReference(postgresdb)
+    .WithReference(rabbit);
+
+var media = builder
+    .AddProject<Projects.Pizza_Media>("media-server")
+    .WithExternalHttpEndpoints();
+
 var api = builder
-    .AddProject<Projects.Pizza_Api>("pizza-api")
+    .AddProject<Projects.Client_ApiGateway>("client-api")
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
-    .WithReference(postgres)
     .WithReference(seq)
-    //.WithReference(authorizationService)
     .WithReference(catalogService)
     .WithReference(identityService)
+    .WithReference(media)
     ;
 
 if (builder.Environment.IsDevelopment())
 {
     var frontend = builder
-        .AddNpmApp("pizza-frontend", "../Pizza.Frontend", "dev")
+        .AddNpmApp("client-frontend", "../Client.Frontend", "dev")
         .WithReference(api)
         .WithHttpEndpoint(env: "PORT", port: 8080)
         .WithExternalHttpEndpoints();

@@ -9,24 +9,29 @@ builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "bearer"
+    });
+});
 builder.Services.AddSwaggerDocument();
-builder.Services.AddSwaggerGen();
-//builder.Services.AddSwaggerGen(o =>
-//{
-//    o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-//    {
-//        In = ParameterLocation.Header,
-//        Description = "Enter JWT token",
-//        Name = "Authorization",
-//        Type = SecuritySchemeType.Http,
-//        BearerFormat = "JWT",
-//        Scheme = "bearer"
-//    });
-//});
 
 builder.AddSeqEndpoint("seq", cfg => cfg.DisableHealthChecks = true);
 
 var rabbitConnStr = builder.Configuration.GetConnectionString("rabbit");
+
+builder.Services.Configure<MassTransitHostOptions>(options =>
+{
+    options.WaitUntilStarted = true;
+    options.StartTimeout = TimeSpan.FromSeconds(300);
+});
 
 builder.Services.AddMassTransit(cfg =>
 {
