@@ -34,6 +34,12 @@ export default defineNuxtConfig({
         changeOrigin: true,
         secure: false,
       },
+
+      '/images': {
+        target: 'https://localhost:7212/images/',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
 });

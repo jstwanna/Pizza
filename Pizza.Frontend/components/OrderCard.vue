@@ -1,33 +1,39 @@
 <script lang="ts" setup>
-import type { OftenOrderCard } from '../models/models';
-import { OrderType } from '../models/models';
+import type { ProductListView } from '../api/api-generated';
 import { formatNumber } from '../utils/utils';
 
 const emit = defineEmits<{
-  (e: 'cardClick', card: OftenOrderCard): void;
+  (e: 'cardClick', card: ProductListView): void;
 }>();
 
-const props = defineProps<{ card: OftenOrderCard }>();
+const props = defineProps<{ card: ProductListView }>();
 
-const handleClickCard = () => {
-  emit('cardClick', props.card);
+const handleClickProduct = (card: ProductListView) => {
+  emit('cardClick', card);
+};
+
+const getOldCost = (price: number): number | null => {
+  const shouldHaveOldCost = Math.random() > 0.5;
+  if (shouldHaveOldCost) {
+    const additionalCost = Math.floor(Math.random() * 201) + 300;
+    return price + additionalCost;
+  }
+
+  return null;
 };
 </script>
 
 <template>
-  <li class="order-card" @click="handleClickCard">
+  <li class="order-card" @click="handleClickProduct(props.card)">
     <img
-      :src="card.src"
-      :alt="`Фото ${card.title}`"
+      :src="`/images/${card.image}`"
+      :alt="`Фото ${card.name}`"
       class="order-card__image"
     />
     <div class="order-card__info">
-      <h3 class="order-card__title">{{ card.title }}</h3>
-      <span class="order-card__cost">
-        <template v-if="card.type === OrderType.Pizza">от</template>
-        {{ formatNumber(card.cost) }} ₽
-      </span>
-      <OldPrice :oldCost="card.oldCost" />
+      <h3 class="order-card__title">{{ card.name }}</h3>
+      <span class="order-card__cost"> {{ formatNumber(card.price) }} ₽ </span>
+      <OldPrice :oldCost="getOldCost(card.price)" />
     </div>
   </li>
 </template>
@@ -58,7 +64,7 @@ const handleClickCard = () => {
     display: flex;
     flex-flow: column;
     justify-content: center;
-    margin-left: 0.5px;
+    margin-left: 0.5rem;
   }
 
   &__title {

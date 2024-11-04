@@ -1,17 +1,25 @@
 <script lang="ts" setup>
 interface Props {
   type: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
 }
 
 const emit = defineEmits<{ (event: 'click'): void }>();
 
-defineProps<Props>();
+withDefaults(defineProps<Props>(), {
+  disabled: false,
+});
 
 const handleClickButton = () => emit('click');
 </script>
 
 <template>
-  <button :type="type" @click="handleClickButton" class="button">
+  <button
+    :type="type"
+    :disabled="disabled"
+    @click="handleClickButton"
+    class="button"
+  >
     <slot />
   </button>
 </template>

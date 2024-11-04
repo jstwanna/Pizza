@@ -1,18 +1,35 @@
 <script lang="ts" setup>
 import { headerMenuItems } from '../utils/constants';
 
+const isLoginPopup = ref<boolean>(false);
+const input = ref<HTMLInputElement | null>(null);
+
+const userPhone = ref<string>('');
+
 const handleClickLoyalty = () => {
   console.log('aaa');
 };
+
+const handleOpenPopup = () => {
+  isLoginPopup.value = !isLoginPopup.value;
+};
+
+watch(isLoginPopup, () => {
+  if (isLoginPopup.value) {
+    nextTick(() => {
+      input.value?.focus();
+    });
+  }
+});
 </script>
 
 <template>
   <header class="header">
     <ul class="header__wrapper">
       <li v-for="link in headerMenuItems" :key="link.id">
-        <UIBaseLink :to="link.to" activeClass="header__link_active">{{
-          link.title
-        }}</UIBaseLink>
+        <UIBaseLink :to="link.to" activeClass="header__link_active">
+          {{ link.title }}
+        </UIBaseLink>
       </li>
     </ul>
 
@@ -85,7 +102,11 @@ const handleClickLoyalty = () => {
           <span class="header__coin"></span>
           <span class="header__dodo-coins">Додокоины</span>
         </UIBaseButton>
-        <UIBaseButton type="button" class="header__sign-in">
+        <UIBaseButton
+          type="button"
+          class="header__sign-in"
+          @click="handleOpenPopup"
+        >
           Войти
         </UIBaseButton>
       </div>
@@ -93,6 +114,37 @@ const handleClickLoyalty = () => {
   </header>
 
   <Navigation />
+
+  <UIBasePopup v-model="isLoginPopup" @close-popup="handleOpenPopup">
+    <template #content>
+      <div class="popup__content">
+        <h3 class="popup__title">Вход на сайт</h3>
+        <p class="popup__text">
+          Подарим подарок на день рождения, сохраним адрес доставки и расскажем
+          об акциях
+        </p>
+        <form @submit.prevent="" class="popup__form">
+          <span class="popup__input-label">Номер телефона</span>
+          <input
+            v-model="userPhone"
+            placeholder="+7 999 999-99-99"
+            ref="input"
+            class="popup__input"
+          />
+          <UIBaseButton type="submit" class="popup__button">
+            Выслать код
+          </UIBaseButton>
+        </form>
+        <div class="popup__warning">
+          Продолжая, вы соглашаетесь
+          <UIBaseLink to="#" class="popup__legal">
+            со сбором и обработкой персональных данных и пользовательским
+            соглашением
+          </UIBaseLink>
+        </div>
+      </div>
+    </template>
+  </UIBasePopup>
 </template>
 
 <style lang="scss" scoped>
@@ -247,6 +299,97 @@ const handleClickLoyalty = () => {
     &:hover {
       color: $black;
     }
+  }
+}
+
+.popup {
+  &__content {
+    background-color: $white;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 24.9375rem;
+    width: 25.5625rem;
+    box-shadow: hsla(0, 0%, 0%, 0.2) 0 1.875rem 3.75rem;
+    border-radius: 1.25rem;
+  }
+
+  &__title {
+    margin: 0 0 0.5rem;
+    font-size: $fs-4xl;
+    font-weight: $fw-medium;
+    line-height: 2.25rem;
+  }
+
+  &__text {
+    font-weight: 600;
+    line-height: 1.25rem;
+    color: $dark-gray;
+    margin: 0 0 1.5rem;
+  }
+
+  &__input-label {
+    margin-bottom: 0.5rem;
+    font-weight: $fw-medium;
+    font-size: $fs-sm;
+    line-height: 1.125rem;
+    color: $dark-gray;
+    display: block;
+  }
+
+  &__input {
+    text-align: left;
+    display: block;
+    outline: none;
+    box-shadow: none;
+    appearance: none;
+    position: relative;
+    height: 3.5rem;
+    padding: 0.875rem 1rem;
+    border-radius: 0.75rem;
+    width: 100%;
+    border: 0.0625rem solid hsl(240, 14%, 90%);
+    resize: none;
+    font-size: $fs-base;
+    line-height: 1.25rem;
+    font-weight: $fw-medium;
+    @include transition(all, 100ms, ease-out);
+
+    &:focus {
+      border-color: $orange;
+    }
+
+    &::placeholder {
+      color: hsl(232, 10%, 70%);
+    }
+  }
+
+  &__button {
+    height: 3rem;
+    padding: 0.75rem 1.5rem;
+    font-size: $fs-base;
+    line-height: 1.5rem;
+    margin-top: 2.3125rem;
+    background-color: $orange;
+    color: $white;
+    width: 100%;
+
+    &:hover {
+      background-color: $dark-orange;
+    }
+  }
+
+  &__warning {
+    font-size: $fs-xs;
+    line-height: 1rem;
+    color: $dark-gray;
+    text-align: center;
+    margin-top: 0.5rem;
+  }
+
+  &__legal {
+    font-size: $fs-xs;
+    color: $orange;
   }
 }
 </style>
