@@ -1,11 +1,6 @@
 ﻿using Catalog.Data.Database;
-using Catalog.Data.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Pizza.Infrastructure.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Catalog.Domain.Services
@@ -19,59 +14,45 @@ namespace Catalog.Domain.Services
             this.dbContext = dbContext;
         }
 
-        public Task<PizzaListView[]> GetAllPizzas ()
+        public Task<CatalogItemListView[]> GetCatalogItems (CancellationToken cancellationToken)
         {
-            var pizzas = dbContext.Pizzas
-                .Include(i => i.PizzaType)
-                .Include(i => i.DoughType)
-                .Include(i => i.PizzaSize)
-                .Include(i => i.Additives)
-                .GroupBy(g => g.PizzaType)
-                .Select(s => new PizzaListView
+            return dbContext.CatalogItems
+                .Include(i => i.CatalogCategory)
+                .Include(i => i.Products)
+                .ThenInclude(p => p.Characteristics)
+                .ThenInclude(pa => pa.CharacteristicType)
+                .Include(i => i.Products)
+                .ThenInclude(p => p.Additives)
+                .Include(i => i.Products)
+                .ThenInclude(p => p.ProductType)
+                .Include(i => i.ViewType)
+                .Select(s => new CatalogItemListView
                 {
-                    Id = s.Key.Id,
-                    Desctiption = s.Key.Description,
-                    Pizzas = s.Select(s => new PizzaView
-                    {
-                        Image = s.Image,
-                        PizzaSize = s.PizzaSize.Name,
-                        DoughType = s.DoughType.Name,
-                        PizzaType = s.PizzaType.Name,
-                        Price = s.Price,
-                        Weight = s.Weight,
-                        Additives = s.Additives.Select(x => new AdditiveView
-                        {
-                            Id = x.Id,
-                            Image = x.Image,
-                            Name = x.Name,
-                            Price = x.Price,
-                        })
-                    })
-                })
-                .ToArrayAsync();
-
-            return pizzas;
-        }
-
-        public Task<ProductListView[]> GetAllProducts ()
-        {
-            var products = dbContext.Products
-                .Include(i => i.ProductType)
-                .Select(s => new ProductListView
-                {
-                    Count = s.Count,
-                    CountMeasurement = s.CountMeasurement,
+                    Category = s.CatalogCategory.Name,
                     Description = s.Description,
-                    Id = s.Id,
                     Image = s.Image,
                     Name = s.Name,
-                    ProductType = s.ProductType.Name,
-                    Weight = s.Weight,
-                    Price = s.Price
-                })
-                .ToArrayAsync();
-
-            return products;
+                    ViewType = s.ViewType.Name,
+                    Products = s.Products.Select(s => new ProductListView
+                    {
+                        Id = s.Id,
+                        Image = s.Image,
+                        Price = s.Price,
+                        ProductType = s.ProductType.Name,
+                        Characteristics = s.Characteristics.Select(s => new CharacteristicsListView
+                        {
+                            Name = s.CharacteristicType.Name,
+                            Value = s.Value
+                        }).ToArray(),
+                        Additives = s.Additives.Select(s => new AdditiveListView
+                        {
+                            Id = s.Id,
+                            Image = s.Image,
+                            Name = s.Name,
+                            Price = s.Price,
+                        }).ToArray()
+                    }).ToArray()
+                }).ToArrayAsync(cancellationToken);
         }
     }
 }

@@ -5,7 +5,7 @@ using Pizza.Infrastructure.Rabbit.Catalog.Responses;
 
 namespace Catalog.Api.Consumers
 {
-    public class GetAllProductsConsumer : IConsumer<GetAllItemsRequest>
+    public class GetAllProductsConsumer : IConsumer<GetCatalogItemsRequest>
     {
         private readonly ICatalogService catalogService;
 
@@ -14,15 +14,11 @@ namespace Catalog.Api.Consumers
             this.catalogService = catalogService;
         }
 
-        public async Task Consume (ConsumeContext<GetAllItemsRequest> context)
+        public async Task Consume (ConsumeContext<GetCatalogItemsRequest> context)
         {
-            var products = await catalogService.GetAllProducts();
-            var pizzas = await catalogService.GetAllPizzas();
-
-            await context.RespondAsync(new GetAllItemsResponse
+            await context.RespondAsync(new GetCatalogItemsResponse
             {
-                Pizzas = pizzas,
-                Products = products
+                Products = await catalogService.GetCatalogItems(context.CancellationToken)
             });
         }
     }

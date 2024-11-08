@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Domain.Helpers
+namespace Pizza.Infrastructure.Rabbit.Catalog.Requests
 {
-    internal static class PizzaTransformer
+    public class GetCatalogItemsRequest
     {
         
     }

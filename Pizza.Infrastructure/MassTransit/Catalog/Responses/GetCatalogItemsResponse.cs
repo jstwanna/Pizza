@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Pizza.Infrastructure.Rabbit.Catalog.Requests
+namespace Pizza.Infrastructure.Rabbit.Catalog.Responses
 {
-    public class GetAllItemsRequest
+    public class GetCatalogItemsResponse
     {
-        
+        public CatalogItemListView[] Products { get; set; }
     }
 }

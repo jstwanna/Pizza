@@ -10,7 +10,6 @@ namespace Catalog.Domain.Services
 {
     public interface ICatalogService
     {
-        public Task<PizzaListView[]> GetAllPizzas ();
-        public Task<ProductListView[]> GetAllProducts ();
+        public Task<CatalogItemListView[]> GetCatalogItems (CancellationToken cancellationToken);
     }
 }

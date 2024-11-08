@@ -18,9 +18,9 @@ namespace Pizza.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<GetAllItemsResponse> GetAllProducts (CancellationToken cancellationToken)
+        public async Task<GetCatalogItemsResponse> GetCatalogItems (CancellationToken cancellationToken)
         {
-            var response = await busControl.Request<GetAllItemsRequest, GetAllItemsResponse>(new GetAllItemsRequest(), cancellationToken);
+            var response = await busControl.Request<GetCatalogItemsRequest, GetCatalogItemsResponse>(new GetCatalogItemsRequest(), cancellationToken);
 
             return response.Message;
         }

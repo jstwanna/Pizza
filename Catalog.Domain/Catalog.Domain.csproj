@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Catalog.Data\Catalog.Data.csproj" />
     <ProjectReference Include="..\Pizza.Infrastructure\Pizza.Infrastructure.csproj" />
   </ItemGroup>

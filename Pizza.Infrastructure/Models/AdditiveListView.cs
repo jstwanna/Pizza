@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Pizza.Infrastructure.Models
 {
-    public class PizzaListView
+    public class AdditiveListView
     {
         public int Id { get; set; }
-        public string Desctiption { get; set; }
-        public IEnumerable<PizzaView>? Pizzas { get; set; }
+        public double Price { get; set; }
+        public string Name { get; set; }
+        public string Image {  get; set; }
     }
 }
