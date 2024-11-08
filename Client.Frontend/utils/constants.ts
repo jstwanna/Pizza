@@ -39,7 +39,7 @@ export const headerMenuItems: Link[] = [
   {
     id: 1,
     title: 'Работа в Додо',
-    to: '',
+    to: '#',
   },
   {
     id: 2,
@@ -49,11 +49,11 @@ export const headerMenuItems: Link[] = [
   {
     id: 3,
     title: 'Контакты',
-    to: '',
+    to: '#',
   },
 ];
 
-export const headerLinks: Link[] = [
+export const headerLinks = computed<Link[]>(() => [
   {
     id: 1,
     title: 'Пиццы',
@@ -114,7 +114,7 @@ export const headerLinks: Link[] = [
     title: 'Акции',
     to: '#',
   },
-];
+]);
 
 export const contactLinks: ContactLink[] = [
   {

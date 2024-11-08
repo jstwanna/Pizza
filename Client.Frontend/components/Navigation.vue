@@ -1,19 +1,23 @@
 <script lang="ts" setup>
 import smallLogo from '../assets/svg/smallLogo.svg';
+import emptyCart from '../assets/svg/empty-cart.svg';
 
 import { headerLinks } from '../utils/constants';
 
 const shadow = ref<boolean>(false);
 
+const isCartOpen = ref<boolean>(false);
+
 const handleShadow = () => {
   shadow.value = window.scrollY >= 165;
 };
 
-const route = useRoute();
-const isActive = (to: string) => route.hash === to;
-
 const handleClickToTop = () => {
   window.scrollTo({ top: 0 });
+};
+
+const toggleCartPopup = () => {
+  isCartOpen.value = !isCartOpen.value;
 };
 
 onMounted(() => {
@@ -47,21 +51,45 @@ onUnmounted(() => {
             :key="link.id"
             class="navigation__link-container"
           >
-            <UIBaseLink
-              :to="link.to"
-              :class="{ navigation__link_active: isActive(link.to) }"
-            >
+            <UIBaseLink :to="link.to">
               {{ link.title }}
             </UIBaseLink>
           </li>
         </ul>
       </nav>
 
-      <UIBaseButton type="button" class="navigation__basket">
+      <UIBaseButton
+        type="button"
+        class="navigation__basket"
+        @click="toggleCartPopup"
+      >
         Корзина
       </UIBaseButton>
     </div>
   </div>
+
+  <UIBasePopup
+    v-model="isCartOpen"
+    @closePopup="toggleCartPopup"
+    closePosition="left"
+    customClass="cart-popup"
+  >
+    <template #content>
+      <div class="cart-popup__content">
+        <div class="cart-popup__empty">
+          <img
+            :src="emptyCart"
+            alt="Картинка пустой пиццы и сиба-ину"
+            class="cart-popup__empty-img"
+          />
+          <h2 class="cart-popup__empty-title">Пока тут пусто</h2>
+          <p class="cart-popup__empty-text">
+            Добавьте пиццу. Или две! А мы доставим ваш заказ от 649₽
+          </p>
+        </div>
+      </div>
+    </template>
+  </UIBasePopup>
 </template>
 
 <style lang="scss" scoped>
@@ -139,8 +167,7 @@ onUnmounted(() => {
     text-decoration: none;
     @include transition;
 
-    &:hover,
-    &_active {
+    &:hover {
       color: $orange;
     }
   }
@@ -163,6 +190,44 @@ onUnmounted(() => {
     &:hover {
       background-color: $dark-orange;
     }
+  }
+}
+
+.cart-popup {
+  &__content {
+    width: 26.875rem;
+    height: 100%;
+    background-color: $white;
+    padding: 1.875rem;
+  }
+
+  &__empty {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  &__empty-img {
+    max-width: 19.625rem;
+    width: 100%;
+    padding: 0.25rem;
+  }
+
+  &__empty-title {
+    font-size: $fs-xl;
+    margin-top: 1.0625rem;
+    margin-bottom: 1.0625rem;
+    font-weight: $fw-semibold;
+  }
+
+  &__empty-text {
+    max-width: 13.375rem;
+    font-size: $fs-sm;
+    white-space: pre-wrap;
+    text-align: center;
+    font-weight: $fw-medium;
   }
 }
 </style>
