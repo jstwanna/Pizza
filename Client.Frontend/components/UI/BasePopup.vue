@@ -9,10 +9,12 @@ const emits = defineEmits<{
 interface Props {
   modelValue: boolean;
   customClass?: string;
+  closePosition?: 'top' | 'left';
 }
 
 const props = withDefaults(defineProps<Props>(), {
   customClass: '',
+  closePosition: 'top',
 });
 
 const popup = ref<Element | null>(null);
@@ -61,8 +63,12 @@ watch(modelUpdate, () => {
   <Teleport to="body">
     <Transition name="popup">
       <section v-if="modelUpdate" ref="popup" :class="['popup', customClass]">
-        <div class="popup__content">
-          <img :src="close" @click="closePopup" class="popup__close" />
+        <div :class="`popup__content popup__content_${closePosition}`">
+          <img
+            :src="close"
+            @click="closePopup"
+            :class="`popup__close popup__close_${closePosition}`"
+          />
           <slot name="content" />
         </div>
       </section>
@@ -82,24 +88,39 @@ watch(modelUpdate, () => {
   background-color: hsla(0, 0%, 0%, 0.7);
 
   &__content {
-    margin: auto;
     position: relative;
     font-family: $ff-dodo, system-ui, -apple-system, BlinkMacSystemFont,
       'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
       Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
       'Segoe UI Symbol';
+
+    &_top {
+      margin: auto;
+    }
+
+    &_left {
+      margin-left: auto;
+    }
   }
 
   &__close {
     cursor: pointer;
     position: absolute;
-    top: 0.8125rem;
-    right: -2.375rem;
     cursor: pointer;
     @include transition(transform, 0.1s ease-in-out);
 
     &:hover {
       transform: scale(1.1);
+    }
+
+    &_top {
+      top: 0.8125rem;
+      right: -2.375rem;
+    }
+
+    &_left {
+      left: -3rem;
+      top: calc(50% - 0.75rem);
     }
   }
 

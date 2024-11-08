@@ -21,18 +21,26 @@ const currentSnacksBreakfast = ref<ProductListView | null>(null);
 const isPizzaOpen = ref<boolean>(false);
 const isProductOpen = ref<boolean>(false);
 
+const togglePizzaPopup = () => {
+  isPizzaOpen.value = !isPizzaOpen.value;
+};
+
+const toggleProductPopup = () => {
+  isProductOpen.value = !isProductOpen.value;
+};
+
 useHead({
   title:
     'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
 });
 
 const handleGetPizza = (pizza: PizzaListView) => {
-  isPizzaOpen.value = true;
+  togglePizzaPopup();
   currentPizza.value = pizza;
 };
 
 const handleGetProduct = (product: ProductListView) => {
-  isProductOpen.value = true;
+  toggleProductPopup();
   currentSnacksBreakfast.value = product;
 };
 
@@ -210,7 +218,7 @@ onMounted(() => {
   <UIBasePopup
     v-model="isPizzaOpen"
     customClass="main-popup"
-    @closePopup="isPizzaOpen = false"
+    @closePopup="togglePizzaPopup"
   >
     <template #content v-if="currentPizza?.pizzas != null">
       <div class="main-popup__content">
@@ -229,7 +237,7 @@ onMounted(() => {
   <UIBasePopup
     v-model="isProductOpen"
     customClass="main-popup"
-    @closePopup="isProductOpen = false"
+    @closePopup="toggleProductPopup"
   >
     <template #content v-if="currentSnacksBreakfast != null">
       <div class="main-popup__content">
