@@ -5,11 +5,11 @@ using Pizza.Infrastructure.Rabbit.Catalog.Responses;
 
 namespace Catalog.Api.Consumers
 {
-    public class GetAllProductsConsumer : IConsumer<GetCatalogItemsRequest>
+    public class GetCategoryItemsConsumer : IConsumer<GetCatalogItemsRequest>
     {
         private readonly ICatalogService catalogService;
 
-        public GetAllProductsConsumer(ICatalogService catalogService)
+        public GetCategoryItemsConsumer(ICatalogService catalogService)
         {
             this.catalogService = catalogService;
         }
@@ -18,7 +18,7 @@ namespace Catalog.Api.Consumers
         {
             await context.RespondAsync(new GetCatalogItemsResponse
             {
-                Products = await catalogService.GetCatalogItems(context.CancellationToken)
+                Items = await catalogService.GetCatalogItems(context.CancellationToken)
             });
         }
     }

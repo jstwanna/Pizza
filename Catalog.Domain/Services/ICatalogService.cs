@@ -11,5 +11,7 @@ namespace Catalog.Domain.Services
     public interface ICatalogService
     {
         public Task<CatalogItemListView[]> GetCatalogItems (CancellationToken cancellationToken);
+
+        public Task<string[]> GetCategoriesList (CancellationToken cancellationToken);
     }
 }

@@ -9,6 +9,6 @@ namespace Pizza.Infrastructure.Rabbit.Catalog.Responses
 {
     public class GetCatalogItemsResponse
     {
-        public CatalogItemListView[] Products { get; set; }
+        public CatalogItemListView[] Items { get; set; }
     }
 }

@@ -14,6 +14,13 @@ namespace Catalog.Domain.Services
             this.dbContext = dbContext;
         }
 
+        public Task<string[]> GetCategoriesList(CancellationToken cancellationToken)
+        {
+            return dbContext.CatalogCategories
+                .Select(s => s.Name)
+                .ToArrayAsync(cancellationToken);
+        }
+
         public Task<CatalogItemListView[]> GetCatalogItems (CancellationToken cancellationToken)
         {
             return dbContext.CatalogItems

@@ -16,7 +16,8 @@ var rabbitConnStr = builder.Configuration.GetConnectionString("rabbit");
 
 builder.Services.AddMassTransit(cfg =>
 {
-    cfg.AddConsumer<GetAllProductsConsumer>();
+    cfg.AddConsumer<GetCategoryItemsConsumer>();
+    cfg.AddConsumer<GetCategoriesListConsumer>();
 
     cfg.UsingRabbitMq((context, rabbitCfg) =>
     {
@@ -25,7 +26,8 @@ builder.Services.AddMassTransit(cfg =>
 
         rabbitCfg.ReceiveEndpoint("catalogQueue", e =>
         {
-            e.ConfigureConsumer<GetAllProductsConsumer>(context);
+            e.ConfigureConsumer<GetCategoryItemsConsumer>(context);
+            e.ConfigureConsumer<GetCategoriesListConsumer>(context);
 
             e.UseMessageRetry(u => u.Interval(3, 5));
         });
