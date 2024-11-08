@@ -12,6 +12,7 @@ namespace Catalog.Data.Database.Models
         public string Name { get; set; }
         public double Price { get; set; }
         public string Image {  get; set; }
-        public List<ProductAdditive> Products { get; set; } = new();
+        public List<Product> Products { get; set; } = new();
+        public List<ProductAdditive> ProductAdditives { get; set; } = new();
     }
 }

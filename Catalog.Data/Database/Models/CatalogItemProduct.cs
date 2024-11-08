@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 
 namespace Catalog.Data.Database.Models
 {
-    public class Сharacteristic
+    public class CatalogItemProduct
     {
         public int Id { get; set; }
-        public int Value { get; set; }
 
-        public int CharacteristicTypeId { get; set; }
-        public СharacteristicType CharacteristicType { get; set; }
+        public int CatalogItemId { get; set; }
+        public CatalogItem CatalogItem { get; set; }
 
         public int ProductId { get; set; }
         public Product Product { get; set; }

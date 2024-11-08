@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Catalog.Data.Database.Models
 {
-    public class ComboType
+    public class ViewType
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -10,11 +10,15 @@ namespace Catalog.Data.Database.Models
     {
         public int Id { get; set; }
         public string Image { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
-        public int ComboTypeId { get; set; }
-        public ComboType ComboType { get; set; }
+        public int ViewTypeId { get; set; }
+        public ViewType ViewType { get; set; }
         
         public int CatalogCategoryId { get; set; }
         public CatalogCategory CatalogCategory { get; set; }
+
+        public List<Product> Products { get; set; }
     }
 }
