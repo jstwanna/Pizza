@@ -43,6 +43,7 @@ namespace Catalog.Domain.Services
                     Products = s.Products.Select(s => new ProductListView
                     {
                         Id = s.Id,
+                        Name = s.Name,
                         Image = s.Image,
                         Price = s.Price,
                         ProductType = s.ProductType.Name,
