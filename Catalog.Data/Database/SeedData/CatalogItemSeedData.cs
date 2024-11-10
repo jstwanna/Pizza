@@ -94,15 +94,15 @@ namespace Catalog.Data.Database.SeedData
                     Name = "Омлет с пепперони",
                     Description = "Сытный и сбалансированный завтрак — омлет с поджаристой корочкой, пикантная пепперони, томаты и моцарелла"
                 },
-                new CatalogItem
-                {
-                    Id = 10,
-                    CatalogCategoryId = 2,
-                    ViewTypeId = 2,
-                    Image = "Combo3Pizzas.png",
-                    Name = "3 пиццы",
-                    Description = "Три удовольствия в нашем меню — это 3 средние пиццы на ваш выбор. Цена комбо зависит от выбранных пицц и может быть увеличена"
-                },
+                //new CatalogItem
+                //{
+                //    Id = 10,
+                //    CatalogCategoryId = 2,
+                //    ViewTypeId = 2,
+                //    Image = "Combo3Pizzas.png",
+                //    Name = "3 пиццы",
+                //    Description = "Три удовольствия в нашем меню — это 3 средние пиццы на ваш выбор. Цена комбо зависит от выбранных пицц и может быть увеличена"
+                //},
             };
         }
     }

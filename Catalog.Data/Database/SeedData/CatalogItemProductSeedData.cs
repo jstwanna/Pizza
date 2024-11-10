@@ -139,24 +139,24 @@ namespace Catalog.Data.Database.SeedData
                     CatalogItemId = 9,
                     ProductId = 21,
                 },
-                new CatalogItemProduct
-                {
-                    Id = 22,
-                    CatalogItemId = 10,
-                    ProductId = 3,
-                },
-                new CatalogItemProduct
-                {
-                    Id = 23,
-                    CatalogItemId = 10,
-                    ProductId = 11,
-                },
-                new CatalogItemProduct
-                {
-                    Id = 24,
-                    CatalogItemId = 10,
-                    ProductId = 16,
-                }
+                //new CatalogItemProduct
+                //{
+                //    Id = 22,
+                //    CatalogItemId = 10,
+                //    ProductId = 3,
+                //},
+                //new CatalogItemProduct
+                //{
+                //    Id = 23,
+                //    CatalogItemId = 10,
+                //    ProductId = 11,
+                //},
+                //new CatalogItemProduct
+                //{
+                //    Id = 24,
+                //    CatalogItemId = 10,
+                //    ProductId = 16,
+                //}
             };
         }
     }
