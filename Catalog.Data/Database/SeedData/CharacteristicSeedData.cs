@@ -53,7 +53,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 6,
                     ProductId = 2,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
@@ -95,7 +95,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 12,
                     ProductId = 4,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
@@ -200,7 +200,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 27,
                     ProductId = 10,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
@@ -242,7 +242,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 33,
                     ProductId = 12,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
@@ -305,7 +305,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 42,
                     ProductId = 15,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
@@ -347,7 +347,7 @@ namespace Catalog.Data.Database.SeedData
                     Id = 48,
                     ProductId = 17,
                     CharacteristicTypeId = 3,
-                    Value = 1
+                    Value = 2
                 },
                 new Сharacteristic
                 {
