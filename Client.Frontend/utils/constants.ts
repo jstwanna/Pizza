@@ -72,7 +72,7 @@ export const headerLinks = computed<Link[]>(() => [
   {
     id: 2,
     title: 'Комбо',
-    to: '#',
+    to: '#combo',
   },
   {
     id: 4,

@@ -1,32 +1,120 @@
 <script lang="ts" setup>
+import BaseTabs from '~/components/UI/BaseTabs.vue';
+
 import { carouselItems } from '../utils/constants';
-import { formatNumber } from '../utils/utils';
-
 import { CatalogClient, ApiException } from '../api/api-generated';
-import type { ProductListView, PizzaListView } from '../api/api-generated';
-
-interface ProcessedData {
-  pizzas: PizzaListView[];
-  snacks: ProductListView[];
-  breakfast: ProductListView[];
-}
+import type {
+  CatalogItemListView,
+  ProductListView,
+} from '../api/api-generated';
+import { addToCart, cartItems } from '../utils/cartHelper';
+import type { ITab, ICounterItems } from '../models/models';
 
 const catalogApi = new CatalogClient();
-const catalog = ref<ProcessedData | null>(null);
-const order = ref<ProductListView[]>([]);
 
-const currentPizza = ref<PizzaListView | null>();
-const currentSnacksBreakfast = ref<ProductListView | null>(null);
+const pizzaItems = ref<CatalogItemListView[]>([]);
+const breakfastItems = ref<CatalogItemListView[]>([]);
+const snackItems = ref<CatalogItemListView[]>([]);
+const comboItems = ref<CatalogItemListView[]>([]);
+const randomOrderItems = ref<CatalogItemListView[]>([]);
 
-const isPizzaOpen = ref<boolean>(false);
-const isProductOpen = ref<boolean>(false);
+const isPizzaPopup = ref<boolean>(false);
+const isComboOpen = ref<boolean>(false);
+const isBreakfastOrSnackOpen = ref<boolean>(false);
 
-const togglePizzaPopup = () => {
-  isPizzaOpen.value = !isPizzaOpen.value;
+const currentProduct = ref<CatalogItemListView | null>(null);
+
+const selectedSizeTab = ref<number>(25);
+const selectedTypeTab = ref<number>(1);
+
+const isThinDoughDisabled = computed(() => selectedSizeTab.value === 25);
+const isTypeTabDisabled = computed(() => selectedTypeTab.value === 2);
+
+const pizzaSizeTabs = computed<ITab[]>(() => [
+  {
+    id: 25,
+    title: '25 см',
+    disabled: isTypeTabDisabled.value,
+  },
+  {
+    id: 30,
+    title: '30 см',
+  },
+  {
+    id: 35,
+    title: '35 см',
+  },
+]);
+
+const pizzaTypeTabs = computed<ITab[]>(() => [
+  {
+    id: 1,
+    title: 'Традиционное',
+  },
+  {
+    id: 2,
+    title: 'Тонкое',
+    disabled: isThinDoughDisabled.value,
+  },
+]);
+
+const currentVariant = computed(() => {
+  return currentProduct.value?.products.find(
+    (product) =>
+      product.characteristics.some(
+        (char) => char.name === 'Размер' && char.value === selectedSizeTab.value
+      ) &&
+      product.characteristics.some(
+        (char) =>
+          char.name === 'Тип теста' && char.value === selectedTypeTab.value
+      )
+  );
+});
+
+const currentWeight = computed(() => {
+  const weightCharacteristic = currentVariant.value?.characteristics.find(
+    (char) => char.name === 'Вес'
+  );
+  return weightCharacteristic ? weightCharacteristic.value : 0;
+});
+
+const resetPizzaOptions = () => {
+  selectedSizeTab.value = 25;
+  selectedTypeTab.value = 1;
 };
 
-const toggleProductPopup = () => {
-  isProductOpen.value = !isProductOpen.value;
+const togglePopup = (type: string = 'any') => {
+  if (type === 'Пицца') {
+    isPizzaPopup.value = !isPizzaPopup.value;
+    if (!isPizzaPopup.value) resetPizzaOptions();
+  } else if (type === 'Комбо') {
+    isComboOpen.value = !isComboOpen.value;
+  } else {
+    isBreakfastOrSnackOpen.value = !isBreakfastOrSnackOpen.value;
+  }
+};
+
+const handleProductClick = (product: CatalogItemListView) => {
+  currentProduct.value = product;
+  togglePopup(product.category);
+};
+
+const handleAddToCart = (product: ICounterItems<ProductListView>) => {
+  addToCart(product);
+  togglePopup(product.item.productType);
+};
+
+const handleValidateCart = (product: CatalogItemListView) => {
+  if (product.category === 'Пицца' || product.category === 'Комбо') {
+    handleProductClick(product);
+  } else {
+    addToCart({
+      count: 1,
+      price: product.products[0].price,
+      additives: null,
+      item: product.products[0],
+    });
+  }
 };
 
 useHead({
@@ -34,58 +122,45 @@ useHead({
     'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
 });
 
-const handleGetPizza = (pizza: PizzaListView) => {
-  togglePizzaPopup();
-  currentPizza.value = pizza;
-};
-
-const handleGetProduct = (product: ProductListView) => {
-  toggleProductPopup();
-  currentSnacksBreakfast.value = product;
-};
-
-onMounted(() => {
-  const savedCatalog = localStorage.getItem('catalog');
-
-  if (savedCatalog) {
-    catalog.value = JSON.parse(savedCatalog);
-  } else {
-    catalogApi
-      .getAllProducts()
-      .then((res) => {
-        const processedData: ProcessedData = {
-          pizzas: res.pizzas,
-          snacks: [],
-          breakfast: [],
-        };
-
-        res.products.forEach((product) => {
-          if (product.productType === 'Завтрак') {
-            processedData.breakfast.push(product);
-          } else if (product.productType === 'Закуски') {
-            processedData.snacks.push(product);
-          }
-        });
-
-        catalog.value = processedData;
-
-        localStorage.setItem('catalog', JSON.stringify(processedData));
-      })
-      .catch((error: ApiException) =>
-        console.error('Error while receiving goods:', error.message)
-      );
-  }
-
-  if (catalog.value) {
-    const snacks = catalog.value.snacks ?? [];
-    const breakfast = catalog.value.breakfast ?? [];
-
-    const allProducts = [...snacks, ...breakfast];
-
-    const shuffledProducts = allProducts.sort(() => 0.5 - Math.random());
-    order.value = shuffledProducts.slice(0, 4);
+onMounted(async () => {
+  try {
+    const { items } = await catalogApi.getCatalogItems();
+    items.forEach((item: CatalogItemListView) => {
+      switch (item.category) {
+        case 'Пицца':
+          pizzaItems.value.push(item);
+          break;
+        case 'Завтрак':
+          breakfastItems.value.push(item);
+          break;
+        case 'Закуски':
+          snackItems.value.push(item);
+          break;
+        case 'Комбо':
+          comboItems.value.push(item);
+          break;
+        default:
+          console.error(`Unknown type: ${item.category}`);
+      }
+    });
+    const combinedItems = [...breakfastItems.value, ...snackItems.value];
+    randomOrderItems.value = combinedItems
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 4);
+  } catch (error) {
+    console.error('Error loading catalog:', (error as ApiException).name);
   }
 });
+
+watch(
+  cartItems,
+  () => {
+    console.log(cartItems.value);
+  },
+  {
+    deep: true,
+  }
+);
 </script>
 
 <template>
@@ -96,94 +171,38 @@ onMounted(() => {
   <section class="often-order">
     <h2 class="often-order__title">Часто заказывают</h2>
     <ul class="often-order__cards">
-      <OrderCard v-for="card in order" :key="card.id" :card="card" />
+      <OrderCard
+        v-for="card in randomOrderItems"
+        @cardClick="handleProductClick"
+        :key="card.name"
+        :card="card"
+      />
     </ul>
   </section>
 
-  <section class="category" id="pizza">
-    <h2 class="category__title">Пицца</h2>
-    <div class="category__products">
-      <article
-        class="product"
-        v-for="pizza in catalog?.pizzas"
-        :key="pizza.id"
-        @click="handleGetPizza(pizza)"
-      >
-        <template v-if="pizza.pizzas != null">
-          <div class="product__main">
-            <img
-              :src="`/images/${pizza.pizzas[0].image}`"
-              class="product__image"
-            />
-            <h3 class="product__title">{{ pizza.pizzas[0].pizzaType }}</h3>
-            {{ pizza.desctiption }}
-          </div>
-          <div class="product__footer">
-            <div class="product__cost">
-              {{ formatNumber(pizza.pizzas[0].price) }} ₽
-            </div>
-            <UIBaseButton type="button" class="product__button">
-              Собрать
-            </UIBaseButton>
-          </div>
-        </template>
-      </article>
-    </div>
-  </section>
+  <CategorySection
+    id="pizza"
+    title="Пицца"
+    :products="pizzaItems"
+    @cardClick="handleProductClick"
+    @addToCart="handleValidateCart"
+  />
 
-  <section class="category" id="snacks">
-    <h2 class="category__title">Закуски</h2>
-    <div class="category__products">
-      <article
-        class="product"
-        v-for="snack in catalog?.snacks"
-        :key="snack.id"
-        @click="handleGetProduct(snack)"
-      >
-        <template v-if="snack != null">
-          <div class="product__main">
-            <img :src="`/images/${snack.image}`" class="product__image" />
-            <h3 class="product__title">{{ snack.name }}</h3>
-            {{ snack.description }}
-          </div>
-          <div class="product__footer">
-            <div class="product__cost">{{ formatNumber(snack.price) }} ₽</div>
-            <UIBaseButton type="button" class="product__button">
-              В корзину
-            </UIBaseButton>
-          </div>
-        </template>
-      </article>
-    </div>
-  </section>
+  <CategorySection
+    id="snacks"
+    title="Закуски"
+    :products="snackItems"
+    @cardClick="handleProductClick"
+    @addToCart="handleValidateCart"
+  />
 
-  <section class="category" id="breakfast">
-    <h2 class="category__title">Завтрак</h2>
-    <div class="category__products">
-      <article
-        class="product"
-        v-for="breakfast in catalog?.breakfast"
-        :key="breakfast.id"
-        @click="handleGetProduct(breakfast)"
-      >
-        <template v-if="breakfast != null">
-          <div class="product__main">
-            <img :src="`/images/${breakfast.image}`" class="product__image" />
-            <h3 class="product__title">{{ breakfast.name }}</h3>
-            {{ breakfast.description }}
-          </div>
-          <div class="product__footer">
-            <div class="product__cost">
-              {{ formatNumber(breakfast.price) }} ₽
-            </div>
-            <UIBaseButton type="button" class="product__button">
-              В корзину
-            </UIBaseButton>
-          </div>
-        </template>
-      </article>
-    </div>
-  </section>
+  <CategorySection
+    id="breakfast"
+    title="Завтрак"
+    :products="breakfastItems"
+    @cardClick="handleProductClick"
+    @addToCart="handleValidateCart"
+  />
 
   <section class="delivery">
     <h2 class="delivery__title">Доставка и оплата</h2>
@@ -216,43 +235,112 @@ onMounted(() => {
   </section>
 
   <UIBasePopup
-    v-model="isPizzaOpen"
+    v-model="isPizzaPopup"
     customClass="main-popup"
-    @closePopup="togglePizzaPopup"
+    @closePopup="togglePopup('Пицца')"
   >
-    <template #content v-if="currentPizza?.pizzas != null">
+    <template #content v-if="currentVariant">
       <div class="main-popup__content">
         <div class="main-popup__image-container">
           <img
-            :src="`/images/${currentPizza.pizzas[1].image}`"
-            :alt="`Фото ${currentPizza.pizzas[0].pizzaType}`"
+            :src="`/images/${currentVariant.image}`"
+            :alt="`Фото ${currentVariant.name}`"
             class="main-popup__image"
           />
         </div>
-        <div class="pizza-popup__info-content"></div>
+        <div class="main-popup__container">
+          <div class="main-popup__info">
+            <h3 class="main-popup__title">{{ currentProduct?.name }}</h3>
+            <span class="main-popup__count-info">
+              {{ selectedSizeTab }} см,
+              {{
+                selectedTypeTab === 1 ? 'традиционное тесто,' : 'тонкое тесто,'
+              }}
+              {{ currentWeight }} г
+            </span>
+            <div class="main-popup__description">
+              {{ currentProduct?.description }}
+            </div>
+            <BaseTabs :tabs="pizzaSizeTabs" v-model="selectedSizeTab" />
+            <BaseTabs
+              :tabs="pizzaTypeTabs"
+              v-model="selectedTypeTab"
+              style="margin-top: 0"
+            />
+            <template v-if="currentVariant.additives.length > 0">
+              <span class="main-popup__add">Добавить по вкусу</span>
+              <ul class="main-popup__additives">
+                <Additive
+                  v-for="additive in currentVariant.additives"
+                  :additive="additive"
+                  :key="additive.id"
+                />
+              </ul>
+            </template>
+          </div>
+          <div class="main-popup__button-container">
+            <UIBaseButton
+              type="button"
+              class="main-popup__button"
+              @click="
+                handleAddToCart({
+                  count: 1,
+                  price: currentVariant.price,
+                  additives: null,
+                  item: currentVariant,
+                })
+              "
+            >
+              В корзину за {{ currentVariant.price }}
+            </UIBaseButton>
+          </div>
+        </div>
       </div>
     </template>
   </UIBasePopup>
 
   <UIBasePopup
-    v-model="isProductOpen"
+    v-model="isBreakfastOrSnackOpen"
     customClass="main-popup"
-    @closePopup="toggleProductPopup"
+    @closePopup="togglePopup"
   >
-    <template #content v-if="currentSnacksBreakfast != null">
+    <template #content v-if="currentProduct !== null">
       <div class="main-popup__content">
         <div class="main-popup__image-container">
           <img
-            :src="`/images/${currentSnacksBreakfast.image}`"
-            :alt="`Фото ${currentSnacksBreakfast.name}`"
+            :src="`/images/${currentProduct.image}`"
+            :alt="`Фото ${currentProduct.name}`"
             class="main-popup__image"
           />
         </div>
         <div class="main-popup__container">
-          <div class="main-popup__info"></div>
+          <div class="main-popup__info">
+            <h3 class="main-popup__title">{{ currentProduct.name }}</h3>
+            <span class="main-popup__count-info">
+              {{ currentProduct.products[0].characteristics[1].value }} шт,
+              {{ currentProduct.products[0].characteristics[0].value }} г
+            </span>
+            <div class="main-popup__description">
+              {{ currentProduct.description }}
+            </div>
+            <div class="main-popup__count">
+              {{ currentProduct.products[0].characteristics[1].value }} шт
+            </div>
+          </div>
           <div class="main-popup__button-container">
-            <UIBaseButton type="button" class="main-popup__button">
-              В корзину за {{ currentSnacksBreakfast.price }}
+            <UIBaseButton
+              type="button"
+              class="main-popup__button"
+              @click="
+                handleAddToCart({
+                  count: 1,
+                  price: currentProduct.products[0].price,
+                  additives: null,
+                  item: currentProduct.products[0],
+                })
+              "
+            >
+              В корзину за {{ currentProduct.products[0].price }}
             </UIBaseButton>
           </div>
         </div>
@@ -469,18 +557,6 @@ onMounted(() => {
     height: 26.625rem;
   }
 
-  &__info-content {
-    position: relative;
-    float: right;
-    vertical-align: top;
-    width: 24.625rem;
-    height: 38.125rem;
-    padding: 1.875rem 0;
-    background: $white;
-    border-top-right-radius: 1.25rem;
-    border-bottom-right-radius: 1.25rem;
-  }
-
   &__container {
     position: relative;
     float: right;
@@ -488,7 +564,7 @@ onMounted(() => {
     width: 24.625rem;
     height: 38.125rem;
     padding: 1.875rem 0;
-    background: $white;
+    background: hsl(0, 0%, 99%);
     border-top-right-radius: 1.25rem;
     border-bottom-right-radius: 1.25rem;
   }
@@ -515,6 +591,88 @@ onMounted(() => {
   }
 
   &__info {
+    position: relative;
+    overflow: auto;
+    display: flex;
+    flex-flow: column;
+    height: 29.875rem;
+    padding-left: 1.875rem;
+    padding-right: 1.875rem;
+
+    &::-webkit-scrollbar {
+      width: 0.25rem;
+      height: 0.25rem;
+
+      &-track {
+        background: transparent;
+      }
+
+      &-thumb {
+        background: $orange;
+        border-radius: 0.4rem;
+      }
+    }
+
+    @-moz-document url-prefix() {
+      scrollbar-width: thin;
+      scrollbar-color: $orange transparent;
+    }
+  }
+
+  &__title {
+    font-size: $fs-2xl;
+    line-height: 1.75rem;
+    font-weight: 500;
+  }
+
+  &__count-info {
+    color: $dark-gray;
+    padding-top: 0.1875rem;
+    padding-bottom: 0.3125rem;
+    font-size: $fs-sm;
+    line-height: 1.25rem;
+  }
+
+  &__description {
+    font-size: $fs-sm;
+  }
+
+  &__count {
+    font-size: $fs-xs;
+    line-height: 2rem;
+    margin-top: 1.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $gray;
+    height: 2rem;
+    border-radius: 624.9375rem;
+  }
+
+  &__combo {
+    margin-top: 1rem;
+  }
+
+  &__combo-scroll {
+    position: relative;
+    height: 100%;
+    overflow-x: auto;
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+  }
+
+  &__add {
+    margin-top: 0.875rem;
+    margin-bottom: 0.75rem;
+    font-size: $fs-xl;
+    line-height: 1.5rem;
+    font-weight: $fw-semibold;
+  }
+
+  &__additives {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
   }
 }
 </style>

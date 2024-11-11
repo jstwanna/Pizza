@@ -1,27 +1,25 @@
 <script lang="ts" setup>
-import type { OftenOrderCard } from '../models/models';
+import type { CatalogItemListView } from '../api/api-generated';
 
 interface Props {
+  id: string;
   title: string;
-  products: OftenOrderCard[];
+  products: CatalogItemListView[];
 }
 
 defineProps<Props>();
-
-const handleCardClick = (clickedCard: OftenOrderCard) => {
-  console.log('Card clicked:', clickedCard);
-};
 </script>
 
 <template>
-  <section class="category">
+  <section class="category" :id="id">
     <h2 class="category__title">{{ title }}</h2>
     <div class="category__products">
       <Product
         v-for="product in products"
-        :key="product.id"
+        :key="product.name"
         :product="product"
-        @card-click="handleCardClick"
+        @cardClick="$emit('cardClick', product)"
+        @addToCart="$emit('addToCart', product)"
       />
     </div>
   </section>

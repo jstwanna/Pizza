@@ -21,7 +21,7 @@
   font-weight: $fw-normal;
   line-height: 1.4;
 
-  min-width: 64rem;
+  min-width: 70.5rem;
   min-height: 100dvh;
 
   color: $black;

@@ -1,3 +1,5 @@
+import type { AdditiveListView } from '../api/api-generated';
+
 export interface ContactLink {
   id: number;
   title: string;
@@ -41,4 +43,17 @@ export interface Ingredient {
   id: number;
   title: string;
   text: string;
+}
+
+export interface ITab {
+  id: number;
+  title: string;
+  disabled?: boolean;
+}
+
+export interface ICounterItems<T> {
+  count: number;
+  price: number;
+  additives: string[] | null;
+  item: T;
 }

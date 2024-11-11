@@ -36,7 +36,7 @@ export default defineNuxtConfig({
       },
 
       '/images': {
-        target: 'https://localhost:7212/images/',
+        target: 'https://localhost:7118/images/',
         changeOrigin: true,
         secure: false,
       },

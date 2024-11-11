@@ -3,6 +3,7 @@ import smallLogo from '../assets/svg/smallLogo.svg';
 import emptyCart from '../assets/svg/empty-cart.svg';
 
 import { headerLinks } from '../utils/constants';
+import { cartItems, isCartNotEmpty } from '../utils/cartHelper';
 
 const shadow = ref<boolean>(false);
 
@@ -60,10 +61,14 @@ onUnmounted(() => {
 
       <UIBaseButton
         type="button"
-        class="navigation__basket"
+        class="navigation__cart"
         @click="toggleCartPopup"
       >
         Корзина
+        <template v-if="isCartNotEmpty">
+          <div class="navigation__cart-line"></div>
+          {{ cartItems.length }}
+        </template>
       </UIBaseButton>
     </div>
   </div>
@@ -172,14 +177,9 @@ onUnmounted(() => {
     }
   }
 
-  &__basket-container {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-  }
-
-  &__basket {
+  &__cart {
+    display: flex;
+    align-items: center;
     margin-left: auto;
     color: $white;
     line-height: 1.5rem;
@@ -190,6 +190,14 @@ onUnmounted(() => {
     &:hover {
       background-color: $dark-orange;
     }
+  }
+
+  &__cart-line {
+    height: 1.5rem;
+    width: 0.0625rem;
+    margin: 0 0.75rem;
+    background: $white;
+    opacity: 0.4;
   }
 }
 

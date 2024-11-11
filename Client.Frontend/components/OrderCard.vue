@@ -1,15 +1,16 @@
 <script lang="ts" setup>
-import type { ProductListView } from '../api/api-generated';
+import type { CatalogItemListView } from '../api/api-generated';
 import { formatNumber } from '../utils/utils';
 
 const emit = defineEmits<{
-  (e: 'cardClick', card: ProductListView): void;
+  (e: 'cardClick', card: CatalogItemListView): void;
 }>();
 
-const props = defineProps<{ card: ProductListView }>();
+const props = defineProps<{ card: CatalogItemListView }>();
 
-const handleClickProduct = (card: ProductListView) => {
+const handleClickProduct = (card: CatalogItemListView) => {
   emit('cardClick', card);
+  console.log(card);
 };
 
 const getOldCost = (price: number): number | null => {
@@ -32,8 +33,10 @@ const getOldCost = (price: number): number | null => {
     />
     <div class="order-card__info">
       <h3 class="order-card__title">{{ card.name }}</h3>
-      <span class="order-card__cost"> {{ formatNumber(card.price) }} ₽ </span>
-      <OldPrice :oldCost="getOldCost(card.price)" />
+      <span class="order-card__cost">
+        {{ formatNumber(card.products[0].price) }} ₽
+      </span>
+      <OldPrice :oldCost="getOldCost(card.products[0].price)" />
     </div>
   </li>
 </template>

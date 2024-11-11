@@ -17,7 +17,7 @@ const handleClickButton = () => emit('click');
   <button
     :type="type"
     :disabled="disabled"
-    @click="handleClickButton"
+    @click.stop="handleClickButton"
     class="button"
   >
     <slot />
