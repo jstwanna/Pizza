@@ -24,6 +24,9 @@
   min-width: 70.5rem;
   min-height: 100dvh;
 
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
   color: $black;
 
   font-synthesis: none;

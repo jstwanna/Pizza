@@ -98,6 +98,8 @@ const resetPizzaOptions = () => {
 const togglePopup = (type: string = 'any') => {
   if (type === 'Пицца') {
     isPizzaPopup.value = !isPizzaPopup.value;
+
+    selectedAdditives.value = [];
     if (!isPizzaPopup.value) resetPizzaOptions();
   } else if (type === 'Комбо') {
     isComboOpen.value = !isComboOpen.value;
@@ -108,7 +110,6 @@ const togglePopup = (type: string = 'any') => {
 
 const handleProductClick = (product: CatalogItemListView) => {
   currentProduct.value = null;
-  selectedAdditives.value.length = 0;
 
   togglePopup(product.category);
 
@@ -127,7 +128,7 @@ const handleValidateCart = (product: CatalogItemListView) => {
     addToCart({
       count: 1,
       price: product.products[0].price,
-      additives: null,
+      additives: [],
       item: product.products[0],
     });
   }
@@ -180,16 +181,6 @@ onMounted(async () => {
     console.error('Error loading catalog:', (error as ApiException).name);
   }
 });
-
-watch(
-  cartItems,
-  () => {
-    console.log(cartItems.value);
-  },
-  {
-    deep: true,
-  }
-);
 </script>
 
 <template>
@@ -365,7 +356,7 @@ watch(
                 handleAddToCart({
                   count: 1,
                   price: currentProduct.products[0].price,
-                  additives: null,
+                  additives: [],
                   item: currentProduct.products[0],
                 })
               "
@@ -474,8 +465,8 @@ watch(
 
 .category {
   @include container;
-  padding-top: 58px;
-  margin-top: -58px;
+  padding-top: 3.625rem;
+  margin-top: -3.625rem;
 
   &__title {
     @include section-title;
@@ -628,25 +619,7 @@ watch(
     height: 29.875rem;
     padding-left: 1.875rem;
     padding-right: 1.875rem;
-
-    &::-webkit-scrollbar {
-      width: 0.25rem;
-      height: 0.25rem;
-
-      &-track {
-        background: transparent;
-      }
-
-      &-thumb {
-        background: $orange;
-        border-radius: 0.4rem;
-      }
-    }
-
-    @-moz-document url-prefix() {
-      scrollbar-width: thin;
-      scrollbar-color: $orange transparent;
-    }
+    @include scrollbar;
   }
 
   &__title {

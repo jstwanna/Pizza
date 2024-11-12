@@ -54,6 +54,6 @@ export interface ITab {
 export interface ICounterItems<T> {
   count: number;
   price: number;
-  additives: AdditiveListView[] | null;
+  additives: AdditiveListView[];
   item: T;
 }

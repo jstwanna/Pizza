@@ -22,12 +22,20 @@ const handleClickCard = () => {
 const handleAddToCart = () => {
   emits('addToCart', props.product);
 };
+
+const minPrice = computed(() =>
+  Math.min(...props.product.products.map((p) => p.price))
+);
 </script>
 
 <template>
   <article class="product" @click="handleClickCard">
     <div class="product__main">
-      <img :src="`/images/${product.image}`" class="product__image" />
+      <img
+        :src="`/images/${product.image}`"
+        :alt="`Фото ${product.name}`"
+        class="product__image"
+      />
       <h3 class="product__title">{{ product.name }}</h3>
       {{ product.description }}
     </div>
@@ -35,7 +43,7 @@ const handleAddToCart = () => {
       <div class="product__cost">
         {{
           `${product.category === 'Пицца' ? 'от ' : ''} ${formatNumber(
-            product.products[0].price
+            minPrice
           )}`
         }}
         ₽

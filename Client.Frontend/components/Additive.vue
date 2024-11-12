@@ -44,11 +44,11 @@ const toggleActive = () => {
   position: relative;
   height: 10.375rem;
   width: calc(33.3333% - 0.5rem);
-  box-shadow: rgba(6, 5, 50, 0.12) 0 0.25rem 1.25rem;
+  box-shadow: hsla(241, 82%, 11%, 0.12) 0 0.25rem 1.25rem;
   display: flex;
   align-items: center;
   padding: 0.5rem;
-  background: rgb(255, 255, 255);
+  background: $white;
   border-width: 0.0625rem;
   border-style: solid;
   border-color: $white;

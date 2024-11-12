@@ -43,7 +43,7 @@ defineProps<{ card: ProductListView }>();
   min-height: 5.875rem;
   position: relative;
   margin-bottom: 0.75rem;
-  box-shadow: rgba(6, 5, 50, 0.1) 0rem 0.125rem 0.25rem;
+  box-shadow: $black-100 0rem 0.125rem 0.25rem;
   padding: 0.75rem;
   background: $white;
   border-radius: 1rem;
@@ -55,7 +55,7 @@ defineProps<{ card: ProductListView }>();
   cursor: pointer;
 
   &:hover {
-    box-shadow: rgba(6, 5, 50, 0.1) 0px 0.375rem 1.25rem;
+    box-shadow: $black-100 0 0.375rem 1.25rem;
   }
 
   &__row {
@@ -88,7 +88,7 @@ defineProps<{ card: ProductListView }>();
   &__control {
     display: flex;
     gap: 1rem;
-    margin-top: 24px;
+    margin-top: 1.5rem;
   }
 
   &__change {
