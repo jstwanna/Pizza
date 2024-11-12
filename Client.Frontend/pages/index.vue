@@ -6,6 +6,7 @@ import { CatalogClient, ApiException } from '../api/api-generated';
 import type {
   CatalogItemListView,
   ProductListView,
+  AdditiveListView,
 } from '../api/api-generated';
 import { addToCart, cartItems } from '../utils/cartHelper';
 import type { ITab, ICounterItems } from '../models/models';
@@ -29,6 +30,8 @@ const selectedTypeTab = ref<number>(1);
 
 const isThinDoughDisabled = computed(() => selectedSizeTab.value === 25);
 const isTypeTabDisabled = computed(() => selectedTypeTab.value === 2);
+
+const selectedAdditives = ref<AdditiveListView[]>([]);
 
 const pizzaSizeTabs = computed<ITab[]>(() => [
   {
@@ -78,6 +81,15 @@ const currentWeight = computed(() => {
   return weightCharacteristic ? weightCharacteristic.value : 0;
 });
 
+const totalPrice = computed(() => {
+  const additivesPrice = selectedAdditives.value.reduce(
+    (sum, additive) => sum + additive.price,
+    0
+  );
+
+  return currentVariant.value!.price + additivesPrice;
+});
+
 const resetPizzaOptions = () => {
   selectedSizeTab.value = 25;
   selectedTypeTab.value = 1;
@@ -95,8 +107,12 @@ const togglePopup = (type: string = 'any') => {
 };
 
 const handleProductClick = (product: CatalogItemListView) => {
-  currentProduct.value = product;
+  currentProduct.value = null;
+  selectedAdditives.value.length = 0;
+
   togglePopup(product.category);
+
+  currentProduct.value = product;
 };
 
 const handleAddToCart = (product: ICounterItems<ProductListView>) => {
@@ -114,6 +130,19 @@ const handleValidateCart = (product: CatalogItemListView) => {
       additives: null,
       item: product.products[0],
     });
+  }
+};
+
+const handleToggleAdditive = (
+  additive: AdditiveListView,
+  isActive: boolean
+) => {
+  if (isActive) {
+    selectedAdditives.value.push(additive);
+  } else {
+    selectedAdditives.value = selectedAdditives.value.filter(
+      (item) => item.id !== additive.id
+    );
   }
 };
 
@@ -274,6 +303,7 @@ watch(
                   v-for="additive in currentVariant.additives"
                   :additive="additive"
                   :key="additive.id"
+                  :onToggle="handleToggleAdditive"
                 />
               </ul>
             </template>
@@ -285,13 +315,13 @@ watch(
               @click="
                 handleAddToCart({
                   count: 1,
-                  price: currentVariant.price,
-                  additives: null,
+                  price: totalPrice,
+                  additives: selectedAdditives,
                   item: currentVariant,
                 })
               "
             >
-              В корзину за {{ currentVariant.price }}
+              В корзину за {{ totalPrice }}
             </UIBaseButton>
           </div>
         </div>

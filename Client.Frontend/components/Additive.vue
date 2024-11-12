@@ -3,12 +3,16 @@ import confirm from '../assets/svg/confirm.svg';
 
 import type { AdditiveListView } from '../api/api-generated';
 
-defineProps<{ additive: AdditiveListView }>();
+const props = defineProps<{
+  additive: AdditiveListView;
+  onToggle: (additive: AdditiveListView, isActive: boolean) => void;
+}>();
 
 const isActive = ref<boolean>(false);
 
 const toggleActive = () => {
   isActive.value = !isActive.value;
+  props.onToggle(props.additive, isActive.value);
 };
 </script>
 

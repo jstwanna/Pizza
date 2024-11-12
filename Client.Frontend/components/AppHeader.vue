@@ -6,10 +6,6 @@ const input = ref<HTMLInputElement | null>(null);
 
 const userPhone = ref<string>('');
 
-const handleClickLoyalty = () => {
-  console.log('aaa');
-};
-
 const handleOpenPopup = () => {
   isLoginPopup.value = !isLoginPopup.value;
 };
@@ -94,11 +90,7 @@ watch(isLoginPopup, () => {
       </div>
 
       <div class="header__profile">
-        <UIBaseButton
-          type="button"
-          class="header__loyalty"
-          @click="handleClickLoyalty"
-        >
+        <UIBaseButton type="button" class="header__loyalty">
           <span class="header__coin"></span>
           <span class="header__dodo-coins">Додокоины</span>
         </UIBaseButton>

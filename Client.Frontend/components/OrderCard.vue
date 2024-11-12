@@ -10,7 +10,6 @@ const props = defineProps<{ card: CatalogItemListView }>();
 
 const handleClickProduct = (card: CatalogItemListView) => {
   emit('cardClick', card);
-  console.log(card);
 };
 
 const getOldCost = (price: number): number | null => {

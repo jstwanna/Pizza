@@ -81,7 +81,8 @@ onUnmounted(() => {
   >
     <template #content>
       <div class="cart-popup__content">
-        <div class="cart-popup__empty">
+        <div v-if="isCartNotEmpty"></div>
+        <div class="cart-popup__empty" v-else>
           <img
             :src="emptyCart"
             alt="Картинка пустой пиццы и сиба-ину"
