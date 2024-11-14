@@ -93,11 +93,14 @@ const currentYear = computed(() => new Date().getFullYear());
 
 <style lang="scss" scoped>
 .footer {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
   padding-bottom: 1.25rem;
   background-color: $dark;
 
   &__container {
     @include container;
+    @include responsive-width;
     padding-top: 1.875rem;
   }
 

@@ -39,3 +39,9 @@
     scrollbar-color: $orange transparent;
   }
 }
+
+@mixin responsive-width($breakpoint: 80rem, $width: 60rem) {
+  @media screen and (max-width: $breakpoint) {
+    width: $width;
+  }
+}

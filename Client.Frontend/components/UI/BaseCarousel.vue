@@ -4,18 +4,18 @@ import type { Image } from '../../models/models';
 defineProps<{ images: Image[] }>();
 
 const carousel = ref<HTMLDivElement | null>(null);
-const isDown = ref(false);
-const startX = ref(0);
-const scrollLeft = ref(0);
-const showLeftButton = ref(false);
-const showRightButton = ref(true);
+const isDown = ref<boolean>(false);
+const startX = ref<number>(0);
+const scrollLeft = ref<number>(0);
+const showLeftButton = ref<boolean>(false);
+const showRightButton = ref<boolean>(true);
 
 const checkButtonsVisibility = () => {
   if (carousel.value) {
     showLeftButton.value = carousel.value.scrollLeft > 0;
     showRightButton.value =
       carousel.value.scrollLeft + carousel.value.clientWidth <
-      carousel.value.scrollWidth;
+      carousel.value.scrollWidth - 1;
   }
 };
 
@@ -65,6 +65,7 @@ onMounted(() => {
     carousel.value.addEventListener('mouseup', onMouseUp);
     carousel.value.addEventListener('mousemove', onMouseMove);
     carousel.value.addEventListener('scroll', checkButtonsVisibility);
+    window.addEventListener('resize', checkButtonsVisibility);
     checkButtonsVisibility();
   }
 });
@@ -76,6 +77,7 @@ onUnmounted(() => {
     carousel.value.removeEventListener('mouseup', onMouseUp);
     carousel.value.removeEventListener('mousemove', onMouseMove);
     carousel.value.removeEventListener('scroll', checkButtonsVisibility);
+    window.removeEventListener('resize', checkButtonsVisibility);
   }
 });
 </script>

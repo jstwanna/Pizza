@@ -28,6 +28,7 @@ defineProps<Props>();
 <style lang="scss" scoped>
 .category {
   @include container;
+  @include responsive-width;
 
   &__title {
     @include section-title;

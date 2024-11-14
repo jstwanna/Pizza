@@ -24,6 +24,7 @@ export interface Link {
   id: number;
   title: string;
   to: string;
+  isMoreMenu?: boolean;
 }
 
 export interface ExternalLink {

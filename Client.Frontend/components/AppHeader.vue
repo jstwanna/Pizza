@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { headerMenuItems } from '../utils/constants';
+import { headerMenuItems, userMenuItems } from '../utils/constants';
 
 const isLoginPopup = ref<boolean>(false);
 const input = ref<HTMLInputElement | null>(null);
@@ -90,10 +90,17 @@ watch(isLoginPopup, () => {
       </div>
 
       <div class="header__profile">
-        <UIBaseButton type="button" class="header__loyalty">
-          <span class="header__coin"></span>
-          <span class="header__dodo-coins">Додокоины</span>
-        </UIBaseButton>
+        <UIBaseLink
+          v-for="link in userMenuItems"
+          :key="link.id"
+          :to="link.link"
+          class="header__profile-item"
+        >
+          <span
+            :class="`header__profile-image header__profile-image_${link.type}`"
+          ></span>
+          <span class="header__profile-description">{{ link.title }}</span>
+        </UIBaseLink>
         <UIBaseButton
           type="button"
           class="header__sign-in"
@@ -156,13 +163,21 @@ watch(isLoginPopup, () => {
     display: flex;
     align-items: center;
     gap: 1.25rem;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+
+    @media screen and (max-width: 80rem) {
+      padding: 0.75rem calc(50% - 30rem);
+    }
   }
 
   &__info-container {
     @include container;
+    @include responsive-width;
     display: flex;
     justify-content: space-between;
-    padding: 1.5rem 0 1rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
   }
 
   &__info {
@@ -245,7 +260,7 @@ watch(isLoginPopup, () => {
     gap: 2rem;
   }
 
-  &__loyalty {
+  &__profile-item {
     position: relative;
     display: flex;
     align-items: center;
@@ -253,26 +268,37 @@ watch(isLoginPopup, () => {
     cursor: pointer;
 
     &:hover {
-      .header__coin {
+      .header__profile-image {
         background-color: $orange;
         transform: translateY(-0.25rem);
       }
 
-      .header__dodo-coins {
+      .header__profile-description {
         color: $orange;
       }
     }
   }
 
-  &__coin {
+  &__profile-image {
     @include transition($duration: 150ms, $timing-function: ease);
     background-color: $black;
-    mask-image: url('/coin.svg');
     height: 1.75rem;
     width: 1.75rem;
+
+    &_coin {
+      mask-image: url('/coin.svg');
+    }
+
+    &_bonus {
+      mask-image: url('/bonus.svg');
+    }
+
+    &_profile {
+      mask-image: url('/profile.svg');
+    }
   }
 
-  &__dodo-coins {
+  &__profile-description {
     @include transition($duration: 150ms, $timing-function: ease);
     font-size: $fs-sm;
     font-weight: $fw-semibold;

@@ -204,6 +204,7 @@ useHead({
 <style scoped lang="scss">
 .section {
   @include container;
+  @include responsive-width;
   margin-bottom: 6.875rem;
 
   &__title {

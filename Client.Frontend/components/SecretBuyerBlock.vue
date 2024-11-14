@@ -28,6 +28,7 @@ import secretBuyer from '../assets/svg/secretBuyer.svg';
     display: flex;
     align-items: center;
     @include container;
+    @include responsive-width;
   }
 
   &__image {

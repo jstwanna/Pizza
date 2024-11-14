@@ -35,6 +35,13 @@ import dodoPeople from '../assets/svg/dodoPeople.svg';
 import dodoChat from '../assets/svg/dodoChat.svg';
 import dodoSecondChat from '../assets/svg/dodoSecondChat.svg';
 
+interface IProfileMenuItem {
+  id: number;
+  link: string;
+  type: string;
+  title: string;
+}
+
 export const headerMenuItems: Link[] = [
   {
     id: 1,
@@ -53,7 +60,28 @@ export const headerMenuItems: Link[] = [
   },
 ];
 
-export const headerLinks = computed<Link[]>(() => [
+export const userMenuItems: IProfileMenuItem[] = [
+  {
+    id: 1,
+    link: '#',
+    type: 'coin',
+    title: 'Додокоины',
+  },
+  {
+    id: 2,
+    link: '/profile#client-bonuses',
+    type: 'bonus',
+    title: 'Мои акции',
+  },
+  {
+    id: 3,
+    link: '/profile#personal-data',
+    type: 'profile',
+    title: 'Профиль',
+  },
+];
+
+export const headerLinks = reactive<Link[]>([
   {
     id: 1,
     title: 'Пиццы',
@@ -98,16 +126,19 @@ export const headerLinks = computed<Link[]>(() => [
     id: 8,
     title: 'Любят дети',
     to: '#',
+    isMoreMenu: true,
   },
   {
     id: 9,
     title: 'Соусы',
     to: '#',
+    isMoreMenu: true,
   },
   {
     id: 10,
     title: 'Другие товары',
     to: '#',
+    isMoreMenu: true,
   },
   {
     id: 11,

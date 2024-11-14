@@ -143,9 +143,6 @@ const handleToggleAdditive = (
   }
 };
 
-const { data } = await useAsyncData('aaa', () => catalogApi.getCatalogItems());
-console.log(data);
-
 useHead({
   title:
     'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
@@ -371,10 +368,12 @@ onMounted(async () => {
   max-width: 86rem;
   margin-left: auto;
   margin-right: auto;
+  @include responsive-width($width: 66rem);
 }
 
 .often-order {
   @include container;
+  @include responsive-width;
 
   &__title {
     font-weight: $fw-medium;
@@ -386,10 +385,16 @@ onMounted(async () => {
   &__cards {
     display: flex;
     align-items: flex-start;
-    flex-wrap: wrap;
     margin-top: 0.5625rem;
     margin-bottom: 1.25rem;
     column-gap: 1.5rem;
+    @include scrollbar;
+
+    @media screen and (max-width: 80rem) {
+      position: relative;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
   }
 }
 
@@ -397,6 +402,7 @@ onMounted(async () => {
   display: flex;
   flex-wrap: wrap;
   @include container;
+  @include responsive-width;
 
   &__title {
     width: 100%;
