@@ -8,7 +8,7 @@ import type {
   ProductListView,
   AdditiveListView,
 } from '../api/api-generated';
-import { addToCart, cartItems } from '../utils/cartHelper';
+import { addToCart } from '../utils/cartHelper';
 import type { ITab, ICounterItems } from '../models/models';
 
 const catalogApi = new CatalogClient();
@@ -16,11 +16,9 @@ const catalogApi = new CatalogClient();
 const pizzaItems = ref<CatalogItemListView[]>([]);
 const breakfastItems = ref<CatalogItemListView[]>([]);
 const snackItems = ref<CatalogItemListView[]>([]);
-const comboItems = ref<CatalogItemListView[]>([]);
 const randomOrderItems = ref<CatalogItemListView[]>([]);
 
 const isPizzaPopup = ref<boolean>(false);
-const isComboOpen = ref<boolean>(false);
 const isBreakfastOrSnackOpen = ref<boolean>(false);
 
 const currentProduct = ref<CatalogItemListView | null>(null);
@@ -101,8 +99,6 @@ const togglePopup = (type: string = 'any') => {
 
     selectedAdditives.value = [];
     if (!isPizzaPopup.value) resetPizzaOptions();
-  } else if (type === 'Комбо') {
-    isComboOpen.value = !isComboOpen.value;
   } else {
     isBreakfastOrSnackOpen.value = !isBreakfastOrSnackOpen.value;
   }
@@ -147,6 +143,9 @@ const handleToggleAdditive = (
   }
 };
 
+const { data } = await useAsyncData('aaa', () => catalogApi.getCatalogItems());
+console.log(data);
+
 useHead({
   title:
     'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
@@ -165,9 +164,6 @@ onMounted(async () => {
           break;
         case 'Закуски':
           snackItems.value.push(item);
-          break;
-        case 'Комбо':
-          comboItems.value.push(item);
           break;
         default:
           console.error(`Unknown type: ${item.category}`);
