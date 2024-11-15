@@ -10,9 +10,7 @@ const emits = defineEmits<{
 }>();
 
 const buttonText = computed(() =>
-  props.product.category === 'Пицца' || props.product.category === 'Комбо'
-    ? 'Выбрать'
-    : 'В корзину'
+  props.product.category === 'Пицца' ? 'Выбрать' : 'В корзину'
 );
 
 const handleClickCard = () => {

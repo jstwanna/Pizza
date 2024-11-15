@@ -126,23 +126,15 @@ export const headerLinks = reactive<Link[]>([
     id: 8,
     title: 'Любят дети',
     to: '#',
-    isMoreMenu: true,
   },
   {
     id: 9,
     title: 'Соусы',
     to: '#',
-    isMoreMenu: true,
   },
   {
     id: 10,
     title: 'Другие товары',
-    to: '#',
-    isMoreMenu: true,
-  },
-  {
-    id: 11,
-    title: 'Акции',
     to: '#',
   },
 ]);

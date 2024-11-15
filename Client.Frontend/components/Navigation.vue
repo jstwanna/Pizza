@@ -3,6 +3,9 @@ import smallLogo from '../assets/svg/smallLogo.svg';
 import emptyCart from '../assets/svg/empty-cart.svg';
 import coin from '/coin.svg';
 import right from '../assets/svg/right.svg';
+import bottom from '../assets/svg/bottom.svg';
+
+import BaseButton from './UI/BaseButton.vue';
 
 import { headerLinks } from '../utils/constants';
 import {
@@ -14,10 +17,15 @@ import {
 } from '../utils/cartHelper';
 import type { AdditiveListView } from '../api/api-generated';
 import { formatNumber, pluralizeWord } from '../utils/utils';
-import BaseButton from './UI/BaseButton.vue';
+import type { Link } from '~/models/models';
 
 const shadow = ref<boolean>(false);
 const isCartOpen = ref<boolean>(false);
+const isDropdownOpen = ref<boolean>(false);
+const visibleLinks = ref<Link[]>([]);
+const hiddenLinks = ref<Link[]>([]);
+const dropdownRef = ref<HTMLElement | null>(null);
+const dropdownButtonRef = ref<HTMLElement | null>(null);
 
 const handleShadow = () => {
   shadow.value = window.scrollY >= 165;
@@ -67,12 +75,45 @@ const handleDecrementCount = (id: number, additives: AdditiveListView[]) => {
 
 const formatPrice = computed(() => formatNumber(getTotalPrice.value));
 
+const toggleDropdown = () => {
+  isDropdownOpen.value = !isDropdownOpen.value;
+};
+
+const updateLinks = () => {
+  if (window.innerWidth < 1280) {
+    visibleLinks.value = headerLinks.slice(0, -3);
+    hiddenLinks.value = headerLinks.slice(-3);
+  } else {
+    visibleLinks.value = headerLinks;
+    hiddenLinks.value = [];
+  }
+};
+
+const handleClickOutside = (event: MouseEvent) => {
+  if (
+    dropdownRef.value &&
+    !dropdownRef.value.contains(event.target as Node) &&
+    dropdownButtonRef.value &&
+    !dropdownButtonRef.value.contains(event.target as Node)
+  ) {
+    isDropdownOpen.value = false;
+  }
+};
+
 onMounted(() => {
   window.addEventListener('scroll', handleShadow);
+  window.addEventListener('resize', updateLinks);
+
+  document.addEventListener('click', handleClickOutside);
+
+  updateLinks();
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleShadow);
+  window.removeEventListener('resize', updateLinks);
+
+  document.removeEventListener('click', handleClickOutside);
 });
 </script>
 
@@ -94,13 +135,46 @@ onUnmounted(() => {
       >
         <ul class="navigation__links">
           <li
-            v-for="link in headerLinks"
+            v-for="link in visibleLinks"
             :key="link.id"
             class="navigation__link-container"
           >
             <UIBaseLink :to="link.to">
               {{ link.title }}
             </UIBaseLink>
+          </li>
+
+          <li
+            v-if="hiddenLinks.length"
+            class="navigation__link-container navigation__link-container_more"
+          >
+            <div
+              class="navigation__more"
+              @click="toggleDropdown"
+              ref="dropdownButtonRef"
+            >
+              <span>Ещё</span>
+              <img
+                :src="bottom"
+                alt="Стрелка вниз"
+                class="navigation__more-icon"
+              />
+              <ul
+                v-if="isDropdownOpen"
+                class="navigation__dropdown"
+                ref="dropdownRef"
+              >
+                <li v-for="link in hiddenLinks" :key="link.id">
+                  <UIBaseLink :to="link.to" class="navigation__dropdown-item">
+                    {{ link.title }}
+                  </UIBaseLink>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <li class="navigation__link-container">
+            <UIBaseLink to="#">Акции</UIBaseLink>
           </li>
         </ul>
       </nav>
@@ -211,6 +285,7 @@ onUnmounted(() => {
     display: flex;
     align-items: center;
     @include container;
+    @include responsive-width;
   }
 
   &__logo-container {
@@ -262,9 +337,59 @@ onUnmounted(() => {
     font-weight: $fw-semibold;
     padding-top: 1.375rem;
     padding-bottom: 1.375rem;
+
+    &_more {
+      height: min-content;
+      padding-top: 1rem;
+      padding-bottom: 0;
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &::after {
+        content: '•';
+        margin-left: 0.75rem;
+      }
+    }
   }
 
-  &__link {
+  &__more {
+    display: flex;
+    background-color: $gray;
+    border-radius: 2.5rem;
+    padding: 0.4375rem 0.75rem;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  &__dropdown {
+    position: absolute;
+    margin-top: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    top: 100%;
+    left: 0;
+    background: $white;
+    border-radius: 0.5rem;
+    z-index: 10;
+    box-shadow: $black-100 0 -0.125rem 0.25rem;
+    width: 10rem;
+  }
+
+  &__dropdown-item {
+    display: block;
+    padding: 0.5rem;
+
+    &:hover {
+      background-color: $gray;
+    }
+  }
+
+  &__more-icon {
+    margin-left: 0.375rem;
+  }
+
+  & &__link {
     color: $black;
     text-decoration: none;
     @include transition;
@@ -305,7 +430,7 @@ onUnmounted(() => {
     background-color: $white;
     padding: 1rem 1.5rem;
     box-shadow: $black-100 0 -0.125rem 0.25rem;
-    z-index: 10; // Чтобы перекрывать другие элементы
+    z-index: 100;
   }
 
   &__content {

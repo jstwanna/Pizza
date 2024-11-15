@@ -71,7 +71,7 @@ const getOldCost = (price: number): number | null => {
 
   &__title {
     max-width: 9.1875rem;
-    font-size: $fs-base;
+    font-size: $fs-sm;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

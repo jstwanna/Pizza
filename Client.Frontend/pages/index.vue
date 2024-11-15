@@ -394,6 +394,8 @@ onMounted(async () => {
       position: relative;
       overflow-x: auto;
       padding-bottom: 0.5rem;
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
     }
   }
 }
