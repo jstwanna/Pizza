@@ -22,9 +22,9 @@ definePageMeta({
       v-model="searchOrder"
     />
     <ElTable :data="ordersData" border class="orders__table">
-      <el-table-column prop="status" label="Статус заказа" />
-      <el-table-column prop="phone" label="Телефон" />
-      <el-table-column prop="products" label="Содержимое" />
+      <ElTableColumn prop="status" label="Статус заказа" />
+      <ElTableColumn prop="phone" label="Телефон" />
+      <ElTableColumn prop="products" label="Содержимое" />
       <ElTableColumn prop="operations" label="Действия">
         <template #default="scope">Действия</template>
       </ElTableColumn>

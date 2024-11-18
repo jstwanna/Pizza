@@ -97,7 +97,7 @@ const userStore = useUserStore();
     border-radius: 0.25rem;
     padding: 0.625rem;
     display: none;
-    z-index: 2;
+    z-index: 9999;
 
     &::before {
       content: '';
