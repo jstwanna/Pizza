@@ -55,8 +55,14 @@ var api = builder
 
 if (builder.Environment.IsDevelopment())
 {
-    var frontend = builder
+    var clientFrontend = builder
         .AddNpmApp("client-frontend", "../Client.Frontend", "dev")
+        .WithReference(api)
+        .WithHttpEndpoint(env: "PORT", port: 8081)
+        .WithExternalHttpEndpoints();
+
+    var employeeFrontend = builder
+        .AddNpmApp("employee-frontend", "../Employee.Frontend", "dev")
         .WithReference(api)
         .WithHttpEndpoint(env: "PORT", port: 8080)
         .WithExternalHttpEndpoints();
