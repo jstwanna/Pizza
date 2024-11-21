@@ -1,0 +1,52 @@
+{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [],
+      "UpstreamPathTemplate": "/api/catalog/getCatalogItems",
+      "DownstreamPathTemplate": "/api/Catalog/GetCatalogItems",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7212
+        }
+      ],
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/{everything}",
+      "UpstreamHttpMethod": [],
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7162
+        }
+      ],
+      "SwaggerKey": "identity"
+    }
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "catalog",
+      "Config": [
+        {
+          "Name": "Catalog API",
+          "Version": "v1",
+          "Url": "https://localhost:7212/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "identity",
+      "Config": [
+        {
+          "Name": "Identity API",
+          "Version": "v1",
+          "Url": "https://localhost:7162/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

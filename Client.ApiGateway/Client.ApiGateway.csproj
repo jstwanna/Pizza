@@ -11,11 +11,13 @@
     <PackageReference Include="MassTransit" Version="8.2.5" />
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
+    <PackageReference Include="MMLib.SwaggerForOcelot" Version="8.3.2" />
     <PackageReference Include="NSwag.AspNetCore" Version="14.0.0" />
     <PackageReference Include="NSwag.MSBuild" Version="14.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Ocelot" Version="23.3.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
@@ -23,14 +25,4 @@
     <ProjectReference Include="..\Pizza.Infrastructure\Pizza.Infrastructure.csproj" />
     <ProjectReference Include="..\Pizza.ServiceDefaults\Pizza.ServiceDefaults.csproj" />
   </ItemGroup>
-
-	<Target Name="NSwag" AfterTargets="PostBuildEvent">
-		<Exec Command="$(NSwagExe_Net80) run ../Client.Frontend/api/api.nswag.json /variables:ProjPath=$(ProjectDir)Client.ApiGateway.csproj">
-			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
-			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
-		</Exec>
-		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
-		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
-	</Target>
-
 </Project>

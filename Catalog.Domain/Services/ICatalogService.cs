@@ -1,5 +1,5 @@
-﻿using Catalog.Data.Database.Models;
-using Pizza.Infrastructure.Models;
+﻿using Catalog.Data.Models;
+using Catalog.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

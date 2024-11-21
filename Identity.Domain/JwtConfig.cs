@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Domain.Helpers
+namespace Identity.Domain
 {
-    internal static class PizzaTransformer
+    public class JwtConfig
     {
-        
+        public string SecretKey { get; set; }
     }
 }

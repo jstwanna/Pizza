@@ -1,3 +1,4 @@
+using Aspirant.Hosting;
 using Microsoft.Extensions.Hosting;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -27,16 +28,16 @@ var postgres = builder.AddPostgres(
     .WithDataVolume("postgres_data")
     .WithPgAdmin(s => s.WithHostPort(5430));
 
-var postgresdb = postgres.AddDatabase("postgres-db", "postgres");
+var catalogdb = postgres.AddDatabase("catalog-db", "catalog");
+var identitydb = postgres.AddDatabase("identity-db", "identity");
 
 var identityService = builder
     .AddProject<Projects.Identity_Api>("identity-service")
-    .WithReference(postgresdb)
-    .WithReference(rabbit);
+    .WithReference(identitydb);
 
 var catalogService = builder
     .AddProject<Projects.Catalog_Api>("catalog-service")
-    .WithReference(postgresdb)
+    .WithReference(catalogdb)
     .WithReference(rabbit);
 
 var media = builder
@@ -48,10 +49,9 @@ var api = builder
     .WithExternalHttpEndpoints()
     .WithReference(rabbit)
     .WithReference(seq)
-    .WithReference(catalogService)
-    .WithReference(identityService)
     .WithReference(media)
     ;
+
 
 if (builder.Environment.IsDevelopment())
 {

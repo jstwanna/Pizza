@@ -1,7 +1,5 @@
-using Catalog.Api.Consumers;
-using Catalog.Data.Database;
+using Catalog.Data;
 using Catalog.Domain;
-using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,37 +8,22 @@ builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 
-builder.AddNpgsqlDbContext<CatalogDbContext>("postgres-db");
+builder.AddNpgsqlDbContext<CatalogDbContext>("catalog-db");
 
 var rabbitConnStr = builder.Configuration.GetConnectionString("rabbit");
 
-builder.Services.AddMassTransit(cfg =>
-{
-    cfg.AddConsumer<GetCategoryItemsConsumer>();
-    cfg.AddConsumer<GetCategoriesListConsumer>();
-
-    cfg.UsingRabbitMq((context, rabbitCfg) =>
-    {
-        rabbitCfg.Host(rabbitConnStr);
-        rabbitCfg.ConfigureEndpoints(context);
-
-        rabbitCfg.ReceiveEndpoint("catalogQueue", e =>
-        {
-            e.ConfigureConsumer<GetCategoryItemsConsumer>(context);
-            e.ConfigureConsumer<GetCategoriesListConsumer>(context);
-
-            e.UseMessageRetry(u => u.Interval(3, 5));
-        });
-    });
-});
-
 builder.Services.AddCatalogServices();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocument();
 
 var app = builder.Build();
 
-app.MapDefaultEndpoints();
+app.UseOpenApi();
+app.UseSwaggerUi();
 
-app.UseStaticFiles();
+app.MapDefaultEndpoints();
 
 app.UseHttpsRedirection();
 

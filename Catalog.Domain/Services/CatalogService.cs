@@ -1,7 +1,6 @@
-﻿using Catalog.Data.Database;
+﻿using Catalog.Data;
+using Catalog.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Pizza.Infrastructure.Models;
-using System.Threading.Tasks;
 
 namespace Catalog.Domain.Services
 {

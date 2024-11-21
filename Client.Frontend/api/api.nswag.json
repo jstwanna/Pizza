@@ -4,7 +4,7 @@
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
       "project": "$(ProjPath)",
-      "documentName": "v1",
+      "documentName": "Catalog API - v1",
       "msBuildProjectExtensionsPath": null,
       "configuration": null,
       "runtime": null,
@@ -20,7 +20,7 @@
   },
   "codeGenerators": {
     "openApiToTypeScriptClient": {
-      "className": "{controller}Client",
+      "className": "Client",
       "moduleName": "",
       "namespace": "",
       "typeScriptVersion": 4.3,

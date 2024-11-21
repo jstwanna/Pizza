@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catalog.Domain.Helpers
+namespace Identity.Domain.Models
 {
-    internal static class PizzaTransformer
+    public class LoginClientModel
     {
-        
+        public string Phone { get; set; }
     }
 }
