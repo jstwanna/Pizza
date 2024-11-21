@@ -18,3 +18,30 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+    height: 0.25rem;
+
+    &-track {
+      background: transparent;
+    }
+
+    &-thumb {
+      background: $orange;
+      border-radius: 0.4rem;
+    }
+  }
+
+  @-moz-document url-prefix() {
+    scrollbar-width: thin;
+    scrollbar-color: $orange transparent;
+  }
+}
+
+@mixin responsive-width($breakpoint: 80rem, $width: 60rem) {
+  @media screen and (max-width: $breakpoint) {
+    width: $width;
+  }
+}

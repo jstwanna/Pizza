@@ -1,49 +1,63 @@
-<script lang="ts" setup>
-import { OrderType } from '../models/models';
-import type { OftenOrderCard } from '../models/models';
+<script setup lang="ts">
+import type { CatalogItemListView } from '../api/api-generated';
 import { formatNumber } from '../utils/utils';
 
-const props = defineProps<{ product: OftenOrderCard }>();
+const props = defineProps<{ product: CatalogItemListView }>();
 
-const emit = defineEmits<{
-  (e: 'cardClick', card: OftenOrderCard): void;
+const emits = defineEmits<{
+  (e: 'cardClick', card: CatalogItemListView): void;
+  (e: 'addToCart', card: CatalogItemListView): void;
 }>();
 
 const buttonText = computed(() =>
-  [OrderType.Pizza, OrderType.Combo].includes(props.product.type)
-    ? 'Выбрать'
-    : 'В корзину'
+  props.product.category === 'Пицца' ? 'Выбрать' : 'В корзину'
 );
 
 const handleClickCard = () => {
-  emit('cardClick', props.product);
+  emits('cardClick', props.product);
 };
+
+const handleAddToCart = () => {
+  emits('addToCart', props.product);
+};
+
+const minPrice = computed(() =>
+  Math.min(...props.product.products.map((p) => p.price))
+);
 </script>
 
 <template>
   <article class="product" @click="handleClickCard">
     <div class="product__main">
       <img
-        :src="product.src"
-        :alt="`Фото ${product.title}`"
+        :src="`/images/${product.image}`"
+        :alt="`Фото ${product.name}`"
         class="product__image"
       />
-      <h3 class="product__title">{{ product.title }}</h3>
+      <h3 class="product__title">{{ product.name }}</h3>
       {{ product.description }}
     </div>
     <div class="product__footer">
       <div class="product__cost">
-        {{ formatNumber(product.cost) }} ₽
-        <OldPrice :oldCost="product.oldCost" class="product__old-cost" />
+        {{
+          `${product.category === 'Пицца' ? 'от ' : ''} ${formatNumber(
+            minPrice
+          )}`
+        }}
+        ₽
       </div>
-      <UIBaseButton type="button" class="product__button">
+      <UIBaseButton
+        type="button"
+        class="product__button"
+        @click="handleAddToCart"
+      >
         {{ buttonText }}
       </UIBaseButton>
     </div>
   </article>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .product {
   display: flex;
   flex-flow: column;
@@ -97,12 +111,6 @@ const handleClickCard = () => {
     display: flex;
     flex-flow: column;
     justify-content: center;
-  }
-
-  &__old-cost {
-    font-size: $fs-sm;
-    line-height: 1.125rem;
-    color: $dark-gray;
   }
 
   &__button {

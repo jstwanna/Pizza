@@ -2,7 +2,7 @@
 type TargetAttribute = '_blank' | '_self' | '_parent' | '_top';
 
 interface Props {
-  to: string;
+  to: string | Object;
   target?: TargetAttribute;
   activeClass?: string;
 }

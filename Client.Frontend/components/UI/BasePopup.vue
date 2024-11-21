@@ -66,6 +66,7 @@ watch(modelUpdate, () => {
         <div :class="`popup__content popup__content_${closePosition}`">
           <img
             :src="close"
+            alt="Фото закрытия попапа"
             @click="closePopup"
             :class="`popup__close popup__close_${closePosition}`"
           />
