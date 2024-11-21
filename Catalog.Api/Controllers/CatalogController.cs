@@ -1,5 +1,6 @@
 ﻿using Catalog.Domain.Models;
 using Catalog.Domain.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,13 @@ namespace Catalog.Api.Controllers
         public Task<string[]> GetCategoryListItems (CancellationToken cancellationToken)
         {
             return catalogService.GetCategoriesList(cancellationToken);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public string TestAuth ()
+        {
+            return "Ok";
         }
     }
 }
