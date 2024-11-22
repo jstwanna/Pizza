@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import BaseButton from './BaseButton.vue';
 
-import type { ProductListView } from '../../api/api-generated';
+import type { ProductListView } from '../../models/models';
 
 defineProps<{ card: ProductListView }>();
 </script>

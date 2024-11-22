@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import confirm from '../assets/svg/confirm.svg';
 
-import type { AdditiveListView } from '../api/api-generated';
+import type { IAdditiveListView } from '../models/models';
 
 const props = defineProps<{
-  additive: AdditiveListView;
-  onToggle: (additive: AdditiveListView, isActive: boolean) => void;
+  additive: IAdditiveListView;
+  onToggle: (additive: IAdditiveListView, isActive: boolean) => void;
 }>();
 
 const isActive = ref<boolean>(false);

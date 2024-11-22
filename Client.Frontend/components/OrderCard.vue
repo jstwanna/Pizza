@@ -1,25 +1,15 @@
 <script lang="ts" setup>
-import type { CatalogItemListView } from '../api/api-generated';
+import type { ICatalogItemListView } from '../models/models';
 import { formatNumber } from '../utils/utils';
 
 const emit = defineEmits<{
-  (e: 'cardClick', card: CatalogItemListView): void;
+  (e: 'cardClick', card: ICatalogItemListView): void;
 }>();
 
-const props = defineProps<{ card: CatalogItemListView }>();
+const props = defineProps<{ card: ICatalogItemListView }>();
 
-const handleClickProduct = (card: CatalogItemListView) => {
+const handleClickProduct = (card: ICatalogItemListView) => {
   emit('cardClick', card);
-};
-
-const getOldCost = (price: number): number | null => {
-  const shouldHaveOldCost = Math.random() > 0.5;
-  if (shouldHaveOldCost) {
-    const additionalCost = Math.floor(Math.random() * 201) + 300;
-    return price + additionalCost;
-  }
-
-  return null;
 };
 </script>
 
@@ -35,7 +25,7 @@ const getOldCost = (price: number): number | null => {
       <span class="order-card__cost">
         {{ formatNumber(card.products[0].price) }} ₽
       </span>
-      <OldPrice :oldCost="getOldCost(card.products[0].price)" />
+      <OldPrice :oldCost="2000" />
     </div>
   </li>
 </template>

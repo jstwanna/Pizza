@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { CatalogItemListView } from '../api/api-generated';
+import type { ICatalogItemListView } from '../models/models';
 
 interface Props {
   id: string;
   title: string;
-  products: CatalogItemListView[];
+  products: ICatalogItemListView[];
 }
 
 defineProps<Props>();

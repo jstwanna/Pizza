@@ -1,9 +1,8 @@
-import type { ProductListView } from '../api/api-generated';
-import type { ICounterItems } from '../models/models';
+import type { ICounterItems, IProductListView } from '../models/models';
 
-export const cartItems = ref<ICounterItems<ProductListView>[]>([]);
+export const cartItems = ref<ICounterItems<IProductListView>[]>([]);
 
-export const addToCart = (product: ICounterItems<ProductListView>) => {
+export const addToCart = (product: ICounterItems<IProductListView>) => {
   const existingProduct = cartItems.value.find(
     (item) =>
       item.item.id === product.item.id &&

@@ -15,7 +15,7 @@ import {
   getTotalPrice,
   calculateBonusPoints,
 } from '../utils/cartHelper';
-import type { AdditiveListView } from '../api/api-generated';
+import type { IAdditiveListView } from '../models/models';
 import { formatNumber, pluralizeWord } from '../utils/utils';
 import type { Link } from '~/models/models';
 
@@ -39,7 +39,7 @@ const toggleCartPopup = () => {
   isCartOpen.value = !isCartOpen.value;
 };
 
-const handleRemoveProduct = (id: number, additives: AdditiveListView[]) => {
+const handleRemoveProduct = (id: number, additives: IAdditiveListView[]) => {
   cartItems.value = cartItems.value.filter(
     (cartItem) =>
       cartItem.item.id !== id ||
@@ -50,7 +50,7 @@ const handleRemoveProduct = (id: number, additives: AdditiveListView[]) => {
   );
 };
 
-const findCartItem = (id: number, additives: AdditiveListView[]) => {
+const findCartItem = (id: number, additives: IAdditiveListView[]) => {
   return cartItems.value.find(
     (item) =>
       item.item.id === id &&
@@ -61,12 +61,12 @@ const findCartItem = (id: number, additives: AdditiveListView[]) => {
   );
 };
 
-const handleIncrementCount = (id: number, additives: AdditiveListView[]) => {
+const handleIncrementCount = (id: number, additives: IAdditiveListView[]) => {
   const product = findCartItem(id, additives);
   if (product) product.count++;
 };
 
-const handleDecrementCount = (id: number, additives: AdditiveListView[]) => {
+const handleDecrementCount = (id: number, additives: IAdditiveListView[]) => {
   const product = findCartItem(id, additives);
   if (product) {
     product.count > 1 ? product.count-- : handleRemoveProduct(id, additives);
@@ -139,7 +139,7 @@ onUnmounted(() => {
             :key="link.id"
             class="navigation__link-container"
           >
-            <UIBaseLink :to="link.to">
+            <UIBaseLink :to="`/${link.to}`">
               {{ link.title }}
             </UIBaseLink>
           </li>

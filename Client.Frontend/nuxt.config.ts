@@ -27,19 +27,19 @@ export default defineNuxtConfig({
     },
   },
 
-  nitro: {
-    devProxy: {
-      '/api': {
-        target: 'https://localhost:7056/api/',
-        changeOrigin: true,
-        secure: false,
-      },
+  routeRules: {
+    '/api/**': {
+      proxy: 'https://localhost:7056/api/**',
+    },
 
-      '/images': {
-        target: 'https://localhost:7118/images/',
-        changeOrigin: true,
-        secure: false,
-      },
+    '/images/**': {
+      proxy: 'https://localhost:7118/images/**',
+    },
+  },
+
+  nitro: {
+    prerender: {
+      routes: ['/'],
     },
   },
 });

@@ -5,10 +5,56 @@ const isLoginPopup = ref<boolean>(false);
 const input = ref<HTMLInputElement | null>(null);
 
 const userPhone = ref<string>('');
+const rawPhone = ref<string>('');
+
+const resetPhone = () => {
+  userPhone.value = '';
+  rawPhone.value = '';
+};
 
 const handleOpenPopup = () => {
   isLoginPopup.value = !isLoginPopup.value;
+  resetPhone();
 };
+
+const formatPhoneNumber = (phone: string): string => {
+  const mainPart = phone.slice(1);
+  return `+7 ${mainPart.slice(0, 3)}${
+    mainPart.length > 3 ? ' ' : ''
+  }${mainPart.slice(3, 6)}${mainPart.length > 6 ? '-' : ''}${mainPart.slice(
+    6,
+    8
+  )}${mainPart.length > 8 ? '-' : ''}${mainPart.slice(8)}`.trim();
+};
+
+const handlePhoneInput = (event: Event) => {
+  const input = event.target as HTMLInputElement;
+  let value = input.value.replace(/\D/g, '');
+
+  if (!value) {
+    resetPhone();
+    return;
+  }
+
+  value = value.startsWith('7') ? value : `7${value}`;
+  value = value.slice(0, 11);
+
+  rawPhone.value = value;
+
+  userPhone.value = formatPhoneNumber(value);
+};
+
+const onLogin = () => {
+  console.log(rawPhone.value);
+  $fetch('/api/login/client', {
+    method: 'POST',
+    body: {
+      phone: rawPhone.value,
+    },
+  });
+};
+
+const isPhoneComplete = computed(() => rawPhone.value.length === 11);
 
 watch(isLoginPopup, () => {
   if (isLoginPopup.value) {
@@ -122,15 +168,21 @@ watch(isLoginPopup, () => {
           Подарим подарок на день рождения, сохраним адрес доставки и расскажем
           об акциях
         </p>
-        <form @submit.prevent="" class="popup__form">
+        <form @submit.prevent="onLogin" novalidate class="popup__form">
           <span class="popup__input-label">Номер телефона</span>
           <input
+            type="tel"
             v-model="userPhone"
             placeholder="+7 999 999-99-99"
+            @input="handlePhoneInput"
             ref="input"
             class="popup__input"
           />
-          <UIBaseButton type="submit" class="popup__button">
+          <UIBaseButton
+            type="submit"
+            :disabled="!isPhoneComplete"
+            class="popup__button"
+          >
             Выслать код
           </UIBaseButton>
         </form>
@@ -394,6 +446,12 @@ watch(isLoginPopup, () => {
 
     &:hover {
       background-color: $dark-orange;
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      background-color: $orange;
     }
   }
 

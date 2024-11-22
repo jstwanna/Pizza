@@ -1,5 +1,5 @@
 import type {
-  ContactLink,
+  IContactLink,
   Image,
   Images,
   Link,
@@ -139,7 +139,7 @@ export const headerLinks = reactive<Link[]>([
   },
 ]);
 
-export const contactLinks: ContactLink[] = [
+export const contactLinks: IContactLink[] = [
   {
     id: 1,
     title: 'Додо Пицца',

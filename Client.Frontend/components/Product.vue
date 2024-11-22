@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { CatalogItemListView } from '../api/api-generated';
+import type { ICatalogItemListView } from '../models/models';
 import { formatNumber } from '../utils/utils';
 
-const props = defineProps<{ product: CatalogItemListView }>();
+const props = defineProps<{ product: ICatalogItemListView }>();
 
 const emits = defineEmits<{
-  (e: 'cardClick', card: CatalogItemListView): void;
-  (e: 'addToCart', card: CatalogItemListView): void;
+  (e: 'cardClick', card: ICatalogItemListView): void;
+  (e: 'addToCart', card: ICatalogItemListView): void;
 }>();
 
 const buttonText = computed(() =>

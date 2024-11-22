@@ -1,6 +1,40 @@
-import type { AdditiveListView } from '../api/api-generated';
+export interface ICatalogItemListView {
+  category: string;
+  viewType: string;
+  image: string;
+  name: string;
+  description: string;
+  products: IProductListView[];
+}
 
-export interface ContactLink {
+export interface IProductListView {
+  id: number;
+  price: number;
+  productType: string;
+  image: string;
+  name: string;
+  description: string;
+  characteristics: ICharacteristicsListView[];
+  additives: IAdditiveListView[];
+}
+
+export interface ICharacteristicsListView {
+  name: string;
+  value: number;
+}
+
+export interface IAdditiveListView {
+  id: number;
+  price: number;
+  name: string;
+  image: string;
+}
+
+export interface IGetCategoryListResponse {
+  categories: string[];
+}
+
+export interface IContactLink {
   id: number;
   title: string;
   links: {
@@ -54,6 +88,6 @@ export interface ITab {
 export interface ICounterItems<T> {
   count: number;
   price: number;
-  additives: AdditiveListView[];
+  additives: IAdditiveListView[];
   item: T;
 }
