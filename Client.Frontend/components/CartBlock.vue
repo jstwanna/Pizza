@@ -5,17 +5,17 @@ import plus from '../assets/svg/plus.svg';
 
 import BaseButton from './UI/BaseButton.vue';
 
-import type { ProductListView, AdditiveListView } from '../api/api-generated';
+import type { IProductListView, IAdditiveListView } from '../models/models';
 import type { ICounterItems } from '../models/models';
 import { formatNumber } from '~/utils/utils';
 
 const emits = defineEmits<{
-  (event: 'increment', id: number, additive: AdditiveListView[]): void;
-  (event: 'decrement', id: number, additive: AdditiveListView[]): void;
-  (event: 'remove', id: number, additive: AdditiveListView[]): void;
+  (event: 'increment', id: number, additive: IAdditiveListView[]): void;
+  (event: 'decrement', id: number, additive: IAdditiveListView[]): void;
+  (event: 'remove', id: number, additive: IAdditiveListView[]): void;
 }>();
 
-const props = defineProps<{ item: ICounterItems<ProductListView> }>();
+const props = defineProps<{ item: ICounterItems<IProductListView> }>();
 
 const handleIncrement = () =>
   emits('increment', props.item.item.id, props.item.additives);

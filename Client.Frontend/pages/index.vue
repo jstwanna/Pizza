@@ -2,26 +2,25 @@
 import BaseTabs from '~/components/UI/BaseTabs.vue';
 
 import { carouselItems } from '../utils/constants';
-import { CatalogClient, ApiException } from '../api/api-generated';
-import type {
-  CatalogItemListView,
-  ProductListView,
-  AdditiveListView,
-} from '../api/api-generated';
+
 import { addToCart } from '../utils/cartHelper';
-import type { ITab, ICounterItems } from '../models/models';
+import type {
+  ITab,
+  ICounterItems,
+  ICatalogItemListView,
+  IAdditiveListView,
+  IProductListView,
+} from '../models/models';
 
-const catalogApi = new CatalogClient();
-
-const pizzaItems = ref<CatalogItemListView[]>([]);
-const breakfastItems = ref<CatalogItemListView[]>([]);
-const snackItems = ref<CatalogItemListView[]>([]);
-const randomOrderItems = ref<CatalogItemListView[]>([]);
+const pizzaItems = ref<ICatalogItemListView[]>([]);
+const breakfastItems = ref<ICatalogItemListView[]>([]);
+const snackItems = ref<ICatalogItemListView[]>([]);
+const oftenOrderedItems = ref<ICatalogItemListView[]>([]);
 
 const isPizzaPopup = ref<boolean>(false);
 const isBreakfastOrSnackOpen = ref<boolean>(false);
 
-const currentProduct = ref<CatalogItemListView | null>(null);
+const currentProduct = ref<ICatalogItemListView | null>(null);
 
 const selectedSizeTab = ref<number>(25);
 const selectedTypeTab = ref<number>(1);
@@ -29,7 +28,7 @@ const selectedTypeTab = ref<number>(1);
 const isThinDoughDisabled = computed(() => selectedSizeTab.value === 25);
 const isTypeTabDisabled = computed(() => selectedTypeTab.value === 2);
 
-const selectedAdditives = ref<AdditiveListView[]>([]);
+const selectedAdditives = ref<IAdditiveListView[]>([]);
 
 const pizzaSizeTabs = computed<ITab[]>(() => [
   {
@@ -104,7 +103,7 @@ const togglePopup = (type: string = 'any') => {
   }
 };
 
-const handleProductClick = (product: CatalogItemListView) => {
+const handleProductClick = (product: ICatalogItemListView) => {
   currentProduct.value = null;
 
   togglePopup(product.category);
@@ -112,12 +111,12 @@ const handleProductClick = (product: CatalogItemListView) => {
   currentProduct.value = product;
 };
 
-const handleAddToCart = (product: ICounterItems<ProductListView>) => {
+const handleAddToCart = (product: ICounterItems<IProductListView>) => {
   addToCart(product);
   togglePopup(product.item.productType);
 };
 
-const handleValidateCart = (product: CatalogItemListView) => {
+const handleValidateCart = (product: ICatalogItemListView) => {
   if (product.category === 'Пицца' || product.category === 'Комбо') {
     handleProductClick(product);
   } else {
@@ -131,7 +130,7 @@ const handleValidateCart = (product: CatalogItemListView) => {
 };
 
 const handleToggleAdditive = (
-  additive: AdditiveListView,
+  additive: IAdditiveListView,
   isActive: boolean
 ) => {
   if (isActive) {
@@ -143,36 +142,40 @@ const handleToggleAdditive = (
   }
 };
 
+const { data, error } = await useFetch<ICatalogItemListView[]>(
+  '/api/catalog/getCatalogItems'
+);
+
+if (data.value) {
+  data.value.forEach((item: ICatalogItemListView) => {
+    switch (item.category) {
+      case 'Пицца':
+        pizzaItems.value.push(item);
+        break;
+      case 'Завтрак':
+        breakfastItems.value.push(item);
+        break;
+      case 'Закуски':
+        snackItems.value.push(item);
+        break;
+      default:
+        console.error(`Unknown type: ${item.category}`);
+    }
+  });
+
+  oftenOrderedItems.value = [
+    ...breakfastItems.value.slice(0, 2),
+    ...snackItems.value.slice(0, 2),
+  ];
+}
+
+if (error.value) {
+  console.error('Error', error.value);
+}
+
 useHead({
   title:
     'Пицца Москва — заказать с доставкой на дом бесплатно, доставка еды из пиццерии Додо',
-});
-
-onMounted(async () => {
-  try {
-    const { items } = await catalogApi.getCatalogItems();
-    items.forEach((item: CatalogItemListView) => {
-      switch (item.category) {
-        case 'Пицца':
-          pizzaItems.value.push(item);
-          break;
-        case 'Завтрак':
-          breakfastItems.value.push(item);
-          break;
-        case 'Закуски':
-          snackItems.value.push(item);
-          break;
-        default:
-          console.error(`Unknown type: ${item.category}`);
-      }
-    });
-    const combinedItems = [...breakfastItems.value, ...snackItems.value];
-    randomOrderItems.value = combinedItems
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 4);
-  } catch (error) {
-    console.error('Error loading catalog:', (error as ApiException).name);
-  }
 });
 </script>
 
@@ -185,7 +188,7 @@ onMounted(async () => {
     <h2 class="often-order__title">Часто заказывают</h2>
     <ul class="often-order__cards">
       <OrderCard
-        v-for="card in randomOrderItems"
+        v-for="card in oftenOrderedItems"
         @cardClick="handleProductClick"
         :key="card.name"
         :card="card"
