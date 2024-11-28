@@ -14,35 +14,22 @@
       "SwaggerKey": "catalog"
     },
     {
-      "UpstreamPathTemplate": "/api/login/client",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/Account/LoginClient",
+      "UpstreamPathTemplate": "/api/catalog/testAuth",
+      "DownstreamPathTemplate": "/api/Catalog/TestAuth",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7162
+          "Port": 7212
         }
       ],
-      "SwaggerKey": "identity"
+      "SwaggerKey": "catalog"
     },
     {
-      "UpstreamPathTemplate": "/api/logout",
+      "UpstreamPathTemplate": "/api/client/{everything}",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/Account/Logout",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7162
-        }
-      ],
-      "SwaggerKey": "identity"
-    },
-    {
-      "UpstreamPathTemplate": "/api/testAuth",
-      "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/Account/TestAuth",
+      "DownstreamPathTemplate": "/api/client/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

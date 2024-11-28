@@ -12,7 +12,9 @@ namespace Identity.Domain
     {
         public static IServiceCollection AddIdentityServices (this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IClientService, ClientService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserTokenService, UserTokenService>();
 
             return services;
         }

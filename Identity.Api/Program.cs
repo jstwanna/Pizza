@@ -12,13 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("JwtConfig"));
+var jwtConfigSection = builder.Configuration.GetSection("JwtConfig");
+builder.Services.Configure<JwtConfig>(jwtConfigSection);
 
 builder.AddNpgsqlDbContext<DbContext>("identity-db");
-builder.Services.AddIdentity<AppUser, IdentityRole>(o =>
-{
-    o.User.RequireUniqueEmail = false;
-})
+builder.Services
+    .AddIdentity<AppUser, IdentityRole>(o =>
+    {
+        o.User.RequireUniqueEmail = false;
+    })
     .AddEntityFrameworkStores<DbContext>()
     .AddRoles<IdentityRole>()
     .AddSignInManager()
@@ -34,7 +36,7 @@ builder.Services
     .AddJwtBearer(authenticationScheme: JwtBearerDefaults.AuthenticationScheme, o =>
     {
         var jwtConfig = new JwtConfig();
-        builder.Configuration.GetSection("JwtConfig").Bind(jwtConfig);
+        jwtConfigSection.Bind(jwtConfig);
 
         o.TokenValidationParameters = new()
         {
@@ -48,7 +50,7 @@ builder.Services
         {
             OnMessageReceived = context =>
             {
-                context.Token = context.Request.Cookies["access-token"];
+                context.Token = context.Request.Cookies[jwtConfig.AccessTokenCookieName];
                 return Task.CompletedTask;
             }
         };
