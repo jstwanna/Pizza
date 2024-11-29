@@ -37,7 +37,6 @@ definePageMeta({
   padding: 1.25rem;
 
   &__table {
-    width: 100%;
     margin-top: 1.25rem;
   }
 }

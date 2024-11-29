@@ -92,11 +92,12 @@ definePageMeta({
   flex-grow: 1;
 
   &__form {
-    position: relative;
+    background-color: $white;
     width: 32.5rem;
     max-width: 100%;
-    padding: 10rem 2.1875rem 0;
-    margin: 0 auto;
+    padding: 2.1875rem 2.1875rem 1.0625rem;
+    margin: 10rem auto 0;
+    border-radius: 0.25rem;
     overflow: hidden;
   }
 

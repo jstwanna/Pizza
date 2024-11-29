@@ -4,6 +4,6 @@ definePageMeta({
 });
 </script>
 
-<template></template>
+<template>PRODUCTS</template>
 
 <style scoped lang="scss"></style>

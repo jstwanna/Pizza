@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<IIcon>(), {
 
 const fontSizes: Record<NonNullable<IIcon['size']>, string> = {
   xs: '0.75rem',
-  sm: '1.5rem',
+  sm: '1.125rem',
   md: '2rem',
   lg: '2.375rem',
   xl: '2.875rem',
