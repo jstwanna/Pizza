@@ -1,4 +1,25 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { isUserLoggedIn } from './utils/userHelper';
+
+onMounted(() => {
+  const user = localStorage.getItem('user');
+  const loginTimeStamp = localStorage.getItem('login-timestamp');
+
+  const router = useRouter();
+  const route = useRoute();
+
+  if (route.path === '/profile' && !isUserLoggedIn) {
+    router.push('/');
+  }
+
+  if (user && loginTimeStamp) {
+    isUserLoggedIn.value = true;
+  } else {
+    localStorage.clear();
+    router.push('/');
+  }
+});
+</script>
 
 <template>
   <div class="app">

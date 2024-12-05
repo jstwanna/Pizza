@@ -1,7 +1,23 @@
 <script setup lang="ts">
-const handleLogout = () => {
-  console.log('logout');
+import { user, isUserLoggedIn } from '../utils/userHelper';
+
+const router = useRouter();
+
+const handleLogout = async () => {
+  await $fetch('/api/client/Logout', {
+    method: 'POST',
+  });
+
+  router.push('/');
+
+  user.value = null;
+  isUserLoggedIn.value = false;
+  localStorage.clear();
 };
+
+definePageMeta({
+  middleware: ['auth'],
+});
 </script>
 
 <template>

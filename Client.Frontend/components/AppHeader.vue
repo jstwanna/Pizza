@@ -1,7 +1,8 @@
 <script lang="ts" setup>
+import type { IUser } from '../models/models';
+import { user, isUserLoggedIn, isLoginPopup } from '../utils/userHelper';
 import { headerMenuItems, userMenuItems } from '../utils/constants';
 
-const isLoginPopup = ref<boolean>(false);
 const input = ref<HTMLInputElement | null>(null);
 
 const userPhone = ref<string>('');
@@ -44,17 +45,41 @@ const handlePhoneInput = (event: Event) => {
   userPhone.value = formatPhoneNumber(value);
 };
 
-const onLogin = () => {
-  console.log(rawPhone.value);
-  $fetch('/api/login/client', {
-    method: 'POST',
-    body: {
-      phone: rawPhone.value,
-    },
-  });
+const onLogin = async () => {
+  try {
+    await $fetch('/api/client/LoginClient', {
+      method: 'POST',
+      body: {
+        phone: rawPhone.value,
+      },
+    });
+
+    const loginTimestamp = new Date().getTime();
+    localStorage.setItem('login-timestamp', loginTimestamp.toString());
+
+    const userInfo = await $fetch<IUser>('/api/client/GetUserInfo', {
+      method: 'POST',
+    });
+
+    localStorage.setItem('user', JSON.stringify(userInfo));
+
+    user.value = userInfo;
+    isUserLoggedIn.value = true;
+  } catch {
+    console.error('Login error');
+  } finally {
+    isLoginPopup.value = false;
+  }
 };
 
 const isPhoneComplete = computed(() => rawPhone.value.length === 11);
+
+const filteredUserMenuItems = computed(() => {
+  if (!isUserLoggedIn.value) {
+    return userMenuItems.filter((item) => item.id === 1);
+  }
+  return userMenuItems;
+});
 
 watch(isLoginPopup, () => {
   if (isLoginPopup.value) {
@@ -137,10 +162,10 @@ watch(isLoginPopup, () => {
 
       <div class="header__profile">
         <UIBaseLink
-          v-for="link in userMenuItems"
-          :key="link.id"
           :to="link.link"
           class="header__profile-item"
+          v-for="link in filteredUserMenuItems"
+          :key="link.id"
         >
           <span
             :class="`header__profile-image header__profile-image_${link.type}`"
@@ -151,6 +176,7 @@ watch(isLoginPopup, () => {
           type="button"
           class="header__sign-in"
           @click="handleOpenPopup"
+          v-if="!isUserLoggedIn"
         >
           Войти
         </UIBaseButton>
@@ -160,35 +186,40 @@ watch(isLoginPopup, () => {
 
   <Navigation />
 
-  <UIBasePopup v-model="isLoginPopup" @close-popup="handleOpenPopup">
+  <UIBasePopup
+    v-model="isLoginPopup"
+    @close-popup="handleOpenPopup"
+    customClass="popup-login"
+    :index="50"
+  >
     <template #content>
-      <div class="popup__content">
-        <h3 class="popup__title">Вход на сайт</h3>
-        <p class="popup__text">
+      <div class="popup-login__content">
+        <h3 class="popup-login__title">Вход на сайт</h3>
+        <p class="popup-login__text">
           Подарим подарок на день рождения, сохраним адрес доставки и расскажем
           об акциях
         </p>
-        <form @submit.prevent="onLogin" novalidate class="popup__form">
-          <span class="popup__input-label">Номер телефона</span>
+        <form @submit.prevent="onLogin" novalidate class="popup-login__form">
+          <span class="popup-login__input-label">Номер телефона</span>
           <input
             type="tel"
             v-model="userPhone"
             placeholder="+7 999 999-99-99"
             @input="handlePhoneInput"
             ref="input"
-            class="popup__input"
+            class="popup-login__input"
           />
           <UIBaseButton
             type="submit"
             :disabled="!isPhoneComplete"
-            class="popup__button"
+            class="popup-login__button"
           >
             Выслать код
           </UIBaseButton>
         </form>
-        <div class="popup__warning">
+        <div class="popup-login__warning">
           Продолжая, вы соглашаетесь
-          <UIBaseLink to="#" class="popup__legal">
+          <UIBaseLink to="#" class="popup-login__legal">
             со сбором и обработкой персональных данных и пользовательским
             соглашением
           </UIBaseLink>
@@ -372,16 +403,13 @@ watch(isLoginPopup, () => {
   }
 }
 
-.popup {
+.popup-login {
   &__content {
-    background-color: $white;
     padding: 2rem;
     display: flex;
     flex-direction: column;
     min-height: 24.9375rem;
     width: 25.5625rem;
-    box-shadow: hsla(0, 0%, 0%, 0.2) 0 1.875rem 3.75rem;
-    border-radius: 1.25rem;
   }
 
   &__title {

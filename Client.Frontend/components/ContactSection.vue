@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { ContactLink } from '../models/models';
+import type { IContactLink } from '../models/models';
 
-defineProps<{ contact: ContactLink }>();
+defineProps<{ contact: IContactLink }>();
 </script>
 
 <template>

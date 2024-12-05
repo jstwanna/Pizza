@@ -2,7 +2,14 @@
 import type { ICatalogItemListView } from '../models/models';
 import { formatNumber } from '../utils/utils';
 
-const props = defineProps<{ product: ICatalogItemListView }>();
+interface IProduct {
+  product: ICatalogItemListView;
+  isLoading?: boolean;
+}
+
+const props = withDefaults(defineProps<IProduct>(), {
+  isLoading: false,
+});
 
 const emits = defineEmits<{
   (e: 'cardClick', card: ICatalogItemListView): void;
