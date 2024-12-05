@@ -91,3 +91,8 @@ export interface ICounterItems<T> {
   additives: IAdditiveListView[];
   item: T;
 }
+
+export interface IUser {
+  username: string;
+  role: string;
+}

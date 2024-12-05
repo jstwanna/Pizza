@@ -424,15 +424,6 @@ onUnmounted(() => {
 }
 
 .cart-popup {
-  &__sticky-footer {
-    position: sticky;
-    bottom: 0;
-    background-color: $white;
-    padding: 1rem 1.5rem;
-    box-shadow: $black-100 0 -0.125rem 0.25rem;
-    z-index: 100;
-  }
-
   &__content {
     width: 26.875rem;
     height: 100%;

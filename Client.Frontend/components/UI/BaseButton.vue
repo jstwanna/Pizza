@@ -26,6 +26,7 @@ const handleClickButton = () => emit('click');
 
 <style lang="scss" scoped>
 .button {
+  position: relative;
   border: 0;
   background-color: transparent;
   cursor: pointer;

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import close from '../../assets/svg/close.svg';
 
+import { lockScroll, unlockScroll } from '../../utils/scrollLock';
+
 const emits = defineEmits<{
   (event: 'closePopup'): void;
   (event: 'update:modelValue', value: boolean): void;
@@ -10,11 +12,13 @@ interface Props {
   modelValue: boolean;
   customClass?: string;
   closePosition?: 'top' | 'left';
+  index?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   customClass: '',
   closePosition: 'top',
+  index: 30,
 });
 
 const popup = ref<Element | null>(null);
@@ -52,17 +56,32 @@ const removeEventListeners = () => {
 
 onMounted(addEventListeners);
 
-onUnmounted(removeEventListeners);
+onUnmounted(() => {
+  if (modelUpdate.value) {
+    unlockScroll();
+  }
 
-watch(modelUpdate, () => {
-  document.body.style.overflowY = modelUpdate.value ? 'hidden' : 'auto';
+  removeEventListeners();
+});
+
+watch(modelUpdate, (newValue) => {
+  if (newValue) {
+    lockScroll();
+  } else {
+    unlockScroll();
+  }
 });
 </script>
 
 <template>
   <Teleport to="body">
     <Transition name="popup">
-      <section v-if="modelUpdate" ref="popup" :class="['popup', customClass]">
+      <section
+        v-if="modelUpdate"
+        ref="popup"
+        :class="['popup', customClass]"
+        :style="`z-index: ${index}`"
+      >
         <div :class="`popup__content popup__content_${closePosition}`">
           <img
             :src="close"
@@ -80,7 +99,6 @@ watch(modelUpdate, () => {
 <style scoped lang="scss">
 .popup {
   position: fixed;
-  z-index: 30;
   display: flex;
   top: 0;
   bottom: 0;
@@ -94,6 +112,9 @@ watch(modelUpdate, () => {
       'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
       Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
       'Segoe UI Symbol';
+    border-radius: 1.25rem;
+    box-shadow: $black-150 0 1.875rem 3.75rem;
+    background-color: $white;
 
     &_top {
       margin: auto;
@@ -108,7 +129,7 @@ watch(modelUpdate, () => {
     cursor: pointer;
     position: absolute;
     cursor: pointer;
-    @include transition(transform, 0.1s ease-in-out);
+    @include transition(transform, 0.1s, ease-in-out);
 
     &:hover {
       transform: scale(1.1);

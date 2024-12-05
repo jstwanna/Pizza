@@ -2,7 +2,6 @@
 import BaseTabs from '~/components/UI/BaseTabs.vue';
 
 import { carouselItems } from '../utils/constants';
-
 import { addToCart } from '../utils/cartHelper';
 import type {
   ITab,
@@ -103,6 +102,16 @@ const togglePopup = (type: string = 'any') => {
   }
 };
 
+const checkUserAuthentication = () => {
+  if (!isUserLoggedIn.value) {
+    isLoginPopup.value = true;
+
+    return true;
+  }
+
+  return false;
+};
+
 const handleProductClick = (product: ICatalogItemListView) => {
   currentProduct.value = null;
 
@@ -112,14 +121,18 @@ const handleProductClick = (product: ICatalogItemListView) => {
 };
 
 const handleAddToCart = (product: ICounterItems<IProductListView>) => {
+  if (checkUserAuthentication()) return;
+
   addToCart(product);
   togglePopup(product.item.productType);
 };
 
 const handleValidateCart = (product: ICatalogItemListView) => {
-  if (product.category === 'Пицца' || product.category === 'Комбо') {
+  if (product.category === 'Пицца') {
     handleProductClick(product);
   } else {
+    if (checkUserAuthentication()) return;
+
     addToCart({
       count: 1,
       price: product.products[0].price,
@@ -308,7 +321,7 @@ useHead({
                 })
               "
             >
-              В корзину за {{ totalPrice }}
+              В корзину за {{ totalPrice }} ₽
             </UIBaseButton>
           </div>
         </div>
@@ -357,7 +370,7 @@ useHead({
                 })
               "
             >
-              В корзину за {{ currentProduct.products[0].price }}
+              В корзину за {{ currentProduct.products[0].price }} ₽
             </UIBaseButton>
           </div>
         </div>
@@ -563,9 +576,6 @@ useHead({
 .main-popup {
   &__content {
     width: 57.75rem;
-    background-color: $white;
-    box-shadow: hsla(0, 0%, 0%, 0.2) 0 1.875rem 3.75rem;
-    border-radius: 1.25rem;
     height: 38.125rem;
     display: flex;
   }
