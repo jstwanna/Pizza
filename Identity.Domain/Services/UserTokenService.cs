@@ -1,11 +1,14 @@
 ﻿using Identity.Data;
 using Identity.Data.Models;
+using Identity.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,7 +49,6 @@ namespace Identity.Domain.Services
         {
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = null;
-
             return userManager.UpdateAsync(user);
         }
     }

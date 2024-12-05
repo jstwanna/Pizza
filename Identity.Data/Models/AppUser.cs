@@ -13,5 +13,7 @@ namespace Identity.Data.Models
         public string LastName { get; set; } = string.Empty;
         public string? RefreshToken { get; set; } = string.Empty;
         public DateTime? RefreshTokenExpiryTime {  get; set; }
+
+        public bool Disabled { get; set; }
     }
 }

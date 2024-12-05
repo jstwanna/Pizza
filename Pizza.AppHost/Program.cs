@@ -43,26 +43,28 @@ var media = builder
     .AddProject<Projects.Pizza_Media>("media-server")
     .WithExternalHttpEndpoints();
 
-var api = builder
-    .AddProject<Projects.Client_ApiGateway>("client-api")
+var clientGateway = builder
+    .AddProject<Projects.Client_ApiGateway>("client-api-gateway")
     .WithExternalHttpEndpoints()
-    .WithReference(rabbit)
     .WithReference(seq)
-    .WithReference(media)
     ;
 
+var employeeGateway = builder
+    .AddProject<Projects.EmployeeApiGateway>("employee-api-gateway")
+    .WithExternalHttpEndpoints()
+    .WithReference(seq);
 
 if (builder.Environment.IsDevelopment())
 {
     var clientFrontend = builder
         .AddNpmApp("client-frontend", "../Client.Frontend", "dev")
-        .WithReference(api)
+        .WithReference(clientGateway)
         .WithHttpEndpoint(env: "PORT", port: 8081)
         .WithExternalHttpEndpoints();
 
     var employeeFrontend = builder
         .AddNpmApp("employee-frontend", "../Employee.Frontend", "dev")
-        .WithReference(api)
+        .WithReference(employeeGateway)
         .WithHttpEndpoint(env: "PORT", port: 8080)
         .WithExternalHttpEndpoints();
 }

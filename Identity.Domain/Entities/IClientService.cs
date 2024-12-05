@@ -8,12 +8,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Domain.Services
+namespace Identity.Domain.Entities
 {
     public interface IClientService
     {
-        public Task<AppUser> GetOrCreateClient (LoginClientModel model);
-
-        public Claim[] GetClaimsByClient (AppUser user);
+        public Task<AppUser> GetOrCreateClient(LoginClientModel model);
     }
 }

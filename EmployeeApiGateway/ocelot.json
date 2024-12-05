@@ -14,19 +14,6 @@
       "SwaggerKey": "catalog"
     },
     {
-      "UpstreamHttpMethod": [],
-      "UpstreamPathTemplate": "/api/catalog/testAuth",
-      "DownstreamPathTemplate": "/api/Catalog/TestAuth",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7212
-        }
-      ],
-      "SwaggerKey": "catalog"
-    },
-    {
       "UpstreamPathTemplate": "/api/identity/base/{everything}",
       "UpstreamHttpMethod": [],
       "DownstreamPathTemplate": "/api/accountBase/{everything}",
@@ -40,9 +27,22 @@
       "SwaggerKey": "identity"
     },
     {
-      "UpstreamPathTemplate": "/api/identity/client/{everything}",
+      "UpstreamPathTemplate": "/api/identity/employee/{everything}",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/clientAccount/{everything}",
+      "DownstreamPathTemplate": "/api/employeeAccount/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7162
+        }
+      ],
+      "SwaggerKey": "identity"
+    },
+    {
+      "UpstreamPathTemplate": "/api/identity/roles/{everything}",
+      "UpstreamHttpMethod": [],
+      "DownstreamPathTemplate": "/api/roles/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

@@ -1,4 +1,5 @@
 ﻿using Identity.Data.Models;
+using Identity.Domain.Entities;
 using Identity.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -42,15 +43,6 @@ namespace Identity.Domain.Services
             }
 
             return user;
-        }
-
-        public Claim[] GetClaimsByClient (AppUser user)
-        {
-            return new[]
-            {
-                new Claim(ClaimTypes.Sid, user.Id),
-                new Claim(ClaimTypes.NameIdentifier, user.UserName)
-            };
         }
     }
 }

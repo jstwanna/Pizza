@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Identity.Domain.Models
 {
-    public class ClientInfoResponse
+    public class AddEmployeeModel
     {
-        public string? Id {  get; set; } = string.Empty;
-        public string? Username { get; set; } = string.Empty;
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace Identity.Data
         {
             var adminRoleId = Guid.NewGuid().ToString();
             var userRoleId = Guid.NewGuid().ToString();
+            var employeeRoleId = Guid.NewGuid().ToString();
 
             builder
                 .Entity<IdentityRole>()
@@ -38,6 +39,12 @@ namespace Identity.Data
                         Name = "User",
                         NormalizedName = "USER",
                         ConcurrencyStamp = userRoleId,
+                    },
+                    new IdentityRole{
+                        Id = employeeRoleId,
+                        Name = "Employee",
+                        NormalizedName = "EMPLOYEE",
+                        ConcurrencyStamp = employeeRoleId,
                     }
                     ]);
 

@@ -5,12 +5,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Identity.Domain.Services
+namespace Identity.Domain.Entities
 {
     public interface ITokenService
     {
-        public string GenerateJwtToken (Claim[] claims);
+        public string GenerateJwtToken(Claim[] claims);
 
-        public string GenerateRefreshToken ();
+        public string GenerateRefreshToken();
     }
 }
