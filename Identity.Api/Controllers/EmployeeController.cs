@@ -77,5 +77,12 @@ namespace Identity.Api.Controllers
         {
             return employeeService.GetEmployeeList(username);
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public Task ChangeUserDisablePosition (string userId, bool value)
+        {
+            return employeeService.ChangeUserDisablePosition(userId, value);
+        }
     }
 }

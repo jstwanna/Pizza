@@ -100,5 +100,24 @@ namespace Identity.Domain.Services
             
             return users.ToArrayAsync();
         }
+
+        public async Task ChangeUserDisablePosition (string userId, bool value)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                throw new Exception("Пользователь не найден");
+            }
+
+            user.Disabled = value;
+
+            var res = await userManager.UpdateAsync(user);
+
+            if (!res.Succeeded)
+            {
+                throw new Exception(res.Errors.FirstOrDefault()?.Description);
+            }
+        }
     }
 }

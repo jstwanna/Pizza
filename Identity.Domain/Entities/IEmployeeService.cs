@@ -17,5 +17,7 @@ namespace Identity.Domain.Entities
         Task<AppUser> AddEmployee (AddEmployeeModel model);
 
         public Task<EmployeeViewModel[]> GetEmployeeList (string? username);
+
+        public Task ChangeUserDisablePosition (string userId, bool value);
     }
 }
