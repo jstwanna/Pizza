@@ -43,7 +43,9 @@ namespace Identity.Domain.Services
         {
             var user = new AppUser
             {
-                UserName = model.Username
+                UserName = model.Username,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
             };
 
             var creatingResult = await userManager.CreateAsync(user, model.Password);
