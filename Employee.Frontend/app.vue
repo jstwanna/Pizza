@@ -16,6 +16,7 @@
   font-weight: $fw-normal;
 
   color: $black;
+  background-color: $sky;
   min-height: 100dvh;
 
   display: flex;

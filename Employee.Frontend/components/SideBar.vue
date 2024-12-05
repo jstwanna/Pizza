@@ -20,7 +20,7 @@ const userStore = useUserStore();
           >
             <UIBaseIcon
               :name="link.icon"
-              size="md"
+              size="sm"
               :class="[
                 'sidebar__icon',
                 { 'sidebar__icon_menu-open': userStore.isMenu },
@@ -44,12 +44,15 @@ const userStore = useUserStore();
 <style scoped lang="scss">
 .sidebar {
   width: 13.125rem;
-  background-color: $primary;
-  color: $white;
+  background-color: $white;
   transition: width 0.3s ease;
 
   &_collapsed {
-    width: 4.5rem;
+    width: 5rem;
+  }
+
+  &__links {
+    padding: 1.25rem 1rem;
   }
 
   &__link-container {
@@ -61,38 +64,41 @@ const userStore = useUserStore();
   }
 
   &__link {
+    border-radius: 624.9375rem;
     outline: 0;
     display: flex;
     align-items: center;
-    height: 3.5rem;
+    min-height: 2.8125rem;
     text-decoration: none;
-    color: $gray;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    color: $black;
+    padding: 0.25rem 1rem 0.25rem 0.875rem;
+    margin-bottom: 0.25rem;
 
     &:hover {
-      background-color: $dark-primary;
+      color: $primary;
+      background-color: $light-primary;
     }
 
     &_active {
       color: $white;
+      background-color: $primary;
     }
   }
 
   &__icon {
     &_menu-open {
-      margin-right: 1rem;
+      margin-right: 0.8125rem;
     }
   }
 
   &__tooltip {
     font-size: $fs-xs;
     color: $white;
-    background-color: $dark-primary;
+    background-color: $primary;
     position: absolute;
     top: 50%;
     left: 100%;
-    margin-left: 1rem;
+    margin-left: 1.65rem;
     transform: translateY(-50%);
     border-radius: 0.25rem;
     padding: 0.625rem;
@@ -107,7 +113,7 @@ const userStore = useUserStore();
       transform: translateY(-50%);
       border-width: 0.5rem;
       border-style: solid;
-      border-color: transparent $dark-primary transparent transparent;
+      border-color: transparent $primary transparent transparent;
     }
   }
 }

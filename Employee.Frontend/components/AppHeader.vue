@@ -21,7 +21,6 @@ const userStore = useUserStore();
   height: 3.125rem;
   padding-left: 1.25rem;
   padding-right: 1.875rem;
-  box-shadow: 0 0.0625rem 0.25rem hsla(209, 100%, 8%, 0.08);
 
   &__menu-icon {
     cursor: pointer;
