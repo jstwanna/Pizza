@@ -1,23 +1,21 @@
-﻿using Identity.Data.Models;
+﻿using Identity.Data;
+using Identity.Data.Models;
 using Identity.Domain.Entities;
 using Identity.Domain.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Domain.Services
 {
     internal class EmployeeService : IEmployeeService
     {
         private readonly UserManager<AppUser> userManager;
+        private readonly Data.DbContext dbContext;
 
-        public EmployeeService(UserManager<AppUser> userManager)
+        public EmployeeService(UserManager<AppUser> userManager, Data.DbContext dbContext)
         {
             this.userManager = userManager;
+            this.dbContext = dbContext;
         }
 
         public async Task<AppUser> GetEmployee(LoginEmployeeModel model)
@@ -27,6 +25,11 @@ namespace Identity.Domain.Services
             if (user == null)
             {
                 throw new Exception("Неверный логин или пароль");
+            }
+
+            if (user.Disabled)
+            {
+                throw new Exception("Пользователь заблокирован");
             }
 
             var passIsValid = await userManager.CheckPasswordAsync(user, model.Password);
@@ -63,6 +66,39 @@ namespace Identity.Domain.Services
             }
 
             return user;
+        }
+
+        public Task<EmployeeViewModel[]> GetEmployeeList (string? username)
+        {
+            var users = dbContext.Users
+                .Join(dbContext.UserRoles,
+                u => u.Id,
+                ur => ur.UserId,
+                (u, ur) => new
+                {
+                    u,
+                    ur
+                })
+                .Join(dbContext.Roles,
+                u => u.ur.RoleId,
+                r => r.Id,
+                (u, r) => new EmployeeViewModel
+                {
+                    Id = u.u.Id,
+                    Disabled = u.u.Disabled,
+                    UserName = u.u.UserName,
+                    FirstName = u.u.FirstName,
+                    LastName = u.u.LastName,
+                    Role = r.NormalizedName
+                })
+                .Where(w => w.Role != "USER");
+
+            if (username != null)
+            {
+                users = users.Where(w => w.UserName.Contains(username));
+            }
+            
+            return users.ToArrayAsync();
         }
     }
 }

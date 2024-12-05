@@ -29,7 +29,7 @@
     {
       "UpstreamPathTemplate": "/api/identity/employee/{everything}",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/employeeAccount/{everything}",
+      "DownstreamPathTemplate": "/api/employee/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

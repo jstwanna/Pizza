@@ -18,7 +18,7 @@ namespace Identity.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class ClientAccountController : ControllerBase
+    public class ClientController : ControllerBase
     {
         private readonly IClientService clientService;
         private readonly ITokenService tokenService;
@@ -26,7 +26,7 @@ namespace Identity.Api.Controllers
         private readonly IUserService userService;
         private readonly JwtConfig jwtConfig;
 
-        public ClientAccountController(IClientService clientService, ITokenService tokenService, IOptions<JwtConfig> jwtConfig, IUserTokenService userTokenService, IUserService userService)
+        public ClientController(IClientService clientService, ITokenService tokenService, IOptions<JwtConfig> jwtConfig, IUserTokenService userTokenService, IUserService userService)
         {
             this.clientService = clientService;
             this.tokenService = tokenService;

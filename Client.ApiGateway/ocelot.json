@@ -42,7 +42,7 @@
     {
       "UpstreamPathTemplate": "/api/identity/client/{everything}",
       "UpstreamHttpMethod": [],
-      "DownstreamPathTemplate": "/api/clientAccount/{everything}",
+      "DownstreamPathTemplate": "/api/client/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {

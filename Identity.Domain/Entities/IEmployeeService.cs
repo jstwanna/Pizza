@@ -15,5 +15,7 @@ namespace Identity.Domain.Entities
         Task<AppUser> GetEmployee(LoginEmployeeModel model);
 
         Task<AppUser> AddEmployee (AddEmployeeModel model);
+
+        public Task<EmployeeViewModel[]> GetEmployeeList (string? username);
     }
 }

@@ -12,7 +12,7 @@ namespace Identity.Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class EmployeeAccountController : ControllerBase
+    public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
         private readonly ITokenService tokenService;
@@ -20,7 +20,7 @@ namespace Identity.Api.Controllers
         private readonly IUserService userService;
         private readonly JwtConfig jwtConfig;
 
-        public EmployeeAccountController(IEmployeeService employeeService, ITokenService tokenService, IUserTokenService userTokenService, IOptions<JwtConfig> jwtConfig, IUserService userService)
+        public EmployeeController(IEmployeeService employeeService, ITokenService tokenService, IUserTokenService userTokenService, IOptions<JwtConfig> jwtConfig, IUserService userService)
         {
             this.employeeService = employeeService;
             this.tokenService = tokenService;
@@ -69,6 +69,13 @@ namespace Identity.Api.Controllers
         public Task<IdentityResult> ChangeUserPassword (ChangePasswordModel model)
         {
             return userService.ChangePassword(model);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public Task<EmployeeViewModel[]> GetEmployees (string? username)
+        {
+            return employeeService.GetEmployeeList(username);
         }
     }
 }
