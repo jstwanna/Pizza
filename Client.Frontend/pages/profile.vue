@@ -4,7 +4,7 @@ import { user, isUserLoggedIn } from '../utils/userHelper';
 const router = useRouter();
 
 const handleLogout = async () => {
-  await $fetch('/api/client/Logout', {
+  await $fetch('/api/identity/base/Logout', {
     method: 'POST',
   });
 

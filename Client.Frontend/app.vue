@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { isUserLoggedIn } from './utils/userHelper';
 
-onMounted(() => {
+onMounted(async () => {
   const user = localStorage.getItem('user');
-  const loginTimeStamp = localStorage.getItem('login-timestamp');
+  const loginTimestamp = localStorage.getItem('login-timestamp');
 
   const router = useRouter();
-  const route = useRoute();
 
-  if (route.path === '/profile' && !isUserLoggedIn) {
-    router.push('/');
-  }
+  if (user && loginTimestamp) {
+    const loginTime = parseInt(loginTimestamp, 10);
+    const currentTime = Date.now();
+    const tokenExpiration = 30 * 60 * 1000;
 
-  if (user && loginTimeStamp) {
-    isUserLoggedIn.value = true;
+    if (currentTime - loginTime < tokenExpiration) {
+      isUserLoggedIn.value = true;
+    } else {
+      await $fetch('/api/identity/base/RefreshToken');
+
+      const newTimestamp = Date.now();
+      localStorage.setItem('login-timestamp', newTimestamp.toString());
+      isUserLoggedIn.value = true;
+    }
   } else {
     localStorage.clear();
     router.push('/');

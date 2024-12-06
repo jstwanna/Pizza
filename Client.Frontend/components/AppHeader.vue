@@ -47,17 +47,17 @@ const handlePhoneInput = (event: Event) => {
 
 const onLogin = async () => {
   try {
-    await $fetch('/api/client/LoginClient', {
+    await $fetch('/api/identity/client/LoginClient', {
       method: 'POST',
       body: {
         phone: rawPhone.value,
       },
     });
 
-    const loginTimestamp = new Date().getTime();
+    const loginTimestamp = Date.now();
     localStorage.setItem('login-timestamp', loginTimestamp.toString());
 
-    const userInfo = await $fetch<IUser>('/api/client/GetUserInfo', {
+    const userInfo = await $fetch<IUser>('/api/identity/base/GetUserInfo', {
       method: 'POST',
     });
 
