@@ -8,6 +8,8 @@ const input = ref<HTMLInputElement | null>(null);
 const userPhone = ref<string>('');
 const rawPhone = ref<string>('');
 
+const router = useRouter();
+
 const resetPhone = () => {
   userPhone.value = '';
   rawPhone.value = '';
@@ -65,6 +67,7 @@ const onLogin = async () => {
 
     user.value = userInfo;
     isUserLoggedIn.value = true;
+    router.push('/');
   } catch {
     console.error('Login error');
   } finally {

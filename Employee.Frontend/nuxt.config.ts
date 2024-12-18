@@ -32,6 +32,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    '/api/**': {
+      proxy: 'https://localhost:7129/api/identity/**',
+    },
+
     '/': { redirect: '/products' },
   },
 });

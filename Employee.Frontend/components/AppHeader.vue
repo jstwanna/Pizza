@@ -1,5 +1,22 @@
 <script setup lang="ts">
+import { clearAuthCookies } from '../utils/clearCookies';
+
 const userStore = useUserStore();
+const router = useRouter();
+
+const handleLogout = async () => {
+  await $fetch('/api/base/Logout', {
+    method: 'POST',
+  });
+
+  clearAuthCookies();
+  router.push('/login');
+};    
+
+onMounted(() => {
+  const savedMenuState = localStorage.getItem('isMenu');
+  userStore.isMenu = savedMenuState === 'true';
+});
 </script>
 
 <template>
@@ -11,6 +28,9 @@ const userStore = useUserStore();
       @click="userStore.toggleMenu"
     />
     <UIBaseBreadcrumbs />
+    <ElButton type="primary" style="margin-left: auto" @click="handleLogout">
+      Выйти
+    </ElButton>
   </header>
 </template>
 
@@ -19,8 +39,6 @@ const userStore = useUserStore();
   display: flex;
   align-items: center;
   height: 3.125rem;
-  padding-left: 1.25rem;
-  padding-right: 1.875rem;
 
   &__menu-icon {
     cursor: pointer;

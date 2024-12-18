@@ -5,10 +5,7 @@
     <SideBar />
     <main class="home__main">
       <AppHeader />
-      <!-- <NuxtPage /> -->
-      <section class="aaa">
-        <div>dadadad</div>
-      </section>
+      <NuxtPage />
     </main>
   </div>
 </template>
@@ -16,13 +13,16 @@
 <style scoped lang="scss">
 .home {
   display: flex;
-  width: 100%;
   min-height: 100dvh;
 
   &__main {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    overflow: hidden;
   }
 }
 </style>

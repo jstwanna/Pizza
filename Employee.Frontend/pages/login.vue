@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import type { FormInstance, FormRules } from 'element-plus';
+import type { IUser } from '../models/models';
 
 interface IRuleForm {
-  name: string;
+  login: string;
   password: string;
 }
 
+const userStore = useUserStore();
+
 const loginFormRef = ref<FormInstance>();
 const loginForm = reactive<IRuleForm>({
-  name: '',
+  login: '',
   password: '',
 });
+const isFormLoading = ref<boolean>(false);
 
 const rules = reactive<FormRules<IRuleForm>>({
-  name: [
+  login: [
     {
       required: true,
       message: 'Пожалуйста, введите Ваше имя',
@@ -29,14 +33,63 @@ const rules = reactive<FormRules<IRuleForm>>({
   ],
 });
 
-const handleLogin = async (formEl: FormInstance | undefined) => {
-  if (!formEl) return;
+const router = useRouter();
 
-  await formEl.validate((valid) => {
-    if (valid) {
-      console.log('submit!');
-    }
+const handleLogin = async (formEl: FormInstance | undefined) => {
+  await apiFetch({
+    path: 'employee/LoginEmployee',
+    body: {
+      login: 'admin',
+      password: 'admin',
+    },
   });
+
+  const get = await apiFetch<IUser>({
+    path: 'base/GetUserInfo',
+    returnContent: true,
+  });
+
+  console.log(get.role);
+
+  // if (!formEl) return;
+
+  // await formEl.validate(async (valid) => {
+  //   if (valid) {
+  //     isFormLoading.value = true;
+
+  //     try {
+  //       await $fetch('/api/employee/LoginEmployee', {
+  //         method: 'POST',
+  //         body: {
+  //           login: loginForm.login,
+  //           password: loginForm.password,
+  //         },
+  //       });
+
+  //       const loginTimestamp = useCookie('login-timestamp', {
+  //         maxAge: 60 * 60 * 24 * 30,
+  //       });
+  //       loginTimestamp.value = Date.now().toString();
+
+  //       const currentUser = await $fetch<IUser>('/api/base/GetUserInfo', {
+  //         method: 'POST',
+  //       });
+
+  //       userStore.setAuthentication(true);
+  //       const user = useCookie('user', {
+  //         maxAge: 60 * 60 * 24 * 30,
+  //       });
+  //       user.value = JSON.stringify(currentUser);
+
+  //       userStore.user = currentUser;
+  //       router.push('/');
+  //     } catch {
+  //       console.error('Login error');
+  //     } finally {
+  //       isFormLoading.value = false;
+  //     }
+  //   }
+  // });
 };
 
 definePageMeta({
@@ -53,12 +106,12 @@ definePageMeta({
       class="login__form"
     >
       <h2 class="login__title">Авторизация</h2>
-      <ElFormItem prop="name">
+      <ElFormItem prop="login">
         <ElInput
           type="text"
           placeholder="Имя пользователя"
           autocomplete="off"
-          v-model="loginForm.name"
+          v-model="loginForm.login"
           class="login__input"
         />
       </ElFormItem>
@@ -79,6 +132,7 @@ definePageMeta({
           @click="handleLogin(loginFormRef)"
           round
           class="login__button"
+          :loading="isFormLoading"
         >
           Войти
         </ElButton>
